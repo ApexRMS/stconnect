@@ -1,0 +1,62 @@
+library(raster)
+library(rsyncrosim)
+
+e = ssimEnvironment()
+source(file.path(e$ModuleDirectory, "common.R"))
+
+#datasheets
+runSettingsIn = GetDataSheetExpectData("ConnCons_CPRunSetting", GLOBAL_Scenario)
+prioritizationOut = datasheet(GLOBAL_Scenario, "ConnCons_CPOutputCumulative")
+
+#file paths
+tempFolderPath = envTempFolder("ConservationPrioritization")
+zonationPath<-"C:/Program Files/zonation 4.0.0rc1_compact/bin/zig4.exe"
+
+rasTemplate<-datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputHabitatSuitability", iteration = GLOBAL_MinIteration, timestep = GLOBAL_MinTimestep)[[1]]
+rasRes<-res(rasTemplate)[1]
+rasExtend<-c(xmin(rasTemplate)-rasRes,xmax(rasTemplate)+rasRes,ymin(rasTemplate)-rasRes,ymax(rasTemplate)+rasRes)
+
+zonationSet<-readLines(file.path(e$ModuleDirectory, "ALL_set_template.dat"))
+removalRule<-data.frame(Code=c(1:5), Name=c("Basic core-area Zonation", "Additive benefit function", "Target based planning", "Generalized benefit function", "Random removal"))
+zonationSet[2]<-paste("removal rule =", removalRule$Code[which(removalRule$Name==runSettingsIn$RemovalValue)])
+zonationSet[3]<-paste("warp factor =", runSettingsIn$WarpFactor)
+edgeRemoval<-if(runSettingsIn$EdgeRemoval=="TRUE") 1 else 0
+zonationSet[4]<-paste("edge removal =", edgeRemoval)
+zonationSet[5]<-paste("add edge points =", runSettingsIn$AddEdgePoints)
+zonationSetName <- paste(tempFolderPath, "RunSetting.dat", sep="/")
+writeLines(zonationSet, zonationSetName)
+
+#Simulation
+envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
+
+for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
+  
+  for (timestep in GLOBAL_MinTimestep:GLOBAL_MaxTimestep) {
+    
+    envReportProgress(iteration, timestep)
+    
+    rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+             datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_NCOutputBetweenness", iteration = iteration, timestep = timestep))
+#             datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_CCOutputCumulativeCurrent"))
+    rasOut<-extend(rasIn, rasExtend, -9999)
+    rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
+    writeRaster(rasOut, rasOutFilename, bylayer=TRUE)
+  
+    zonationSpp<-data.frame(1, 0, 1, 1, 1, rasOutFilename)
+    zonationSppName <- paste(tempFolderPath, "BiodiversityFeatureList.spp", sep="/")
+    write.table(zonationSpp, zonationSppName, row.names = FALSE, col.names=FALSE)
+    zonationOutName <- file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "txt"))
+    zonationScenario<-paste0("-r ", "\"", zonationSetName, "\" ", "\"", zonationSppName, "\" ", "\"", zonationOutName, "\" ", "0.0 0 1.0 0")
+    zonationScenarioName<-paste(tempFolderPath, "ZonationScenario.bat",sep="/")
+    writeLines(zonationScenario, zonationScenarioName)
+            
+    #run Zonation
+    system(paste0("\"",zonationPath, "\" ", zonationScenario))
+
+    df = data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
+    prioritizationOut<-addRow(prioritizationOut, df)
+  }
+}
+    
+saveDatasheet(GLOBAL_Scenario, prioritizationOut, "ConnCons_CPOutputCumulative")
+
