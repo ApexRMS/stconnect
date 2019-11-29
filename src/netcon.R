@@ -11,17 +11,17 @@ e = ssimEnvironment()
 source(file.path(e$ModuleDirectory, "common.R"))
 
 #datasheets
-dispersalIn = GetDataSheetExpectData("ConnCons_NCDispersal", GLOBAL_Scenario)
-networkConnectivityOut = datasheet(GLOBAL_Scenario, "ConnCons_NCOutputSummary")
-btwnOut = datasheet(GLOBAL_Scenario, "ConnCons_NCOutputBetweenness")
+dispersalIn = GetDataSheetExpectData("stconnect_NCDispersal", GLOBAL_Scenario)
+networkConnectivityOut = datasheet(GLOBAL_Scenario, "stconnect_NCOutputSummary")
+btwnOut = datasheet(GLOBAL_Scenario, "stconnect_NCOutputBetweenness")
 
 #file paths
 tempFolderPath = envTempFolder("NetworkConnectivity")
 
 #Read in all habitat patch rasters
-habitatRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputHabitatPatch")
+habitatRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatPatch")
 #Read in all reistance rasters
-resistanceRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputResistance")
+resistanceRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputResistance")
 
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
@@ -104,7 +104,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
   }
 }
 
-saveDatasheet(GLOBAL_Scenario, networkConnectivityOut, "ConnCons_NCOutputSummary")
-saveDatasheet(GLOBAL_Scenario, btwnOut, "ConnCons_NCOutputBetweenness")
+saveDatasheet(GLOBAL_Scenario, networkConnectivityOut, "stconnect_NCOutputSummary")
+saveDatasheet(GLOBAL_Scenario, btwnOut, "stconnect_NCOutputBetweenness")
 
 envEndSimulation()

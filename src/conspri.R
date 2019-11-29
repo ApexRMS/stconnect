@@ -5,14 +5,14 @@ e = ssimEnvironment()
 source(file.path(e$ModuleDirectory, "common.R"))
 
 #datasheets
-runSettingsIn = GetDataSheetExpectData("ConnCons_CPRunSetting", GLOBAL_Scenario)
-prioritizationOut = datasheet(GLOBAL_Scenario, "ConnCons_CPOutputCumulative")
+runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)
+prioritizationOut = datasheet(GLOBAL_Scenario, "stconnect_CPOutputCumulative")
 
 #file paths
 tempFolderPath = envTempFolder("ConservationPrioritization")
 zonationPath<-"C:/Program Files/zonation 4.0.0rc1_compact/bin/zig4.exe"
 
-rasTemplate<-datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputHabitatSuitability", iteration = GLOBAL_MinIteration, timestep = GLOBAL_MinTimestep)[[1]]
+rasTemplate<-datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = GLOBAL_MinIteration, timestep = GLOBAL_MinTimestep)[[1]]
 rasRes<-res(rasTemplate)[1]
 rasExtend<-c(xmin(rasTemplate)-rasRes,xmax(rasTemplate)+rasRes,ymin(rasTemplate)-rasRes,ymax(rasTemplate)+rasRes)
 
@@ -35,9 +35,9 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     
     envReportProgress(iteration, timestep)
     
-    rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
-             datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_NCOutputBetweenness", iteration = iteration, timestep = timestep))
-#             datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_CCOutputCumulativeCurrent"))
+    rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_NCOutputBetweenness", iteration = iteration, timestep = timestep))
+#             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent"))
     rasOut<-extend(rasIn, rasExtend, -9999)
     rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE)
@@ -58,5 +58,5 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
   }
 }
     
-saveDatasheet(GLOBAL_Scenario, prioritizationOut, "ConnCons_CPOutputCumulative")
+saveDatasheet(GLOBAL_Scenario, prioritizationOut, "stconnect_CPOutputCumulative")
 

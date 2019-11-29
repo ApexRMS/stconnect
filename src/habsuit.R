@@ -6,16 +6,16 @@ e = ssimEnvironment()
 source(file.path(e$ModuleDirectory, "common.R"))
 
 #datasheets
-stateClassIn = datasheet(GLOBAL_Scenario,"STSim_StateClass")
+stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
 names(stateClassIn) <- c("StateClassID", "StateLabelXID", "StateLabelYID", "ID", "Color")
-habitatSuitabilityIn = GetDataSheetExpectData("ConnCons_HSHabitatSuitability", GLOBAL_Scenario)
+habitatSuitabilityIn = GetDataSheetExpectData("stconnect_HSHabitatSuitability", GLOBAL_Scenario)
 habitatSuitabilityIn <- merge(habitatSuitabilityIn,stateClassIn,by="StateClassID")
-habitatPatchIn = GetDataSheetExpectData("ConnCons_HSHabitatPatch", GLOBAL_Scenario)
-resistanceIn = GetDataSheetExpectData("ConnCons_HSResistance", GLOBAL_Scenario)
+habitatPatchIn = GetDataSheetExpectData("stconnect_HSHabitatPatch", GLOBAL_Scenario)
+resistanceIn = GetDataSheetExpectData("stconnect_HSResistance", GLOBAL_Scenario)
 resistanceIn <- merge(resistanceIn, stateClassIn, by="StateClassID")
-habitatSuitabilityOut = datasheet(GLOBAL_Scenario, "ConnCons_HSOutputHabitatSuitability")
-habitatPatchOut = datasheet(GLOBAL_Scenario, "ConnCons_HSOutputHabitatPatch")
-resistanceOut = datasheet(GLOBAL_Scenario, "ConnCons_HSOutputResistance")
+habitatSuitabilityOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputHabitatSuitability")
+habitatPatchOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputHabitatPatch")
+resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputResistance")
 
 #file paths
 tempFolderPath = envTempFolder("HabitatSuitability")
@@ -44,7 +44,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             patchSizeThreshold <- patchValues$MinimumHabitatPatchSize
 
             #Input stateclass raster
-            stateMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "STSim_OutputSpatialState", iteration = iteration, timestep = timestep)
+            stateMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
 
             #Habitat suitability map
             suitabilityRaster <- reclassify(stateMap, rcl = suitabilityValues)
@@ -84,8 +84,8 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     }
 }
 
-saveDatasheet(GLOBAL_Scenario, habitatSuitabilityOut, "ConnCons_HSOutputHabitatSuitability")
-saveDatasheet(GLOBAL_Scenario, habitatPatchOut, "ConnCons_HSOutputHabitatPatch")
-saveDatasheet(GLOBAL_Scenario, resistanceOut, "ConnCons_HSOutputResistance")
+saveDatasheet(GLOBAL_Scenario, habitatSuitabilityOut, "stconnect_HSOutputHabitatSuitability")
+saveDatasheet(GLOBAL_Scenario, habitatPatchOut, "stconnect_HSOutputHabitatPatch")
+saveDatasheet(GLOBAL_Scenario, resistanceOut, "stconnect_HSOutputResistance")
 
 envEndSimulation()

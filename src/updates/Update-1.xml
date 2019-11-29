@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<update>
+  <action code="Exec" condition="TableExists" criteria="Circuitscape_OutputFile">
+    <item>DROP TABLE Circuitscape_OutputFile</item>
+  </action>
+  <action code="Exec" condition="TableExists" criteria="ConnCons_REnvironment">
+    <item>DROP TABLE ConnCons_REnvironment</item>
+  </action>
+  <action code="Exec" condition="TableExists" criteria="ConnCons_CCOutputCumulativeCurrent">
+    <item>ALTER TABLE ConnCons_CCOutputCumulativeCurrent RENAME TO stconnect_CCOutputCumulativeCurrent</item>
+  </action> 
+  <action code="Exec" condition="TableExists" criteria="ConnCons_CPOutputCumulative">
+    <item>ALTER TABLE ConnCons_CPOutputCumulative RENAME TO stconnect_CPOutputCumulative</item>
+  </action>  
+  <action code="Exec" condition="TableExists" criteria="ConnCons_CPRunSetting">
+    <item>ALTER TABLE ConnCons_CPRunSetting RENAME TO stconnect_CPRunSetting</item>
+  </action>   
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSHabitatPatch">
+    <item>ALTER TABLE ConnCons_HSHabitatPatch RENAME TO stconnect_HSHabitatPatch</item>
+  </action>   
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSHabitatSuitability">
+    <item>ALTER TABLE ConnCons_HSHabitatSuitability RENAME TO stconnect_HSHabitatSuitability</item>
+  </action>   
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSLandcover">
+    <item>ALTER TABLE ConnCons_HSLandcover RENAME TO stconnect_HSLandcover</item>
+  </action>   
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSLandcoverMap">
+    <item>ALTER TABLE ConnCons_HSLandcoverMap RENAME TO stconnect_HSLandcoverMap</item>
+  </action> 
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSOutputHabitatPatch">
+    <item>ALTER TABLE ConnCons_HSOutputHabitatPatch RENAME TO stconnect_HSOutputHabitatPatch</item>
+  </action> 
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSOutputHabitatSuitability">
+    <item>ALTER TABLE ConnCons_HSOutputHabitatSuitability RENAME TO stconnect_HSOutputHabitatSuitability</item>
+  </action> 
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSOutputResistance">
+    <item>ALTER TABLE ConnCons_HSOutputResistance RENAME TO stconnect_HSOutputResistance</item>
+  </action>
+  <action code="Exec" condition="TableExists" criteria="ConnCons_HSResistance">
+    <item>ALTER TABLE ConnCons_HSResistance RENAME TO stconnect_HSResistance</item>
+  </action>  
+  <action code="Exec" condition="TableExists" criteria="ConnCons_NCDispersal">
+    <item>ALTER TABLE ConnCons_NCDispersal RENAME TO stconnect_NCDispersal</item>
+  </action>  
+  <action code="Exec" condition="TableExists" criteria="ConnCons_NCOutputBetweenness">
+    <item>ALTER TABLE ConnCons_NCOutputBetweenness RENAME TO stconnect_NCOutputBetweenness</item>
+  </action> 
+  <action code="Exec" condition="TableExists" criteria="ConnCons_NCOutputSummary">
+    <item>ALTER TABLE ConnCons_NCOutputSummary RENAME TO stconnect_NCOutputSummary</item>
+  </action>   
+</update>

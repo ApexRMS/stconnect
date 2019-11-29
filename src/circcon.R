@@ -7,19 +7,19 @@ source(file.path(e$ModuleDirectory, "common.R"))
 CS_exe<-"\"C:/Program Files/Circuitscape/cs_run.exe\"" # Don't forget the "Program Files" problem
 
 #datasheets
-resistanceIn = datasheet(GLOBAL_Scenario, "ConnCons_HSOutputResistance")
-circuitOut = datasheet(GLOBAL_Scenario, "ConnCons_CCOutputCumulativeCurrent", empty=T)
+resistanceIn = datasheet(GLOBAL_Scenario, "stconnect_HSOutputResistance")
+circuitOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputCumulativeCurrent", empty=T)
 
 #file paths
 tempFolderPath = envTempFolder("CircuitConnectivity")
 
 #Create ouput folder
-outputFolderPath <- envOutputFolder(GLOBAL_Scenario, "ConnCons_CCOutputCumulativeCurrent")
+outputFolderPath <- envOutputFolder(GLOBAL_Scenario, "stconnect_CCOutputCumulativeCurrent")
 #Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
 write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 
 #Load all resistance rasters
-resistanceRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "ConnCons_HSOutputResistance")
+resistanceRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputResistance")
 
 #Input resistance raster template
 resistanceRasterName <- gsub(" ", "\\.",paste0("Resistance.", GLOBAL_Species$Name[1], ".it", GLOBAL_MinIteration, ".ts", GLOBAL_MinTimestep))
@@ -122,6 +122,6 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
   }
 }
 
-saveDatasheet(GLOBAL_Scenario, circuitOut, "ConnCons_CCOutputCumulativeCurrent")
+saveDatasheet(GLOBAL_Scenario, circuitOut, "stconnect_CCOutputCumulativeCurrent")
 
 envEndSimulation()
