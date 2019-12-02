@@ -63,9 +63,9 @@
       programArguments="habsuit.R"
       userRunnable="True">
       <datafeeds>
-        <datafeed name="HabitatSuitability" displayName="Habitat Suitability" dataScope="Scenario">
+        <datafeed name="HSHabitatSuitability" displayName="Habitat Suitability" dataScope="Scenario">
           <datasheets>
-            <datasheet name="HabitatSuitability" displayName="Habitat Suitability">
+            <datasheet name="HSHabitatSuitability" displayName="Habitat Suitability">
               <columns>
                 <column name="HabitatSuitabilityID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -293,7 +293,7 @@
     <transformer
       name="HabitatSuitabilityExportPatchMap" displayName="Habitat Patch"
       className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
-      dataSheet="HSOutputHabitatSuitability" column="Filename" isFolderExport="True" >
+      dataSheet="HSOutputHabitatPatch" column="Filename" isFolderExport="True" >
     </transformer>
     <transformer
       name="HabitatSuitabilityExportResistanceMap" displayName="Resistance"
@@ -422,25 +422,25 @@
       </group>
       <group name="Habitat">
         <group name="Landscape Maps">
-          <item name="stsim_OutputSpatialState" displayName="From Model"/>
+          <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
           <item name="HSLandcover" displayName="Manually Entered"/>
         </group>
-        <item name="HabitatSuitability"/>
+        <item name="HSHabitatSuitability"/>
         <item name="HSHabitatPatch"/>
         <item name="HSResistance"/>
       </group>
       <group name="Network Connectivity">
-        <item name="HSOutputHabitatSuitability" displayName="Habitat Patch Maps"/>
-        <item name="HSOutputResistance" displayName="Resistance Maps"/>
+        <item name="HSOutputHabitatSuitability" displayName="Habitat Patch Maps" forceVisible="True"/>
+        <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
         <item name="NCDispersal"/>
       </group>
       <group name="Circuit Connectivity">
-        <item name="HSOutputResistance" displayName="Resistance Maps"/>
+        <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
       </group>
       <group name="Conservation Prioritization">
-        <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps"/>
-        <item name="NCOutputBetweenness" displayName="Network Connectivity Maps"/>
-        <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps"/>
+        <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
+        <item name="NCOutputBetweenness" displayName="Network Connectivity Maps" forceVisible="True"/>
+        <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
         <item name="CPRunSetting"/>
       </group>
     </layout>
@@ -494,8 +494,8 @@
     <!--Maps Layout-->    
     <layout name="corestimeforms_Maps" configurationSheet="stsim_RunControl">
       <group name="Landscape Change">
-        <item name="sc" displayName="State Classes" dataSheet="stsim_OutputSpatialState" column="Filename" xcolorMapSource="stsim_StateClass"/>
-        <item name="tg" displayName="Transitions" dataSheet="stsim_OutputSpatialTransition" column="Filename" filter="TransitionGroupID" colorMapSource="stsim_TransitionType"/>
+        <item name="stsim_sc" displayName="State Classes" dataSheet="stsim_OutputSpatialState" column="Filename" xcolorMapSource="stsim_StateClass"/>
+        <item name="stsim_tg" displayName="Transitions" dataSheet="stsim_OutputSpatialTransition" column="Filename" filter="TransitionGroupID" colorMapSource="stsim_TransitionType"/>
       </group>
       <group name="Habitat">
         <item name="HSHabitatSuitability" displayName="Habitat Suitability" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Suitability"></item>

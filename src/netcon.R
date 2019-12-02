@@ -8,7 +8,7 @@ library(grainscape)
 
 e = ssimEnvironment()
 
-source(file.path(e$ModuleDirectory, "common.R"))
+source(file.path(e$PackageDirectory, "common.R"))
 
 #datasheets
 dispersalIn = GetDataSheetExpectData("stconnect_NCDispersal", GLOBAL_Scenario)

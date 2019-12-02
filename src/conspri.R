@@ -2,7 +2,7 @@ library(raster)
 library(rsyncrosim)
 
 e = ssimEnvironment()
-source(file.path(e$ModuleDirectory, "common.R"))
+source(file.path(e$PackageDirectory, "common.R"))
 
 #datasheets
 runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)

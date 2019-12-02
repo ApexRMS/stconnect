@@ -6,46 +6,23 @@
   <action code="Exec" condition="TableExists" criteria="ConnCons_REnvironment">
     <item>DROP TABLE ConnCons_REnvironment</item>
   </action>
-  <action code="Exec" condition="TableExists" criteria="ConnCons_CCOutputCumulativeCurrent">
-    <item>ALTER TABLE ConnCons_CCOutputCumulativeCurrent RENAME TO stconnect_CCOutputCumulativeCurrent</item>
+  <action code="Exec" condition="TableExists" criteria="ConnCons_CPBiodiversityFeatureList">
+    <item>DROP TABLE ConnCons_CPBiodiversityFeatureList</item>
   </action> 
-  <action code="Exec" condition="TableExists" criteria="ConnCons_CPOutputCumulative">
-    <item>ALTER TABLE ConnCons_CPOutputCumulative RENAME TO stconnect_CPOutputCumulative</item>
-  </action>  
-  <action code="Exec" condition="TableExists" criteria="ConnCons_CPRunSetting">
-    <item>ALTER TABLE ConnCons_CPRunSetting RENAME TO stconnect_CPRunSetting</item>
+  <action code="ChangeNamespace" oldNamespace="ConnCons" newNamespace="stconnect">
+  </action> 
+  <action code="Exec" condition="TableExists" criteria="corestime_Charts">
+    <item>UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'ConnCons_', 'stconnect_')</item>
+    <item>UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'NCEquivalentConnectivityGap', 'stconnect_NCEquivalentConnectivityGap')</item> 
+    <item>UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'NCEquivalentConnectivityNatal', 'stconnect_NCEquivalentConnectivityNatal')</item>     
   </action>   
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSHabitatPatch">
-    <item>ALTER TABLE ConnCons_HSHabitatPatch RENAME TO stconnect_HSHabitatPatch</item>
-  </action>   
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSHabitatSuitability">
-    <item>ALTER TABLE ConnCons_HSHabitatSuitability RENAME TO stconnect_HSHabitatSuitability</item>
-  </action>   
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSLandcover">
-    <item>ALTER TABLE ConnCons_HSLandcover RENAME TO stconnect_HSLandcover</item>
-  </action>   
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSLandcoverMap">
-    <item>ALTER TABLE ConnCons_HSLandcoverMap RENAME TO stconnect_HSLandcoverMap</item>
-  </action> 
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSOutputHabitatPatch">
-    <item>ALTER TABLE ConnCons_HSOutputHabitatPatch RENAME TO stconnect_HSOutputHabitatPatch</item>
-  </action> 
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSOutputHabitatSuitability">
-    <item>ALTER TABLE ConnCons_HSOutputHabitatSuitability RENAME TO stconnect_HSOutputHabitatSuitability</item>
-  </action> 
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSOutputResistance">
-    <item>ALTER TABLE ConnCons_HSOutputResistance RENAME TO stconnect_HSOutputResistance</item>
-  </action>
-  <action code="Exec" condition="TableExists" criteria="ConnCons_HSResistance">
-    <item>ALTER TABLE ConnCons_HSResistance RENAME TO stconnect_HSResistance</item>
-  </action>  
-  <action code="Exec" condition="TableExists" criteria="ConnCons_NCDispersal">
-    <item>ALTER TABLE ConnCons_NCDispersal RENAME TO stconnect_NCDispersal</item>
-  </action>  
-  <action code="Exec" condition="TableExists" criteria="ConnCons_NCOutputBetweenness">
-    <item>ALTER TABLE ConnCons_NCOutputBetweenness RENAME TO stconnect_NCOutputBetweenness</item>
-  </action> 
-  <action code="Exec" condition="TableExists" criteria="ConnCons_NCOutputSummary">
-    <item>ALTER TABLE ConnCons_NCOutputSummary RENAME TO stconnect_NCOutputSummary</item>
+  <action code="Exec" condition="TableExists" criteria="corestime_Maps">
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'ConnCons_', 'stconnect_')</item>
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'HSHabitatSuitability', 'stconnect_HSHabitatSuitability')</item> 
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'HSHabitatPatch', 'stconnect_HSHabitatPatch')</item> 
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'HSResistance', 'stconnect_HSResistance')</item> 
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'Betweenness', 'stconnect_Betweenness')</item>
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'CumulativeCurrent', 'stconnect_CumulativeCurrent')</item>
+    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'SpatialConservationPriorities', 'stconnect_SpatialConservationPriorities')</item>    
   </action>   
 </update>

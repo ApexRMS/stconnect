@@ -2,7 +2,7 @@ library(raster)
 library(rsyncrosim)
 
 e = ssimEnvironment()
-source(file.path(e$ModuleDirectory, "common.R"))
+source(file.path(e$PackageDirectory, "common.R"))
 #directory where Circuitscape is installed
 CS_exe<-"\"C:/Program Files/Circuitscape/cs_run.exe\"" # Don't forget the "Program Files" problem
 

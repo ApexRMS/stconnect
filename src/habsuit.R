@@ -3,7 +3,7 @@ library(rsyncrosim)
 
 e = ssimEnvironment()
 
-source(file.path(e$ModuleDirectory, "common.R"))
+source(file.path(e$PackageDirectory, "common.R"))
 
 #datasheets
 stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
