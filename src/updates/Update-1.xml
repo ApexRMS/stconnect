@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <update>
+  
+  <!--Obsolete Tables-->
   <action code="Exec" condition="TableExists" criteria="Circuitscape_OutputFile">
     <item>DROP TABLE Circuitscape_OutputFile</item>
   </action>
@@ -8,21 +10,35 @@
   </action>
   <action code="Exec" condition="TableExists" criteria="ConnCons_CPBiodiversityFeatureList">
     <item>DROP TABLE ConnCons_CPBiodiversityFeatureList</item>
-  </action> 
-  <action code="ChangeNamespace" oldNamespace="ConnCons" newNamespace="stconnect">
-  </action> 
+  </action>
+
+  <!--Fix include and disaggreate references-->   
   <action code="Exec" condition="TableExists" criteria="corestime_Charts">
     <item>UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'ConnCons_', 'stconnect_')</item>
-    <item>UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'NCEquivalentConnectivityGap', 'stconnect_NCEquivalentConnectivityGap')</item> 
-    <item>UPDATE corestime_Charts SET Criteria = REPLACE(Criteria, 'NCEquivalentConnectivityNatal', 'stconnect_NCEquivalentConnectivityNatal')</item>     
+  </action>
+
+  <!--New Chart Variable Names-->  
+  <action code="ChangeNamespace" oldNamespace="ConnCons" newNamespace="stconnect">
+  </action> 
+  <action code="RenameChartVariable" oldVariableName="NCEquivalentConnectivityGap" newVariableName="stconnect_NCEquivalentConnectivityGap">   
   </action>   
-  <action code="Exec" condition="TableExists" criteria="corestime_Maps">
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'ConnCons_', 'stconnect_')</item>
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'HSHabitatSuitability', 'stconnect_HSHabitatSuitability')</item> 
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'HSHabitatPatch', 'stconnect_HSHabitatPatch')</item> 
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'HSResistance', 'stconnect_HSResistance')</item> 
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'Betweenness', 'stconnect_Betweenness')</item>
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'CumulativeCurrent', 'stconnect_CumulativeCurrent')</item>
-    <item>UPDATE corestime_Maps SET Criteria = REPLACE(Criteria, 'SpatialConservationPriorities', 'stconnect_SpatialConservationPriorities')</item>    
+  <action code="RenameChartVariable" oldVariableName="NCEquivalentConnectivityNatal" newVariableName="stconnect_NCEquivalentConnectivityNatal">   
+  </action>
+  <action code="RenameChartVariable" oldVariableName="Network Connectivity" newVariableName="stconnect_NetworkConnectivityGroup">
   </action>   
+  
+  <!--New Map Variable Names-->   
+  <action code="RenameMapVariable" oldVariableName="HSHabitatSuitability" newVariableName="stconnect_HSHabitatSuitability">
+  </action>
+  <action code="RenameMapVariable" oldVariableName="HSHabitatPatch" newVariableName="stconnect_HSHabitatPatch">
+  </action> 
+  <action code="RenameMapVariable" oldVariableName="HSResistance" newVariableName="stconnect_HSResistance">
+  </action>   
+  <action code="RenameMapVariable" oldVariableName="Betweenness" newVariableName="stconnect_Betweenness">
+  </action>   
+  <action code="RenameMapVariable" oldVariableName="CumulativeCurrent" newVariableName="stconnect_CumulativeCurrent">
+  </action>   
+  <action code="RenameMapVariable" oldVariableName="SpatialConservationPriorities" newVariableName="stconnect_SpatialConservationPriorities">
+  </action>  
+  
 </update>

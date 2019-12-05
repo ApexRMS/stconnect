@@ -29,9 +29,9 @@
     <!--Global Transformer-->
     <transformer name="Global">
       <datafeeds>
-        <datafeed name="Species" displayName="Species" dataScope="Project">
+        <datafeed name="Species" dataScope="Project">
           <datasheets>
-            <datasheet name="Species" displayName="Species" valueMember="SpeciesID" displayMember="Name">
+            <datasheet name="Species" valueMember="SpeciesID" displayMember="Name">
               <columns>
                 <column name="SpeciesID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
@@ -334,7 +334,7 @@
     <!--Project Datafeeds Layout-->
     <layout name="coreforms_ProjectDatafeeds">
       <item name="Species"/>
-      <group name="Landscape Change">
+      <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <group name="Strata">
           <item name="stsim_Stratum"/>
           <item name="stsim_SecondaryStratum"/>
@@ -375,9 +375,9 @@
     <!--Scenario Datafeeds Layout-->
     <layout name="coreforms_ScenarioDatafeeds">
       <item name="stsim_RunControl"/>
-      <group name="Landscape Change">
+      <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_Transition" displayName="Transition Pathways"/>
-        <group name="Initial Conditions">
+        <group name="InitialConditions" displayName="Initial Conditions">
           <item name="stsim_InitialConditionsNonSpatial" displayName="Non Spatial"/>
           <item name="stsim_InitialConditionsSpatial" displayName="Spatial"/>
         </group>
@@ -385,8 +385,8 @@
         <item name="stsim_OutputOptions"/>
         <group name="Advanced">
           <item name="stsim_TransitionMultiplierValue" displayName="Transitions - Multipliers"/>
-          <group name="Transitions - Spatial">
-            <group name="Transition Size">
+          <group name="TransitionsSpatialGroup" displayName="Transitions - Spatial">
+            <group name="TransitionsSizeGroup" displayName="Transition Size">
               <item name="stsim_TransitionSizeDistribution"/>
               <item name="stsim_TransitionSizePrioritization"/>
             </group>
@@ -401,7 +401,7 @@
           </group>
           <item name="stsim_TransitionOrder" displayName="Transitions - Order"/>
           <item name="stsim_TransitionTargetPrioritization" displayName="Transitions - Target Prioritization"/>
-          <group name="Time Since Transition">
+          <group name="TSTGroup" displayName="Time Since Transition">
             <item name="stsim_TimeSinceTransitionGroup"/>
             <item name="stsim_TimeSinceTransitionRandomize"/>
           </group>
@@ -421,7 +421,7 @@
         </group>        
       </group>
       <group name="Habitat">
-        <group name="Landscape Maps">
+        <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
           <item name="HSLandcover" displayName="Manually Entered"/>
         </group>
@@ -429,15 +429,15 @@
         <item name="HSHabitatPatch"/>
         <item name="HSResistance"/>
       </group>
-      <group name="Network Connectivity">
+      <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
         <item name="HSOutputHabitatSuitability" displayName="Habitat Patch Maps" forceVisible="True"/>
         <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
         <item name="NCDispersal"/>
       </group>
-      <group name="Circuit Connectivity">
+      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
       </group>
-      <group name="Conservation Prioritization">
+      <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
         <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
         <item name="NCOutputBetweenness" displayName="Network Connectivity Maps" forceVisible="True"/>
         <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
@@ -451,13 +451,13 @@
       <item name="corestime_MapTransformer"/>
       <group name="Export">
         <group name="Reports">
-          <group name="Landscape Change">
+          <group name="LandscapeChangeGroup" displayName="Landscape Change">
             <item name="stsim_StateClassSummaryReport"/>
             <item name="stsim_TransitionSummaryReport"/>
           </group>
         </group>
         <group name="Maps">
-          <group name="Landscape Change">
+          <group name="LandscapeChangeGroup" displayName="Landscape Change">
             <item name="stsim_StateClassRasterMap"/>
             <item name="stsim_TransitionRasterMap"/>
           </group>
@@ -466,13 +466,13 @@
             <item name="HabitatSuitabilityExportPatchMap"/>
             <item name="HabitatSuitabilityExportResistanceMap"/>
           </group>
-          <group name="Network Connectivity">
+          <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
             <item name="NetworkConnectivityExportBetweenessMap"/>
           </group>
-          <group name="Circuit Connectivity">
+          <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
             <item name="CircuitConnectivityExportCumulativeCurrentMap"/>
           </group>
-          <group name="Conservation Prioritization">
+          <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
             <item name="ConservationPrioritizationExportMap"/>
           </group>
         </group>
@@ -481,11 +481,11 @@
 
     <!--Charts Layout-->
     <layout name="corestimeforms_Charts" configurationSheet="stsim_RunControl">
-      <group name="Landscape Change">
+      <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_StateClassNormalVariable" displayName="State Class Area" dataSheet="stsim_OutputStratumState" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID" defaultValue="0.0"/>
         <item name="stsim_TransitionNormalVariable" displayName="Transition Area" dataSheet="stsim_OutputStratumTransition" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID" defaultValue="0.0" skipTimestepZero="True"/>
       </group>
-      <group name="Network Connectivity" dataSheet="NCOutputSummary" filter="SpeciesID">
+      <group name="NetworkConnectivityGroup" displayName="Network Connectivity" dataSheet="NCOutputSummary" filter="SpeciesID">
         <item name="NCEquivalentConnectivityGap" displayName="Equivalent Connectivity Gap" dataSheet="NCOutputSummary" column="EquivalentConnectivityGap"/>
         <item name="NCEquivalentConnectivityNatal" displayName="Equivalent Connectivity Natal" dataSheet="NCOutputSummary" column="EquivalentConnectivityNatal"/>
       </group>
@@ -493,7 +493,7 @@
     
     <!--Maps Layout-->    
     <layout name="corestimeforms_Maps" configurationSheet="stsim_RunControl">
-      <group name="Landscape Change">
+      <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_sc" displayName="State Classes" dataSheet="stsim_OutputSpatialState" column="Filename" xcolorMapSource="stsim_StateClass"/>
         <item name="stsim_tg" displayName="Transitions" dataSheet="stsim_OutputSpatialTransition" column="Filename" filter="TransitionGroupID" colorMapSource="stsim_TransitionType"/>
       </group>
@@ -502,13 +502,13 @@
         <item name="HSHabitatPatch" displayName="Habitat Patch" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Patch"></item>
         <item name="HSResistance" displayName="Resistance" dataSheet="HSOutputResistance" column="Filename" filter="SpeciesID" extendedIdentifier="Resistance"></item>
       </group>
-      <group name="Network Connectivity">
+      <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
         <item name="Betweenness" dataSheet="NCOutputBetweenness" column="Filename" filter="SpeciesID" extendedIdentifier="Betweenness"></item>
       </group>
-      <group name="Circuit Connectivity">
+      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <item name="CumulativeCurrent" displayName="Cumulative Current" dataSheet="CCOutputCumulativeCurrent" column="Filename" filter="SpeciesID" extendedIdentifier="Current Density"></item>
-      </group>
-      <group name="Conservation Prioritization">
+      </group><group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
+      
         <item name="SpatialConservationPriorities" displayName="Spatial Conservation Priorities" dataSheet="CPOutputCumulative" column="Filename"></item>
       </group>
     </layout> 
