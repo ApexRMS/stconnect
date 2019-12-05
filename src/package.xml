@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package 
-  name="stconnect" 
-  displayName="Connectivity planning for future climate and land-use change" 
-  version="1.1.0"  
+<package
+  name="stconnect"
+  displayName="Connectivity planning for future climate and land-use change"
+  version="1.1.0"
   url="https://github.com/ApexRMS/stconnect">
-  
+
   <transformers>
-    
+
     <!--Primary Transformer-->
-    <transformer 
-      name="Primary" 
-      displayName="Connectivity planning for future climate and land-use change" 
+    <transformer
+      name="Primary"
+      displayName="Connectivity planning for future climate and land-use change"
       isPrimary="True">
       <runtime>
         <transformer name="STSimWrapper"/>
@@ -21,8 +21,8 @@
         <transformer name="ConservationPrioritization"/>
       </runtime>
       <include>
-        <transformer name="corestime_Runtime"/>   
-        <transformer name="Global"/>         
+        <transformer name="corestime_Runtime"/>
+        <transformer name="Global"/>
       </include>
     </transformer>
 
@@ -46,9 +46,9 @@
     </transformer>
 
     <!--STSimWrapper Transformer-->
-    <transformer 
-      name="STSimWrapper" 
-      displayName ="Landscape Change" 
+    <transformer
+      name="STSimWrapper"
+      displayName ="Landscape Change"
       userRunnable="True">
       <runtime>
         <transformer name="stsim_Primary" displayName="Landscape Change"/>
@@ -281,7 +281,7 @@
           </datasheets>
         </datafeed>
       </datafeeds>
-      
+
     </transformer>
 
     <!--Export Transformers-->
@@ -418,7 +418,7 @@
             <item name="corestime_Multiprocessing"/>
           </group>
           <item name="corestime_External" displayName="External Program"/>
-        </group>        
+        </group>
       </group>
       <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
@@ -490,8 +490,8 @@
         <item name="NCEquivalentConnectivityNatal" displayName="Equivalent Connectivity Natal" dataSheet="NCOutputSummary" column="EquivalentConnectivityNatal"/>
       </group>
     </layout>
-    
-    <!--Maps Layout-->    
+
+    <!--Maps Layout-->
     <layout name="corestimeforms_Maps" configurationSheet="stsim_RunControl">
       <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_sc" displayName="State Classes" dataSheet="stsim_OutputSpatialState" column="Filename" xcolorMapSource="stsim_StateClass"/>
@@ -507,20 +507,20 @@
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <item name="CumulativeCurrent" displayName="Cumulative Current" dataSheet="CCOutputCumulativeCurrent" column="Filename" filter="SpeciesID" extendedIdentifier="Current Density"></item>
-      </group><group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-      
+      </group>
+      <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
         <item name="SpatialConservationPriorities" displayName="Spatial Conservation Priorities" dataSheet="CPOutputCumulative" column="Filename"></item>
       </group>
-    </layout> 
-    
+    </layout>
+
   </layouts>
 
   <!--Update Provider-->
   <updateProvider
     schemaVersion="1"
     minPackageVersion="1.1.0"
-    className="SyncroSim.Core.XMLUpdateProvider" 
+    className="SyncroSim.Core.XMLUpdateProvider"
     classAssembly="SyncroSim.Core">
   </updateProvider>
-  
+
 </package>
