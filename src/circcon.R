@@ -110,7 +110,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       
       #Save Omni-directional current density raster
       currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", species, iteration, timestep, "tif"))
-      writeRaster(currMapOMNI01, currMapOMNIName)
+      writeRaster(currMapOMNI01, currMapOMNIName, overwrite=TRUE)
       
       #Write output file
       data <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = currMapOMNIName)

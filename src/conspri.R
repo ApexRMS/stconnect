@@ -16,7 +16,7 @@ rasTemplate<-datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHab
 rasRes<-res(rasTemplate)[1]
 rasExtend<-c(xmin(rasTemplate)-rasRes,xmax(rasTemplate)+rasRes,ymin(rasTemplate)-rasRes,ymax(rasTemplate)+rasRes)
 
-zonationSet<-readLines(file.path(e$ModuleDirectory, "ALL_set_template.dat"))
+zonationSet<-readLines(file.path(e$PackageDirectory, "ALL_set_template.dat"))
 removalRule<-data.frame(Code=c(1:5), Name=c("Basic core-area Zonation", "Additive benefit function", "Target based planning", "Generalized benefit function", "Random removal"))
 zonationSet[2]<-paste("removal rule =", removalRule$Code[which(removalRule$Name==runSettingsIn$RemovalValue)])
 zonationSet[3]<-paste("warp factor =", runSettingsIn$WarpFactor)
@@ -40,7 +40,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
 #             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent"))
     rasOut<-extend(rasIn, rasExtend, -9999)
     rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
-    writeRaster(rasOut, rasOutFilename, bylayer=TRUE)
+    writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)
   
     zonationSpp<-data.frame(1, 0, 1, 1, 1, rasOutFilename)
     zonationSppName <- paste(tempFolderPath, "BiodiversityFeatureList.spp", sep="/")
