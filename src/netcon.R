@@ -37,10 +37,10 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       species = GLOBAL_Species[sprow, "Name"]
       
       #Input habitat patch raster
-      habitatRasterName <- gsub(" ", "\\.",paste0("HabitatPatch.", species, ".it", iteration, ".ts", timestep))
+      habitatRasterName <- paste0("HabitatPatch.", species, ".it", iteration, ".ts", timestep)
       habitatRaster <- habitatRasterAll[[habitatRasterName]]
       #Input resistance raster
-      resistanceRasterName <- gsub(" ", "\\.",paste0("Resistance.", species, ".it", iteration, ".ts", timestep))
+      resistanceRasterName <- paste0("Resistance.", species, ".it", iteration, ".ts", timestep)
       resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
       #Species dispersal values
       dispersalValues <- dispersalIn[which(dispersalIn$SpeciesID == species), ]

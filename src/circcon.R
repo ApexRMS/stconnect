@@ -22,7 +22,7 @@ write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 resistanceRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputResistance")
 
 #Input resistance raster template
-resistanceRasterName <- gsub(" ", "\\.",paste0("Resistance.", GLOBAL_Species$Name[1], ".it", GLOBAL_MinIteration, ".ts", GLOBAL_MinTimestep))
+resistanceRasterName <- paste0("Resistance.", GLOBAL_Species$Name[1], ".it", GLOBAL_MinIteration, ".ts", GLOBAL_MinTimestep)
 resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
 
 #create focal region raster for N-S by adding top and bottom rows
@@ -57,7 +57,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       species = GLOBAL_Species[sprow, "Name"]
 
       #Input resistance raster
-      resistanceRasterName <- gsub(" ", "\\.",paste0("Resistance.", species, ".it", iteration, ".ts", timestep))
+      resistanceRasterName <- paste0("Resistance.", species, ".it", iteration, ".ts", timestep)
       resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
       #extend resistanceRaster NS
       resistanceRasterNS<-extend(resistanceRaster,extentNS,values=1)
