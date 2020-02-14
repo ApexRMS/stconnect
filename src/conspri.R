@@ -55,6 +55,8 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
 
     df = data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
     prioritizationOut<-addRow(prioritizationOut, df)
+    
+    envStepSimulation()
   }
 }
     

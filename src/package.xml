@@ -57,6 +57,9 @@
       displayName="Habitat Suitability"
       programName="RScript"
       programArguments="habsuit.R"
+      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
+      classAssembly="SyncroSim.StochasticTime"
+      configurationSheet="stsim_RunControl"
       userRunnable="True">
       <datafeeds>
         <datafeed name="HSHabitatSuitability" displayName="Habitat Suitability" dataScope="Scenario">
@@ -168,6 +171,9 @@
       displayName="Network Connectivity"
       programName="RScript"
       programArguments="netcon.R"
+      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
+      classAssembly="SyncroSim.StochasticTime"
+      configurationSheet="stsim_RunControl"
       userRunnable="True">
       <datafeeds>
         <datafeed name="NCDispersal" displayName="Dispersal Parameters" dataScope="Scenario">
@@ -222,6 +228,9 @@
       displayName="Circuit Connectivity"
       programName="RScript"
       programArguments="circcon.R"
+      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
+      classAssembly="SyncroSim.StochasticTime"
+      configurationSheet="stsim_RunControl"
       userRunnable="True">
       <datafeeds>
         <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
@@ -247,6 +256,9 @@
       displayName="Conservation Prioritization"
       programName="RScript"
       programArguments="conspri.R"
+      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
+      classAssembly="SyncroSim.StochasticTime"
+      configurationSheet="stsim_RunControl"
       userRunnable="True">
       <datafeeds>
         <datafeed name="CPRunSetting" displayName="Run Settings" dataScope="Scenario">
