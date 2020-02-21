@@ -32,6 +32,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
         for (sprow in 1:nrow(GLOBAL_Species)) {
 
             species = GLOBAL_Species[sprow, "Name"]
+            speciesCode = GLOBAL_Species[sprow, "Code"]
             suitabilityValues <- habitatSuitabilityIn[which(habitatSuitabilityIn$SpeciesID == species), c("ID", "Value")]
             patchValues <- habitatPatchIn[which(habitatPatchIn$SpeciesID == species), c("HabitatSuitabilityThreshold", "MinimumHabitatPatchSize")]
             resistanceValues <- resistanceIn[which(resistanceIn$SpeciesID == species), c("ID", "Value")]
@@ -63,9 +64,9 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             resistanceRaster <- reclassify(stateMap, rcl = resistanceValues)
 
             #Save rasters
-            suitabilityName = file.path(tempFolderPath, CreateRasterFileName2("HabitatSuitability", species, iteration, timestep, "tif"))
-            patchName = file.path(tempFolderPath, CreateRasterFileName2("HabitatPatch", species, iteration, timestep, "tif"))
-            resistanceName = file.path(tempFolderPath, CreateRasterFileName2("Resistance", species, iteration, timestep, "tif"))
+            suitabilityName = file.path(tempFolderPath, CreateRasterFileName2("HabitatSuitability", speciesCode, iteration, timestep, "tif"))
+            patchName = file.path(tempFolderPath, CreateRasterFileName2("HabitatPatch", speciesCode, iteration, timestep, "tif"))
+            resistanceName = file.path(tempFolderPath, CreateRasterFileName2("Resistance", speciesCode, iteration, timestep, "tif"))
 
             writeRaster(suitabilityRaster, suitabilityName, overwrite = TRUE)
             df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = suitabilityName)

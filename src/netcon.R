@@ -35,12 +35,13 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     for (sprow in 1:nrow(GLOBAL_Species)) {
       
       species = GLOBAL_Species[sprow, "Name"]
+      speciesCode = GLOBAL_Species[sprow, "Code"]
       
       #Input habitat patch raster
-      habitatRasterName <- paste0("HabitatPatch.", species, ".it", iteration, ".ts", timestep)
+      habitatRasterName <- paste0("HabitatPatch.", speciesCode, ".it", iteration, ".ts", timestep)
       habitatRaster <- habitatRasterAll[[habitatRasterName]]
       #Input resistance raster
-      resistanceRasterName <- paste0("Resistance.", species, ".it", iteration, ".ts", timestep)
+      resistanceRasterName <- paste0("Resistance.", speciesCode, ".it", iteration, ".ts", timestep)
       resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
       #Species dispersal values
       dispersalValues <- dispersalIn[which(dispersalIn$SpeciesID == species), ]
@@ -94,7 +95,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       btwnRaster <- reclassify(mpg$patchId, btwn_lookup)
       
       #Save rasters
-      btwnName = file.path(tempFolderPath, CreateRasterFileName2("Betweenness", species, iteration, timestep, "tif"))
+      btwnName = file.path(tempFolderPath, CreateRasterFileName2("Betweenness", speciesCode, iteration, timestep, "tif"))
       writeRaster(btwnRaster, btwnName, overwrite = TRUE)
       df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = btwnName)
       btwnOut = addRow(btwnOut, df)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<update>
+  
+  <!--Insert New Column into Existing Table-->   
+  <action code="Exec" condition="TableExists" criteria="stconnect_Species">
+    <item>ALTER TABLE stconnect_Species ADD COLUMN Code TEXT</item>
+  </action>
+
+</update>

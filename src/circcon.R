@@ -55,9 +55,10 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     for (sprow in 1:nrow(GLOBAL_Species)) {
       
       species = GLOBAL_Species[sprow, "Name"]
+      speciesCode = GLOBAL_Species[sprow, "Code"]
 
       #Input resistance raster
-      resistanceRasterName <- paste0("Resistance.", species, ".it", iteration, ".ts", timestep)
+      resistanceRasterName <- paste0("Resistance.", speciesCode, ".it", iteration, ".ts", timestep)
       resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
       #extend resistanceRaster NS
       resistanceRasterNS<-extend(resistanceRaster,extentNS,values=1)
@@ -109,7 +110,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       currMapOMNI01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
       
       #Save Omni-directional current density raster
-      currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", species, iteration, timestep, "tif"))
+      currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
       writeRaster(currMapOMNI01, currMapOMNIName, overwrite=TRUE)
       
       #Write output file

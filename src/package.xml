@@ -32,6 +32,7 @@
                 <column name="SpeciesID" dataType="Integer" isPrimary="True"/>
                 <column name="ProjectID" dataType="Integer"/>
                 <column name="Name" dataType="String"/>
+                <column name="Code" dataType="String" displayName="Code"/>
                 <column name="ScientificName" dataType="String" displayName="Scientific Name" isOptional="True"/>
                 <column name="Description" dataType="String" isOptional="True"/>
               </columns>
@@ -525,7 +526,7 @@
 
   <!--Update Provider-->
   <updateProvider
-    schemaVersion="1"
+    schemaVersion="2"
     minPackageVersion="1.1.0"
     className="SyncroSim.Core.XMLUpdateProvider"
     classAssembly="SyncroSim.Core">
