@@ -26,18 +26,24 @@ zonationSet[5]<-paste("add edge points =", runSettingsIn$AddEdgePoints)
 zonationSetName <- paste(tempFolderPath, "RunSetting.dat", sep="/")
 writeLines(zonationSet, zonationSetName)
 
+# Temporal resolution of analysis in years
+# e.g. analyse every 10 years
+temporalRes <- 10
+# Set of timesteps to analyse
+timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
+
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
 
 for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
   
-  for (timestep in GLOBAL_MinTimestep:GLOBAL_MaxTimestep) {
+  for (timestep in timestepSet) {
     
     envReportProgress(iteration, timestep)
     
     rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
-             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_NCOutputBetweenness", iteration = iteration, timestep = timestep))
-#             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent"))
+             #datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_NCOutputBetweenness", iteration = iteration, timestep = timestep),
+             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
     rasOut<-extend(rasIn, rasExtend, -9999)
     rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)

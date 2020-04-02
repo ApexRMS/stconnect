@@ -20,12 +20,18 @@ resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputResistance")
 #file paths
 tempFolderPath = envTempFolder("HabitatSuitability")
 
+# Temporal resolution of analysis in years
+# e.g. analyse every 10 years
+temporalRes <- 10
+# Set of timesteps to analyse
+timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
+
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
 
 for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
 
-    for (timestep in GLOBAL_MinTimestep:GLOBAL_MaxTimestep) {
+    for (timestep in timestepSet) {
 
         envReportProgress(iteration, timestep)
 

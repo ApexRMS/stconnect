@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.0" allowSubModelAddOns="False" url="https://github.com/ApexRMS/stconnect">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.1" url="https://github.com/ApexRMS/stconnect">
 
   <transformers>
 
@@ -494,10 +494,6 @@
         <item name="stsim_StateClassNormalVariable" displayName="State Class Area" dataSheet="stsim_OutputStratumState" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID" defaultValue="0.0"/>
         <item name="stsim_TransitionNormalVariable" displayName="Transition Area" dataSheet="stsim_OutputStratumTransition" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID" defaultValue="0.0" skipTimestepZero="True"/>
       </group>
-      <group name="NetworkConnectivityGroup" displayName="Network Connectivity" dataSheet="NCOutputSummary" filter="SpeciesID">
-        <item name="NCEquivalentConnectivityGap" displayName="Equivalent Connectivity Gap" dataSheet="NCOutputSummary" column="EquivalentConnectivityGap"/>
-        <item name="NCEquivalentConnectivityNatal" displayName="Equivalent Connectivity Natal" dataSheet="NCOutputSummary" column="EquivalentConnectivityNatal"/>
-      </group>
     </layout>
 
     <!--Maps Layout-->
@@ -508,11 +504,7 @@
       </group>
       <group name="Habitat">
         <item name="HSHabitatSuitability" displayName="Habitat Suitability" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Suitability"></item>
-        <item name="HSHabitatPatch" displayName="Habitat Patch" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Patch"></item>
         <item name="HSResistance" displayName="Resistance" dataSheet="HSOutputResistance" column="Filename" filter="SpeciesID" extendedIdentifier="Resistance"></item>
-      </group>
-      <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
-        <item name="Betweenness" dataSheet="NCOutputBetweenness" column="Filename" filter="SpeciesID" extendedIdentifier="Betweenness"></item>
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <item name="CumulativeCurrent" displayName="Cumulative Current" dataSheet="CCOutputCumulativeCurrent" column="Filename" filter="SpeciesID" extendedIdentifier="Current Density"></item>

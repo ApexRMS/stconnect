@@ -43,12 +43,18 @@ focalRegionEWName = file.path(tempFolderPath, "EWfocalRegion.asc")
 writeRaster(focalRegionNS, focalRegionNSName, overwrite = TRUE)
 writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
 
+# Temporal resolution of analysis in years
+# e.g. analyse every 10 years
+temporalRes <- 10
+# Set of timesteps to analyse
+timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
+
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
 
 for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
   
-  for (timestep in GLOBAL_MinTimestep:GLOBAL_MaxTimestep) {
+  for (timestep in timestepSet) {
     
     envReportProgress(iteration, timestep)
     
@@ -61,15 +67,11 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       resistanceRasterName <- paste0("Resistance.", speciesCode, ".it", iteration, ".ts", timestep)
       resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
       #extend resistanceRaster NS
-      resistanceRasterNS<-extend(resistanceRaster,extentNS,values=1)
-      #temp for Hawaii TestArea example
-      resistanceRasterNS[,1]<-1
-      
+      resistanceRasterNS<-extend(resistanceRaster,extentNS,value=1)
+
       #extend resistanceRaster EW
       resistanceRasterEW<-extend(resistanceRaster,extentEW,value=1)
-      #temp for Hawaii TestArea example
-      resistanceRasterEW[nrow(resistanceRasterEW),]<-1
-      
+
       #Save rasters to temp folder
       resistanceRasterNSName = file.path(tempFolderPath, CreateRasterFileName2("NSResistance", species, iteration, timestep, "asc"))
       resistanceRasterEWName = file.path(tempFolderPath, CreateRasterFileName2("EWResistance", species, iteration, timestep, "asc"))
