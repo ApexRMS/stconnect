@@ -67,8 +67,13 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             habitatRaster[Which(habitatClump %in% habitatClumpID$value)] <- 0
 
             #Resistance map
-            resistanceRaster <- reclassify(stateMap, rcl = resistanceValues)
-
+            #Reclassify based on resistance values
+            resistanceRasterReclass <- reclassify(stateMap, rcl = resistanceValues)
+            #Overlay habitat patches
+            resistanceRasterOverlay <- overlay(resistanceRasterReclass, habitatRaster, fun = function(x,y){return(x+y)})
+            #Reclass to assign habitat patches a resistance value = 1 (note that both overlaid values of both 3 and 5 correspond to habitat patches)
+            resistanceRaster <- reclassify(resistanceRasterOverlay, rcl = matrix(c(3, 1, 5, 1), ncol=2, byrow = T))
+            
             #Save rasters
             suitabilityName = file.path(tempFolderPath, CreateRasterFileName2("HabitatSuitability", speciesCode, iteration, timestep, "tif"))
             patchName = file.path(tempFolderPath, CreateRasterFileName2("HabitatPatch", speciesCode, iteration, timestep, "tif"))
