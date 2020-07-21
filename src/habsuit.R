@@ -21,8 +21,8 @@ resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputResistance")
 tempFolderPath = envTempFolder("HabitatSuitability")
 
 # Temporal resolution of analysis in years
-# e.g. analyse every 10 years
-temporalRes <- 10
+# e.g. analyse every 20 years
+temporalRes <- 20
 # Set of timesteps to analyse
 timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
 

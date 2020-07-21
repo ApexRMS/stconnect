@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.1" url="https://github.com/ApexRMS/stconnect">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.2" url="https://github.com/ApexRMS/stconnect">
 
   <transformers>
 
@@ -12,9 +12,6 @@
       <runtime>
         <transformer name="STSimWrapper"/>
         <transformer name="HabitatSuitability"/>
-        <transformer name="NetworkConnectivity"/>
-        <transformer name="CircuitConnectivity"/>
-        <transformer name="ConservationPrioritization"/>
       </runtime>
       <include>
         <transformer name="corestime_Runtime"/>
@@ -165,134 +162,7 @@
         </datafeed>
       </datafeeds>
     </transformer>
-
-    <!--NetworkConnectivity Transformer-->
-    <transformer
-      name="NetworkConnectivity"
-      displayName="Network Connectivity"
-      programName="RScript"
-      programArguments="netcon.R"
-      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
-      classAssembly="SyncroSim.StochasticTime"
-      configurationSheet="stsim_RunControl"
-      userRunnable="True">
-      <datafeeds>
-        <datafeed name="NCDispersal" displayName="Dispersal Parameters" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="NCDispersal" displayName="Dispersal Parameters">
-              <columns>
-                <column name="NCDispersalID" dataType="Integer" isPrimary="True"/>
-                <column name="ScenarioID" dataType="Integer"/>
-                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d" isOptional="True"/>
-                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="MaximumGapCrossingDistance" displayName="Maximum Gap Crossing Distance (m)" dataType="Double" allowDbNull="False"/>
-                <column name="MaximumNatalDispersalDistance" displayName="Maximum Natal Dispersal Distance (m)" dataType="Double" allowDbNull="False"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="NCOutputSummary" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="NCOutputSummary">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="EquivalentConnectivityGap" displayName="Equivalent Connectivity (Gap-Crossing)" dataType="Double" allowDbNull="False"/>
-                <column name="EquivalentConnectivityNatal" displayName="Equivalent Connectivity (Natal Dispersal)" dataType="Double" allowDbNull="False"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="NCOutputBetweenness" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="NCOutputBetweenness">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="Filename" displayName="Betweenness Map" dataType="String" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="SpeciesID" allowDbNull="False" filenameCode="btw"/>
-                <column name="Band" dataType="Integer" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-      </datafeeds>
-    </transformer>
-
-    <!--CircuitConnectivity Transformer-->
-    <transformer
-      name="CircuitConnectivity"
-      displayName="Circuit Connectivity"
-      programName="RScript"
-      programArguments="circcon.R"
-      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
-      classAssembly="SyncroSim.StochasticTime"
-      configurationSheet="stsim_RunControl"
-      userRunnable="True">
-      <datafeeds>
-        <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="CCOutputCumulativeCurrent">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="Filename" dataType="String" displayName="Current Density Map" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="SpeciesID" allowDbNull="False" filenameCode="curr"/>
-                <column name="Band" dataType="Integer" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-      </datafeeds>
-    </transformer>
-
-    <!--ConservationPrioritization Transformer-->
-    <transformer
-      name="ConservationPrioritization"
-      displayName="Conservation Prioritization"
-      programName="RScript"
-      programArguments="conspri.R"
-      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
-      classAssembly="SyncroSim.StochasticTime"
-      configurationSheet="stsim_RunControl"
-      userRunnable="True">
-      <datafeeds>
-        <datafeed name="CPRunSetting" displayName="Run Settings" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="CPRunSetting" displayName="Run Settings" isSingleRow="True">
-              <columns>
-                <column name="RunSettingID" dataType="Integer" isPrimary="True"/>
-                <column name="ScenarioID" dataType="Integer"/>
-                <column name="RemovalValue" displayName="Removal Rule" dataType="Integer" defaultValue="1" validationType="List" formula1="1:Basic core-area Zonation|2:Additive benefit function|3:Target based planning|4:Generalized benefit function|5:Random removal"/>
-                <column name="WarpFactor" displayName="Warp Factor" dataType="Integer" defaultValue="1" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="EdgeRemoval" displayName="Edge Removal" dataType="Boolean" defaultValue="-1"/>
-                <column name="AddEdgePoints" displayName="Add Edge Points" dataType="Integer" defaultValue="0" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="CPOutputCumulative" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="CPOutputCumulative">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Filename" displayName="Spatial Conservation Priorities Map" dataType="String" isExternalFile="True" isRaster="True" bandColumn="Band" allowDbNull="False" filenameCode="scp"/>
-                <column name="Band" dataType="Integer" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-      </datafeeds>
-
-    </transformer>
-
+ 
     <!--Export Transformers-->
     <transformer
       name="HabitatSuitabilityExportMap" displayName="Habitat Suitability"
@@ -308,21 +178,6 @@
       name="HabitatSuitabilityExportResistanceMap" displayName="Resistance"
       className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
       dataSheet="HSOutputResistance" column="Filename" isFolderExport="True" >
-    </transformer>
-    <transformer
-      name="NetworkConnectivityExportBetweenessMap" displayName="Betweenness"
-      className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
-      dataSheet="NCOutputBetweenness" column="Filename" isFolderExport="True" >
-    </transformer>
-    <transformer
-      name="CircuitConnectivityExportCumulativeCurrentMap" displayName="Current Density"
-      className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
-      dataSheet="CCOutputCumulativeCurrent" column="Filename" isFolderExport="True" >
-    </transformer>
-    <transformer
-      name="ConservationPrioritizationExportMap" displayName="Spatial Conservation Priorities"
-      className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
-      dataSheet="CPOutputCumulative" column="Filename" isFolderExport="True" >
     </transformer>
   </transformers>
 
@@ -438,21 +293,7 @@
         <item name="HSHabitatPatch"/>
         <item name="HSResistance"/>
       </group>
-      <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
-        <item name="HSOutputHabitatSuitability" displayName="Habitat Patch Maps" forceVisible="True"/>
-        <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
-        <item name="NCDispersal"/>
-      </group>
-      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
-        <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
-      </group>
-      <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-        <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
-        <item name="NCOutputBetweenness" displayName="Network Connectivity Maps" forceVisible="True"/>
-        <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
-        <item name="CPRunSetting"/>
-      </group>
-    </layout>
+     </layout>
 
     <!--Result Transformers Layout-->
     <layout name="coreforms_ResultTransformers">
@@ -475,16 +316,7 @@
             <item name="HabitatSuitabilityExportPatchMap"/>
             <item name="HabitatSuitabilityExportResistanceMap"/>
           </group>
-          <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
-            <item name="NetworkConnectivityExportBetweenessMap"/>
-          </group>
-          <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
-            <item name="CircuitConnectivityExportCumulativeCurrentMap"/>
-          </group>
-          <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-            <item name="ConservationPrioritizationExportMap"/>
-          </group>
-        </group>
+         </group>
       </group>
     </layout>
 
@@ -505,12 +337,6 @@
       <group name="Habitat">
         <item name="HSHabitatSuitability" displayName="Habitat Suitability" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Suitability"></item>
         <item name="HSResistance" displayName="Resistance" dataSheet="HSOutputResistance" column="Filename" filter="SpeciesID" extendedIdentifier="Resistance"></item>
-      </group>
-      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
-        <item name="CumulativeCurrent" displayName="Cumulative Current" dataSheet="CCOutputCumulativeCurrent" column="Filename" filter="SpeciesID" extendedIdentifier="Current Density"></item>
-      </group>
-      <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-        <item name="SpatialConservationPriorities" displayName="Spatial Conservation Priorities" dataSheet="CPOutputCumulative" column="Filename"></item>
       </group>
     </layout>
 
