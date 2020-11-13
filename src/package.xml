@@ -391,7 +391,11 @@
           <item name="stsim_InitialConditionsSpatial" displayName="Spatial"/>
         </group>
         <item name="stsim_TransitionTarget"/>
-        <item name="stsim_OutputOptions"/>
+        <group name="OutputOptions" displayName="Output Options"> 
+          <item name="stsim_OutputOptions"/>
+          <item name="stsim_OutputOptionsSpatial"/>
+          <item name="stsim_OutputOptionsSpatialAverage"/>
+        </group>
         <group name="Advanced">
           <item name="stsim_TransitionMultiplierValue" displayName="Transitions - Multipliers"/>
           <group name="TransitionsSpatialGroup" displayName="Transitions - Spatial">
