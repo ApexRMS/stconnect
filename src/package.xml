@@ -502,9 +502,11 @@
 
     <!--Maps Layout-->
     <layout name="corestimeforms_Maps" configurationSheet="stsim_RunControl">
-      <group name="LandscapeChangeGroup" displayName="Landscape Change">
+	  <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_sc" displayName="State Classes" dataSheet="stsim_OutputSpatialState" column="Filename" xcolorMapSource="stsim_StateClass"/>
+        <item name="stsim_scavg" displayName="State Classes (avg)" dataSheet="stsim_OutputSpatialAverageStateClass" column="Filename" filter="StateClassID" extendedIdentifier="(Probability for all Iterations)"/>
         <item name="stsim_tg" displayName="Transitions" dataSheet="stsim_OutputSpatialTransition" column="Filename" filter="TransitionGroupID" colorMapSource="stsim_TransitionType"/>
+        <item name="stsim_tgavg" displayName="Transitions (avg)" dataSheet="stsim_OutputSpatialAverageTransitionProbability" column="Filename" filter="TransitionGroupID" extendedIdentifier="(Probability for all Iterations)"/>    
       </group>
       <group name="Habitat">
         <item name="HSHabitatSuitability" displayName="Habitat Suitability" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Suitability"></item>
