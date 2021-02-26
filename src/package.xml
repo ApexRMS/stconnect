@@ -12,7 +12,6 @@
       <runtime>
         <transformer name="STSimWrapper"/>
         <transformer name="HabitatSuitability"/>
-        <transformer name="NetworkConnectivity"/>
         <transformer name="CircuitConnectivity"/>
         <transformer name="ConservationPrioritization"/>
       </runtime>
@@ -166,63 +165,6 @@
       </datafeeds>
     </transformer>
 
-    <!--NetworkConnectivity Transformer-->
-    <transformer
-      name="NetworkConnectivity"
-      displayName="Network Connectivity"
-      programName="RScript"
-      programArguments="netcon.R"
-      className="SyncroSim.StochasticTime.StochasticTimeTransformer"
-      classAssembly="SyncroSim.StochasticTime"
-      configurationSheet="stsim_RunControl"
-      userRunnable="True">
-      <datafeeds>
-        <datafeed name="NCDispersal" displayName="Dispersal Parameters" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="NCDispersal" displayName="Dispersal Parameters">
-              <columns>
-                <column name="NCDispersalID" dataType="Integer" isPrimary="True"/>
-                <column name="ScenarioID" dataType="Integer"/>
-                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d" isOptional="True"/>
-                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="MaximumGapCrossingDistance" displayName="Maximum Gap Crossing Distance (m)" dataType="Double" allowDbNull="False"/>
-                <column name="MaximumNatalDispersalDistance" displayName="Maximum Natal Dispersal Distance (m)" dataType="Double" allowDbNull="False"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="NCOutputSummary" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="NCOutputSummary">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="EquivalentConnectivityGap" displayName="Equivalent Connectivity (Gap-Crossing)" dataType="Double" allowDbNull="False"/>
-                <column name="EquivalentConnectivityNatal" displayName="Equivalent Connectivity (Natal Dispersal)" dataType="Double" allowDbNull="False"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="NCOutputBetweenness" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="NCOutputBetweenness">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="Filename" displayName="Betweenness Map" dataType="String" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="SpeciesID" allowDbNull="False" filenameCode="btw"/>
-                <column name="Band" dataType="Integer" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-      </datafeeds>
-    </transformer>
-
     <!--CircuitConnectivity Transformer-->
     <transformer
       name="CircuitConnectivity"
@@ -310,11 +252,6 @@
       dataSheet="HSOutputResistance" column="Filename" isFolderExport="True" >
     </transformer>
     <transformer
-      name="NetworkConnectivityExportBetweenessMap" displayName="Betweenness"
-      className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
-      dataSheet="NCOutputBetweenness" column="Filename" isFolderExport="True" >
-    </transformer>
-    <transformer
       name="CircuitConnectivityExportCumulativeCurrentMap" displayName="Current Density"
       className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
       dataSheet="CCOutputCumulativeCurrent" column="Filename" isFolderExport="True" >
@@ -379,6 +316,8 @@
         </group>
         <item name="stsim_Terminology"/>
       </group>
+	        <group name="stsim_Advanced" displayName="Stock Flow">
+      </group>
     </layout>
 
     <!--Scenario Datafeeds Layout-->
@@ -433,7 +372,9 @@
           <item name="corestime_External" displayName="External Program"/>
         </group>
       </group>
-      <group name="Habitat">
+      <group name="stsim_Advanced" displayName="Stock Flow">
+      </group>
+	  <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
           <item name="HSLandcover" displayName="Manually Entered"/>
@@ -442,17 +383,12 @@
         <item name="HSHabitatPatch"/>
         <item name="HSResistance"/>
       </group>
-      <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
-        <item name="HSOutputHabitatSuitability" displayName="Habitat Patch Maps" forceVisible="True"/>
-        <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
-        <item name="NCDispersal"/>
-      </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
+	    <item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>
         <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
-        <item name="NCOutputBetweenness" displayName="Network Connectivity Maps" forceVisible="True"/>
         <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
         <item name="CPRunSetting"/>
       </group>
@@ -478,9 +414,6 @@
             <item name="HabitatSuitabilityExportMap"/>
             <item name="HabitatSuitabilityExportPatchMap"/>
             <item name="HabitatSuitabilityExportResistanceMap"/>
-          </group>
-          <group name="NetworkConnectivityGroup" displayName="Network Connectivity">
-            <item name="NetworkConnectivityExportBetweenessMap"/>
           </group>
           <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
             <item name="CircuitConnectivityExportCumulativeCurrentMap"/>

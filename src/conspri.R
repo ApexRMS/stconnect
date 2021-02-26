@@ -28,7 +28,7 @@ writeLines(zonationSet, zonationSetName)
 
 # Temporal resolution of analysis in years
 # e.g. analyse every 10 years
-temporalRes <- 10
+temporalRes <- 9
 # Set of timesteps to analyse
 timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
 
@@ -41,9 +41,17 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     
     envReportProgress(iteration, timestep)
     
-    rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
-             #datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_NCOutputBetweenness", iteration = iteration, timestep = timestep),
-             datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+    carbonStockasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
+    # Keep only Total Ecosystem Carbon
+    result <- data.frame("Ecosystem.Carbon"=rep(NA, length(names(carbonStockasters))))
+    for(i in 1:length(names(carbonStockasters))){
+      result$Ecosystem.Carbon[i]<-grepl("stkg_884", names(carbonStockasters)[i], fixed=TRUE)
+    }
+    carbonStockasters <- dropLayer(carbonStockasters, which(result==FALSE))
+    rasIn<-stack(carbonStockasters,
+                 datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+                 datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+
     rasOut<-extend(rasIn, rasExtend, -9999)
     rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)

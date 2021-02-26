@@ -45,7 +45,7 @@ writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
 
 # Temporal resolution of analysis in years
 # e.g. analyse every 10 years
-temporalRes <- 10
+temporalRes <- 9
 # Set of timesteps to analyse
 timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
 
