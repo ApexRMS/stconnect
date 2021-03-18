@@ -5,32 +5,29 @@ description: "Landing page for the Package"
 permalink: /
 ---
 
-# **Package_Name** SyncroSim Package
+# **ST-Connect** SyncroSim Package
 <img align="right" style="padding: 13px" width="180" src="assets/images/logo/epidemic-sticker-3.png">
-[![GitHub release](https://img.shields.io/github/v/release/ApexRMS/dgsim.svg?style=for-the-badge&color=d68a06)](https://GitHub.com/ApexRMS/Package_Name/releases/)    <a href="https://github.com/ApexRMS/Package_Name"><img align="middle" style="padding: 1px" width="30" src="assets/images/logo/github-trans2.png">
+[![GitHub release](https://img.shields.io/github/v/release/ApexRMS/stconnect.svg?style=for-the-badge&color=d68a06)](https://GitHub.com/ApexRMS/stconnect/releases/)    <a href="https://github.com/ApexRMS/stconnect"><img align="middle" style="padding: 1px" width="30" src="assets/images/logo/github-trans2.png">
 <br>
-## A one-line description of what the package is
+## Connectivity planning for future climate and land-use change
 ### A two-line introduction to the gist of the package
 
 
 Body text: Description of package to go here. Approximately 1 to 2 paragraphs.
 
-An image can be inserted within the body text with the following code below
-< img align="right" style="padding: 15px" width="400" src="assets/images/name_of_image.png" >
-
 ## Requirements
 
-This package requires Syncrosim [Insert_version_here](https://syncrosim.com/download/).
+This package requires SyncroSim [2.2.27](https://syncrosim.com/download/).
 
 ## Links
 
-For information on How to Install, see [Getting Started](https://apexrms.github.io/Package_Name/getting_started.html).
+For information on How to Install, see [Getting Started](https://apexrms.github.io/stconnect/getting_started.html).
 <br>
 Browse source code at
-[http://github.com/ApexRMS/Package_Name/](http://github.com/ApexRMS/Package_Name/)
+[http://github.com/ApexRMS/stconnect/](http://github.com/ApexRMS/stconnect/)
 <br>
 Report a bug at
-[http://github.com/ApexRMS/Package_Name/issues](http://github.com/ApexRMS/Package_Name/issues)
+[http://github.com/ApexRMS/stconnect/issues](http://github.com/ApexRMS/stconnect/issues)
 
 ## Developers
 
