@@ -6,7 +6,7 @@ permalink: /
 ---
 
 # **ST-Connect** SyncroSim Package
-<img align="right" style="padding: 13px" width="180" src="assets/images/logo/epidemic-sticker-3.png">
+<img align="right" style="padding: 13px" width="180" src="assets/images/logo/stconnect-sticker.png">
 [![GitHub release](https://img.shields.io/github/v/release/ApexRMS/stconnect.svg?style=for-the-badge&color=d68a06)](https://GitHub.com/ApexRMS/stconnect/releases/)    <a href="https://github.com/ApexRMS/stconnect"><img align="middle" style="padding: 1px" width="30" src="assets/images/logo/github-trans2.png">
 <br>
 ## Connectivity planning for future climate and land-use change
