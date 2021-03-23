@@ -19,10 +19,12 @@ Body text: Description of package to go here. Approximately 1 to 2 paragraphs.
 
 This package requires SyncroSim [version 2.2.27](https://syncrosim.com/download/).
 
+## How to Install
+
+For more information on **ST-Connect**, including how to install, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page.
+
 ## Links
 
-For information on How to Install, see [Getting Started](https://apexrms.github.io/stconnect/getting_started.html).
-<br>
 Browse source code at
 [http://github.com/ApexRMS/stconnect/](http://github.com/ApexRMS/stconnect/)
 <br>
@@ -31,8 +33,14 @@ Report a bug at
 
 ## Developers
 
-Developer_Name (Author, maintainer)
+Bronwyn Rayfield (Author, maintainer) <a href="https://orcid.org/0000-0003-1768-1300"><img align="middle" style="padding: 0.5px" width="17" src="assets/images/ORCID.png"></a>
 <br>
-Developer_Name (Author) <a href="https://orcid.org/Enter_Your_Link_Here"><img align="middle" style="padding: 0.5px" width="17" src="assets/images/ORCID.png"></a>
+Alex Embrey (Author)
 <br>
-Developer_Name (Author)
+Colin Daniel (Author)
+<br>
+Valentin Lucet (Author)
+<br>
+Andrew Gonzalez (Author)
+<br>
+Kyle Martins (Author)
