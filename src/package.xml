@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.1" url="https://github.com/ApexRMS/stconnect">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.8" url="https://github.com/ApexRMS/stconnect">
 
   <transformers>
 
@@ -122,7 +122,7 @@
         </datafeed>
         <datafeed name="HSOutputHabitatSuitability" dataScope="Scenario" isOutput="True">
           <datasheets>
-            <datasheet name="HSOutputHabitatSuitability">
+            <datasheet name="HSOutputHabitatSuitability" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
                 <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
@@ -136,7 +136,7 @@
         </datafeed>
         <datafeed name="HSOutputHabitatPatch" dataScope="Scenario" isOutput="True">
           <datasheets>
-            <datasheet name="HSOutputHabitatPatch">
+            <datasheet name="HSOutputHabitatPatch" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
                 <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
@@ -150,7 +150,7 @@
         </datafeed>
         <datafeed name="HSOutputResistance" dataScope="Scenario" isOutput="True">
           <datasheets>
-            <datasheet name="HSOutputResistance">
+            <datasheet name="HSOutputResistance" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
                 <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
@@ -178,7 +178,7 @@
       <datafeeds>
         <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
           <datasheets>
-            <datasheet name="CCOutputCumulativeCurrent">
+            <datasheet name="CCOutputCumulativeCurrent" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
                 <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
@@ -220,7 +220,7 @@
         </datafeed>
         <datafeed name="CPOutputCumulative" dataScope="Scenario" isOutput="True">
           <datasheets>
-            <datasheet name="CPOutputCumulative">
+            <datasheet name="CPOutputCumulative" spatialMultiProcessing="True">
               <columns>
                 <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
                 <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
@@ -316,7 +316,7 @@
         </group>
         <item name="stsim_Terminology"/>
       </group>
-	        <group name="stsim_Advanced" displayName="Stock Flow">
+	        <group name="stsim_Advanced" displayName="Carbon">
       </group>
     </layout>
 
@@ -372,7 +372,7 @@
           <item name="corestime_External" displayName="External Program"/>
         </group>
       </group>
-      <group name="stsim_Advanced" displayName="Stock Flow">
+      <group name="stsim_Advanced" displayName="Carbon">
       </group>
 	  <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
