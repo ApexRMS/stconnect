@@ -31,11 +31,15 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases)
 ## How to Install
 
 Download and install R [version 4.0.4](https://www.r-project.org/) or higher.
+<br>
 Download and install [Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation).
+<br>
 Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
+<br>
 Download the latest release of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
 <br>
-Open SyncroSim and select **File -> Packages… -> Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
+<br>
+Open SyncroSim and select **File > Packages… > Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
 <br>
 <br>
 ## Links
