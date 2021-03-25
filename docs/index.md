@@ -20,13 +20,14 @@ permalink: /
 
 This package requires the following software:
 <br>
+<br>
 SyncroSim [version 2.2.27](https://syncrosim.com/download/).
 <br>
-R [version 4.0.4](https://www.r-project.org/) or higher
+R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
-[Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation)
+[Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation).
 <br>
-Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases)
+Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 <br>
 <br>
 ## How to Install
