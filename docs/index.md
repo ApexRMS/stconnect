@@ -10,10 +10,11 @@ permalink: /
 [![GitHub release](https://img.shields.io/github/v/release/ApexRMS/stconnect.svg?style=for-the-badge&color=d68a06)](https://GitHub.com/ApexRMS/stconnect/releases/)    <a href="https://github.com/ApexRMS/stconnect"><img align="middle" style="padding: 1px" width="30" src="assets/images/logo/github-trans2.png">
 <br>
 ## Connectivity planning for future climate and land-use change
-### A two-line introduction to the gist of the package
+### *ST-Connect* is an open-source [SyncroSim](https://syncrosim.com/download/) Base Package for forecasting landscape connectivity.
 
 
-Body text: Description of package to go here. Approximately 1 to 2 paragraphs.
+**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change, landscape connectivity, and conservation prioritization.
+**ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/) modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/) R package.
 
 ## Requirements
 
@@ -39,7 +40,7 @@ Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-c
 Download the latest release of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
 <br>
 <br>
-Open SyncroSim and select **File → Packages… → Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
+Open SyncroSim and select **File -> Packages… -> Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
 <br>
 <br>
 ## Links
