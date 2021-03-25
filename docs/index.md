@@ -17,12 +17,27 @@ Body text: Description of package to go here. Approximately 1 to 2 paragraphs.
 
 ## Requirements
 
-This package requires SyncroSim [version 2.2.27](https://syncrosim.com/download/).
-
+This package requires the following software:
+<br>
+SyncroSim [version 2.2.27](https://syncrosim.com/download/).
+<br>
+R [version 4.0.4](https://www.r-project.org/) or higher
+<br>
+[Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation)
+<br>
+Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases)
+<br>
+<br>
 ## How to Install
 
-For more information on **ST-Connect**, including how to install, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page.
-
+Download and install R [version 4.0.4](https://www.r-project.org/) or higher.
+Download and install [Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation).
+Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
+Download the latest release of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
+<br>
+Open SyncroSim and select **File -> Packages… -> Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
+<br>
+<br>
 ## Links
 
 Browse source code at
@@ -30,7 +45,8 @@ Browse source code at
 <br>
 Report a bug at
 [http://github.com/ApexRMS/stconnect/issues](http://github.com/ApexRMS/stconnect/issues)
-
+<br>
+<br>
 ## Developers
 
 Bronwyn Rayfield (Author, maintainer) <a href="https://orcid.org/0000-0003-1768-1300"><img align="middle" style="padding: 0.5px" width="17" src="assets/images/ORCID.png"></a>
