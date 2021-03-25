@@ -39,7 +39,7 @@ Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-c
 Download the latest release of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
 <br>
 <br>
-Open SyncroSim and select **File > Packages… > Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
+Open SyncroSim and select **File → Packages… → Install from file…**, then navigate to the ***stconnect.ssimpkg*** file and click **OK**.
 <br>
 <br>
 ## Links
