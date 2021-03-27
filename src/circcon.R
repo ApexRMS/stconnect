@@ -1,13 +1,31 @@
+# Workspace setup
+# Check for installed packages and install missing ones
+list.of.packages <- c("raster", "rsyncrosim", "tidyverse")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 library(raster)
 library(rsyncrosim)
+library(tidyverse)
 
 e = ssimEnvironment()
 source(file.path(e$PackageDirectory, "common.R"))
+
+# Parameters
+# These will eventually be moved to the UI
+# Temporal resolution of analysis in years, e.g. analye every 10 years
+temporalRes <- 1
 #directory where Circuitscape is installed
 CS_exe<-"\"C:/Program Files/Circuitscape/cs_run.exe\"" # Don't forget the "Program Files" problem
 
+#file paths
+tempFolderPath = envTempFolder("CircuitConnectivity")
+
 #datasheets
-resistanceIn = datasheet(GLOBAL_Scenario, "stconnect_HSOutputResistance")
+stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
+resistanceIn = GetDataSheetExpectData("stconnect_CCResistance", GLOBAL_Scenario)
+resistanceIn <- merge(resistanceIn, stateClassIn, by.x="StateClassID", by.y="Name")
+resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputResistance")
 circuitOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputCumulativeCurrent", empty=T)
 
 #file paths
@@ -18,34 +36,6 @@ outputFolderPath <- envOutputFolder(GLOBAL_Scenario, "stconnect_CCOutputCumulati
 #Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
 write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 
-#Load all resistance rasters
-resistanceRasterAll <- datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputResistance")
-
-#Input resistance raster template
-resistanceRasterName <- paste0("Resistance.", GLOBAL_Species$Code[1], ".it", GLOBAL_MinIteration, ".ts", GLOBAL_MinTimestep)
-resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
-
-#create focal region raster for N-S by adding top and bottom rows
-extentNS<-extent(xmin(resistanceRaster),xmax(resistanceRaster),ymin(resistanceRaster)-res(resistanceRaster)[1],ymax(resistanceRaster)+res(resistanceRaster)[1])
-focalRegionNS<-raster(extentNS,nrow=nrow(resistanceRaster)+2,ncol=ncol(resistanceRaster))
-focalRegionNS[1,]<-1
-focalRegionNS[nrow(focalRegionNS),]<-2
-
-#create focal region raster for E-W by adding left and right columns
-extentEW<-extent(xmin(resistanceRaster)-res(resistanceRaster)[2],xmax(resistanceRaster)+res(resistanceRaster)[2],ymin(resistanceRaster),ymax(resistanceRaster))
-focalRegionEW<-raster(extentEW,nrow=nrow(resistanceRaster),ncol=ncol(resistanceRaster)+2)
-focalRegionEW[,1]<-1
-focalRegionEW[,ncol(focalRegionEW)]<-2
-
-#Save rasters
-focalRegionNSName = file.path(tempFolderPath, "NSfocalRegion.asc")
-focalRegionEWName = file.path(tempFolderPath, "EWfocalRegion.asc")
-writeRaster(focalRegionNS, focalRegionNSName, overwrite = TRUE)
-writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
-
-# Temporal resolution of analysis in years
-# e.g. analyse every 10 years
-temporalRes <- 9
 # Set of timesteps to analyse
 timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
 
@@ -62,16 +52,50 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       
       species = GLOBAL_Species[sprow, "Name"]
       speciesCode = GLOBAL_Species[sprow, "Code"]
+      resistanceValues <- resistanceIn[which(resistanceIn$SpeciesID == species), c("ID", "Value")]
+      
+      if (nrow(resistanceValues) == 0) {
+        next
+      }
+      
+      #Input stateclass raster
+      stateMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
+      
+      #Resistance map
+      resistanceRaster <- reclassify(stateMap, rcl = resistanceValues)
 
-      #Input resistance raster
-      resistanceRasterName <- paste0("Resistance.", speciesCode, ".it", iteration, ".ts", timestep)
-      resistanceRaster <- resistanceRasterAll[[resistanceRasterName]]
+      #Save rasters
+      resistanceName = file.path(tempFolderPath, CreateRasterFileName2("Resistance", speciesCode, iteration, timestep, "tif"))
+      writeRaster(resistanceRaster, resistanceName, overwrite = TRUE)
+      df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = resistanceName)
+      resistanceOut = addRow(resistanceOut, df)
+
+      #create focal region raster for N-S by adding top and bottom rows
+      extentNS<-extent(xmin(resistanceRaster),xmax(resistanceRaster),ymin(resistanceRaster)-res(resistanceRaster)[1],ymax(resistanceRaster)+res(resistanceRaster)[1])
+      focalRegionNS<-raster(extentNS,nrow=nrow(resistanceRaster)+2,ncol=ncol(resistanceRaster))
+      focalRegionNS[1,]<-1
+      focalRegionNS[nrow(focalRegionNS),]<-2
+      
+      #create focal region raster for E-W by adding left and right columns
+      extentEW<-extent(xmin(resistanceRaster)-res(resistanceRaster)[2],xmax(resistanceRaster)+res(resistanceRaster)[2],ymin(resistanceRaster),ymax(resistanceRaster))
+      focalRegionEW<-raster(extentEW,nrow=nrow(resistanceRaster),ncol=ncol(resistanceRaster)+2)
+      focalRegionEW[,1]<-1
+      focalRegionEW[,ncol(focalRegionEW)]<-2
+      
+      #Save rasters
+      focalRegionNSName = file.path(tempFolderPath, "NSfocalRegion.asc")
+      focalRegionEWName = file.path(tempFolderPath, "EWfocalRegion.asc")
+      writeRaster(focalRegionNS, focalRegionNSName, overwrite = TRUE)
+      writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
+      
       #extend resistanceRaster NS
       resistanceRasterNS<-extend(resistanceRaster,extentNS,value=1)
-
+      resistanceRasterNS[is.na(resistanceRasterNS)]<-100
+      
       #extend resistanceRaster EW
       resistanceRasterEW<-extend(resistanceRaster,extentEW,value=1)
-
+      resistanceRasterEW[is.na(resistanceRasterEW)]<-100
+      
       #Save rasters to temp folder
       resistanceRasterNSName = file.path(tempFolderPath, CreateRasterFileName2("NSResistance", species, iteration, timestep, "asc"))
       resistanceRasterEWName = file.path(tempFolderPath, CreateRasterFileName2("EWResistance", species, iteration, timestep, "asc"))
@@ -109,22 +133,28 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       currMapNS<-crop(raster(file.path(outputFolderPath,"NS_cum_curmap.asc")),resistanceRaster)
       currMapEW<-crop(raster(file.path(outputFolderPath,"EW_cum_curmap.asc")),resistanceRaster)
       currMapOMNI<-currMapEW+currMapNS
-      currMapOMNI01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
+      currMapOMNI[is.na(resistanceRaster)]<-NA
+      
+      #      currMapOMNI01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
+      
+      
+      currMapOMNI_log<-log(currMapOMNI)
+      currMapOMNI_log01<-(currMapOMNI_log-cellStats(currMapOMNI_log,"min"))/(cellStats(currMapOMNI_log,"max")-cellStats(currMapOMNI_log,"min"))
       
       #Save Omni-directional current density raster
       currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
-      writeRaster(currMapOMNI01, currMapOMNIName, overwrite=TRUE)
+      writeRaster(currMapOMNI_log01, currMapOMNIName, overwrite=TRUE)
       
       #Write output file
       data <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = currMapOMNIName)
       circuitOut <- addRow(circuitOut, data)
-      
     }
     
     envStepSimulation()
   }
 }
 
+saveDatasheet(GLOBAL_Scenario, resistanceOut, "stconnect_CCOutputResistance")
 saveDatasheet(GLOBAL_Scenario, circuitOut, "stconnect_CCOutputCumulativeCurrent")
 
 envEndSimulation()

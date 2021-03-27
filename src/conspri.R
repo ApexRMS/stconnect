@@ -1,8 +1,23 @@
+# Workspace setup
+# Check for installed packages and install missing ones
+list.of.packages <- c("raster", "rsyncrosim", "RSQLite", "tidyverse")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 library(raster)
 library(rsyncrosim)
+library(RSQLite)
+library(tidyverse)
 
 e = ssimEnvironment()
 source(file.path(e$PackageDirectory, "common.R"))
+
+# Parameters
+# These will eventually be moved to the UI
+# Which carbon stock group should be used in prioritization
+carbonPriorityStockGroupName <- "Total Ecosystem"
+# Temporal resolution of analysis in years, e.g. analye every 10 years
+temporalRes <- 2
 
 #datasheets
 runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)
@@ -26,9 +41,6 @@ zonationSet[5]<-paste("add edge points =", runSettingsIn$AddEdgePoints)
 zonationSetName <- paste(tempFolderPath, "RunSetting.dat", sep="/")
 writeLines(zonationSet, zonationSetName)
 
-# Temporal resolution of analysis in years
-# e.g. analyse every 10 years
-temporalRes <- 9
 # Set of timesteps to analyse
 timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
 
@@ -41,14 +53,28 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     
     envReportProgress(iteration, timestep)
     
-    carbonStockasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
+    carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
     # Keep only Total Ecosystem Carbon
-    result <- data.frame("Ecosystem.Carbon"=rep(NA, length(names(carbonStockasters))))
-    for(i in 1:length(names(carbonStockasters))){
-      result$Ecosystem.Carbon[i]<-grepl("stkg_884", names(carbonStockasters)[i], fixed=TRUE)
+    # Connect to SQLite database
+    mydbname <- filepath(GLOBAL_Library)
+    mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
+    # Get Stock Group Table
+    stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
+    # Disconnect from database
+    dbDisconnect(mydb)
+
+    # Get stock group id
+    stockGroupID <- stockGroupTable %>%
+      filter(Name == carbonPriorityStockGroupName) %>%
+      pull(StockGroupID)
+    
+    # Identify the focal raster from raster stack of stock groups
+    result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
+    for(i in 1:length(names(carbonStockRasters))){
+      result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
     }
-    carbonStockasters <- dropLayer(carbonStockasters, which(result==FALSE))
-    rasIn<-stack(carbonStockasters,
+    carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
+    rasIn<-stack(carbonStockRasters,
                  datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
                  datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
 

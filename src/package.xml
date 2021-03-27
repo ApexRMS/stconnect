@@ -77,11 +77,11 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="HSLandcover" displayName="Landcover Maps" dataScope="Scenario">
+        <datafeed name="CCLandcover" displayName="Landcover Maps" dataScope="Scenario">
           <datasheets>
-            <datasheet name="HSLandcover">
+            <datasheet name="CCLandcover">
               <columns>
-                <column name="HSLandcoverMapID" dataType="Integer" isPrimary="True"/>
+                <column name="CCLandcoverMapID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d"/>
                 <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
@@ -101,21 +101,6 @@
                 <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
                 <column name="HabitatSuitabilityThreshold" displayName="Habitat Suitability Threshold" dataType="Integer" allowDbNull="False"/>
                 <column name="MinimumHabitatPatchSize" displayName="Minimum Habitat Patch Size (ha)" dataType="Double" allowDbNull="False"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
-        <datafeed name="HSResistance" displayName="Resistance" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="HSResistance" displayName="Resistance">
-              <columns>
-                <column name="HSResistanceID" dataType="Integer" isPrimary="True"/>
-                <column name="ScenarioID" dataType="Integer"/>
-                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d" isOptional="True"/>
-                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False"/>
-                <column name="Value" dataType="Integer" allowDbNull="False"/>
               </columns>
             </datasheet>
           </datasheets>
@@ -148,20 +133,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="HSOutputResistance" dataScope="Scenario" isOutput="True">
-          <datasheets>
-            <datasheet name="HSOutputResistance" spatialMultiProcessing="True">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
-                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
-                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-                <column name="Filename" dataType="String" displayName="Resistance Map" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="SpeciesID" allowDbNull="False" filenameCode="res"/>
-                <column name="Band" dataType="Integer" isOptional="True"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
       </datafeeds>
     </transformer>
 
@@ -176,7 +147,49 @@
       configurationSheet="stsim_RunControl"
       userRunnable="True">
       <datafeeds>
-        <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
+        <datafeed name="HSLandcover" displayName="Landcover Maps" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="HSLandcover">
+              <columns>
+                <column name="HSLandcoverMapID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d"/>
+                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="Filename" dataType="String" displayName="Landscape State Class Map" isExternalFile="True" isRaster="True" allowDbNull="False"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="CCResistance" displayName="Resistance" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="CCResistance" displayName="Resistance">
+              <columns>
+                <column name="CCResistanceID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d" isOptional="True"/>
+                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
+                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False"/>
+                <column name="Value" dataType="Integer" allowDbNull="False"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+		<datafeed name="CCOutputResistance" dataScope="Scenario" isOutput="True">
+          <datasheets>
+            <datasheet name="CCOutputResistance" spatialMultiProcessing="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
+                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
+                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
+                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
+                <column name="Filename" dataType="String" displayName="Resistance Map" isExternalFile="True" isRaster="True" bandColumn="Band" bandFilterColumn="SpeciesID" allowDbNull="False" filenameCode="res"/>
+                <column name="Band" dataType="Integer" isOptional="True"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+       <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CCOutputCumulativeCurrent" spatialMultiProcessing="True">
               <columns>
@@ -190,7 +203,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-      </datafeeds>
+       </datafeeds>
     </transformer>
 
     <!--ConservationPrioritization Transformer-->
@@ -247,9 +260,9 @@
       dataSheet="HSOutputHabitatPatch" column="Filename" isFolderExport="True" >
     </transformer>
     <transformer
-      name="HabitatSuitabilityExportResistanceMap" displayName="Resistance"
+      name="CircuitConnectivityExportResistanceMap" displayName="Resistance"
       className="SyncroSim.StochasticTime.Forms.StochasticTimeExportTransformer" classAssembly="SyncroSim.StochasticTime.Forms"
-      dataSheet="HSOutputResistance" column="Filename" isFolderExport="True" >
+      dataSheet="CCOutputResistance" column="Filename" isFolderExport="True" >
     </transformer>
     <transformer
       name="CircuitConnectivityExportCumulativeCurrentMap" displayName="Current Density"
@@ -381,10 +394,13 @@
         </group>
         <item name="HSHabitatSuitability"/>
         <item name="HSHabitatPatch"/>
-        <item name="HSResistance"/>
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
-        <item name="HSOutputResistance" displayName="Resistance Maps" forceVisible="True"/>
+        <group name="LandscapeMapsGroup" displayName="Landscape Maps">
+          <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
+          <item name="CCLandcover" displayName="Manually Entered"/>
+        </group>
+        <item name="CCResistance"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
 	    <item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>
@@ -413,9 +429,9 @@
           <group name="Habitat">
             <item name="HabitatSuitabilityExportMap"/>
             <item name="HabitatSuitabilityExportPatchMap"/>
-            <item name="HabitatSuitabilityExportResistanceMap"/>
           </group>
           <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
+            <item name="CircuitConnectivityExportResistanceMap"/>
             <item name="CircuitConnectivityExportCumulativeCurrentMap"/>
           </group>
           <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
@@ -443,9 +459,9 @@
       </group>
       <group name="Habitat">
         <item name="HSHabitatSuitability" displayName="Habitat Suitability" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Suitability"></item>
-        <item name="HSResistance" displayName="Resistance" dataSheet="HSOutputResistance" column="Filename" filter="SpeciesID" extendedIdentifier="Resistance"></item>
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
+        <item name="CCResistance" displayName="Resistance" dataSheet="CCOutputResistance" column="Filename" filter="SpeciesID" extendedIdentifier="Resistance"></item>
         <item name="CumulativeCurrent" displayName="Cumulative Current" dataSheet="CCOutputCumulativeCurrent" column="Filename" filter="SpeciesID" extendedIdentifier="Current Density"></item>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">

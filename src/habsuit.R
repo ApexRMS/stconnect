@@ -1,9 +1,20 @@
+# Workspace setup
+# Check for installed packages and install missing ones
+list.of.packages <- c("raster", "rsyncrosim")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 library(raster)
 library(rsyncrosim)
 
-e = ssimEnvironment()
 
+e = ssimEnvironment()
 source(file.path(e$PackageDirectory, "common.R"))
+
+# Parameters
+# These will eventually be moved to the UI
+# Temporal resolution of analysis in years, e.g. analye every 10 years
+temporalRes <- 1
 
 #datasheets
 stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
@@ -11,18 +22,12 @@ names(stateClassIn) <- c("StateClassID", "StateLabelXID", "StateLabelYID", "ID",
 habitatSuitabilityIn = GetDataSheetExpectData("stconnect_HSHabitatSuitability", GLOBAL_Scenario)
 habitatSuitabilityIn <- merge(habitatSuitabilityIn,stateClassIn,by="StateClassID")
 habitatPatchIn = GetDataSheetExpectData("stconnect_HSHabitatPatch", GLOBAL_Scenario)
-resistanceIn = GetDataSheetExpectData("stconnect_HSResistance", GLOBAL_Scenario)
-resistanceIn <- merge(resistanceIn, stateClassIn, by="StateClassID")
 habitatSuitabilityOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputHabitatSuitability")
 habitatPatchOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputHabitatPatch")
-resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputResistance")
 
 #file paths
 tempFolderPath = envTempFolder("HabitatSuitability")
 
-# Temporal resolution of analysis in years
-# e.g. analyse every 10 years
-temporalRes <- 9
 # Set of timesteps to analyse
 timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
 
@@ -41,9 +46,8 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             speciesCode = GLOBAL_Species[sprow, "Code"]
             suitabilityValues <- habitatSuitabilityIn[which(habitatSuitabilityIn$SpeciesID == species), c("ID", "Value")]
             patchValues <- habitatPatchIn[which(habitatPatchIn$SpeciesID == species), c("HabitatSuitabilityThreshold", "MinimumHabitatPatchSize")]
-            resistanceValues <- resistanceIn[which(resistanceIn$SpeciesID == species), c("ID", "Value")]
 
-            if (nrow(suitabilityValues) == 0 || nrow(patchValues) == 0 || nrow(resistanceValues) == 0) {
+            if (nrow(suitabilityValues) == 0 || nrow(patchValues) == 0) {
                 next
             }
 
@@ -66,18 +70,9 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             habitatClumpID <- habitatClumpID[habitatClumpID$count < patchSizeThreshold/conversionFromHa,]
             habitatRaster[Which(habitatClump %in% habitatClumpID$value)] <- 0
 
-            #Resistance map
-            #Reclassify based on resistance values
-            resistanceRasterReclass <- reclassify(stateMap, rcl = resistanceValues)
-            #Overlay habitat patches
-            resistanceRasterOverlay <- overlay(resistanceRasterReclass, habitatRaster, fun = function(x,y){return(x+y)})
-            #Reclass to assign habitat patches a resistance value = 1 (note that both overlaid values of both 3 and 5 correspond to habitat patches)
-            resistanceRaster <- reclassify(resistanceRasterOverlay, rcl = matrix(c(3, 1, 5, 1), ncol=2, byrow = T))
-            
             #Save rasters
             suitabilityName = file.path(tempFolderPath, CreateRasterFileName2("HabitatSuitability", speciesCode, iteration, timestep, "tif"))
             patchName = file.path(tempFolderPath, CreateRasterFileName2("HabitatPatch", speciesCode, iteration, timestep, "tif"))
-            resistanceName = file.path(tempFolderPath, CreateRasterFileName2("Resistance", speciesCode, iteration, timestep, "tif"))
 
             writeRaster(suitabilityRaster, suitabilityName, overwrite = TRUE)
             df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = suitabilityName)
@@ -87,9 +82,6 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = patchName)
             habitatPatchOut = addRow(habitatPatchOut, df)
 
-            writeRaster(resistanceRaster, resistanceName, overwrite = TRUE)
-            df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = resistanceName)
-            resistanceOut = addRow(resistanceOut, df)
         }
 
         envStepSimulation()
@@ -98,6 +90,5 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
 
 saveDatasheet(GLOBAL_Scenario, habitatSuitabilityOut, "stconnect_HSOutputHabitatSuitability")
 saveDatasheet(GLOBAL_Scenario, habitatPatchOut, "stconnect_HSOutputHabitatPatch")
-saveDatasheet(GLOBAL_Scenario, resistanceOut, "stconnect_HSOutputResistance")
 
 envEndSimulation()
