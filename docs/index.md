@@ -25,7 +25,7 @@ SyncroSim [version 2.2.27](https://syncrosim.com/download/).
 <br>
 R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
-[Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation).
+[Circuitscape 4](https://circuitscape.org/downloads/).
 <br>
 Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 <br>
@@ -34,7 +34,7 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 
 Download and install R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
-Download and install [Circuitscape 5](https://github.com/Circuitscape/Circuitscape.jl/blob/master/README.md#Installation).
+Download and install [Circuitscape 4](https://circuitscape.org/downloads/).
 <br>
 Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 <br>
