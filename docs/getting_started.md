@@ -36,7 +36,7 @@ When you are ready to create the Library file, click **OK**. A new Library will 
 The contents of your newly created Library are now displayed in the Library Explorer. Model inputs in SyncroSim are organized into Scenarios, where each Scenario consists of a suite of values, one for each of the Model's required inputs.
 
 > **Note:**
-> Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains two pre-configured Scenarios with model inputs. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios: one a Baseline Scenario, and another a Low Urbanization Scenario.
+> Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains two pre-configured Scenarios with model inputs. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios: one a Baseline Scenario, and another Low Urbanization Scenario.
 
 <img align="middle" style="padding: 3px" width="400" src="assets/images/screencap-2.PNG">
 <br>
