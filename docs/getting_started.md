@@ -53,7 +53,7 @@ This opens the Scenario Properties window.
 <br>
 The first tab in this window, called **Summary**, displays some generic information for the Scenario. The second tab, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 20 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations.
 <br>
-<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.png">
+<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.PNG">
 <br>
 Click on the **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** tabs to familiarize yourself with this Scenario's inputs.
 <br>
