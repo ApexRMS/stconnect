@@ -17,7 +17,7 @@ source(file.path(e$PackageDirectory, "common.R"))
 # Which carbon stock group should be used in prioritization
 carbonPriorityStockGroupName <- "Total Ecosystem"
 # Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 25
+temporalRes <- 10
 
 #datasheets
 runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)

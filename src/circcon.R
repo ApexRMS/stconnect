@@ -14,7 +14,8 @@ source(file.path(e$PackageDirectory, "common.R"))
 # Parameters
 # These will eventually be moved to the UI
 # Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 25
+temporalRes <- 10
+
 #directory where Circuitscape is installed
 CS_exe<-"\"C:/Program Files/Circuitscape/cs_run.exe\"" # Don't forget the "Program Files" problem
 
