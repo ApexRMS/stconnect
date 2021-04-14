@@ -55,7 +55,7 @@ The first tab in this window, called **Summary**, displays some generic informat
 <br>
 <img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.PNG">
 <br>
-Click on the **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** tabs to familiarize yourself with this Scenario's inputs.
+Click on the **Landscape Change**, **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** tabs to familiarize yourself with this Scenario's inputs.
 <br>
 <img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-5.PNG">
 <br>
