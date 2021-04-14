@@ -14,7 +14,7 @@ source(file.path(e$PackageDirectory, "common.R"))
 # Parameters
 # These will eventually be moved to the UI
 # Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 1
+temporalRes <- 25
 
 #datasheets
 stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")

@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (AGRICULTURAL CONTRACTION: Ag->Shrubland [Type]) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+3,0,128,0,255,AGRICULTURAL CONTRACTION: Ag->Shrubland

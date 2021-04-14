@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (MOISTURE ZONE SHIFT: Wet->Mesic [Type]) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+27,0,255,255,255,MOISTURE ZONE SHIFT: Wet->Mesic

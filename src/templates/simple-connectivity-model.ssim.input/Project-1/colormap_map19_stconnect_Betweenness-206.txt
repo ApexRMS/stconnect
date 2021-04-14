@@ -1,0 +1,7 @@
+# Syncrosim Generated Maui Parrotbill Color Map (QGIS-compatible),,,,,
+INTERPOLATION:DISCRETE
+0.2,0,0,255,255,0.2
+0.4,0,255,255,255,0.4
+0.6,255,255,0,255,0.6
+0.8,255,165,0,255,0.8
+1,255,0,0,255,1

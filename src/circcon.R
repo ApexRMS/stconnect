@@ -14,7 +14,7 @@ source(file.path(e$PackageDirectory, "common.R"))
 # Parameters
 # These will eventually be moved to the UI
 # Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 1
+temporalRes <- 25
 #directory where Circuitscape is installed
 CS_exe<-"\"C:/Program Files/Circuitscape/cs_run.exe\"" # Don't forget the "Program Files" problem
 
@@ -88,13 +88,16 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       writeRaster(focalRegionNS, focalRegionNSName, overwrite = TRUE)
       writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
       
+      # Calculate the mean resistance value and use it to replace NA values
+      meanResistanceValue <- round(cellStats(resistanceRaster, mean),0)
+      
       #extend resistanceRaster NS
       resistanceRasterNS<-extend(resistanceRaster,extentNS,value=1)
-      resistanceRasterNS[is.na(resistanceRasterNS)]<-100
+      resistanceRasterNS[is.na(resistanceRasterNS)]<-meanResistanceValue
       
       #extend resistanceRaster EW
       resistanceRasterEW<-extend(resistanceRaster,extentEW,value=1)
-      resistanceRasterEW[is.na(resistanceRasterEW)]<-100
+      resistanceRasterEW[is.na(resistanceRasterEW)]<-meanResistanceValue
       
       #Save rasters to temp folder
       resistanceRasterNSName = file.path(tempFolderPath, CreateRasterFileName2("NSResistance", species, iteration, timestep, "asc"))

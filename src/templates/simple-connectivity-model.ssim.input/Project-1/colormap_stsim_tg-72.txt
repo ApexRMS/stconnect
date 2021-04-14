@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (MANAGEMENT: Plantation Harvest [Type]) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+55,255,0,255,255,MANAGEMENT: Plantation Harvest

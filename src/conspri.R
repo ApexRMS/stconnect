@@ -17,7 +17,7 @@ source(file.path(e$PackageDirectory, "common.R"))
 # Which carbon stock group should be used in prioritization
 carbonPriorityStockGroupName <- "Total Ecosystem"
 # Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 2
+temporalRes <- 25
 
 #datasheets
 runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)
@@ -53,31 +53,33 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     
     envReportProgress(iteration, timestep)
     
-    carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
-    # Keep only Total Ecosystem Carbon
-    # Connect to SQLite database
-    mydbname <- filepath(GLOBAL_Library)
-    mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
-    # Get Stock Group Table
-    stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
-    # Disconnect from database
-    dbDisconnect(mydb)
+    # carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
+    # # Keep only Total Ecosystem Carbon
+    # # Connect to SQLite database
+    # mydbname <- filepath(GLOBAL_Library)
+    # mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
+    # # Get Stock Group Table
+    # stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
+    # # Disconnect from database
+    # dbDisconnect(mydb)
+    # 
+    # # Get stock group id
+    # stockGroupID <- stockGroupTable %>%
+    #   filter(Name == carbonPriorityStockGroupName) %>%
+    #   pull(StockGroupID)
+    # 
+    # # Identify the focal raster from raster stack of stock groups
+    # result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
+    # for(i in 1:length(names(carbonStockRasters))){
+    #   result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
+    # }
+    # carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
+    # rasIn<-stack(carbonStockRasters,
+    #              datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+    #              datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
 
-    # Get stock group id
-    stockGroupID <- stockGroupTable %>%
-      filter(Name == carbonPriorityStockGroupName) %>%
-      pull(StockGroupID)
-    
-    # Identify the focal raster from raster stack of stock groups
-    result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
-    for(i in 1:length(names(carbonStockRasters))){
-      result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
-    }
-    carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
-    rasIn<-stack(carbonStockRasters,
-                 datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+    rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
                  datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
-
     rasOut<-extend(rasIn, rasExtend, -9999)
     rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)

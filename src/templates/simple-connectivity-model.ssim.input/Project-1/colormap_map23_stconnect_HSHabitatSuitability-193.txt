@@ -1,0 +1,7 @@
+# Syncrosim Generated Hawaii Creeper Color Map (QGIS-compatible),,,,,
+INTERPOLATION:DISCRETE
+0,255,255,255,255,.
+100,0,255,0,255,80 - 100
+50,192,192,192,255,1 - 49
+59,128,128,128,255,50 - 59
+79,128,255,128,255,60 - 79

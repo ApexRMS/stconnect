@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (URBANIZATION: Barren->Developed [Type]) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+38,128,128,128,255,URBANIZATION: Barren->Developed

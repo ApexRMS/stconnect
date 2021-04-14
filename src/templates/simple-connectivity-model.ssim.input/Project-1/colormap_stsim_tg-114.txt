@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (SHRUB ENCROACHMENT: Grassland->Shrubland) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+46,128,0,128,255,SHRUB ENCROACHMENT: Grassland->Shrubland

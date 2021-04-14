@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (URBANIZATION: Grassland->Developed) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+40,0,128,128,255,URBANIZATION: Grassland->Developed

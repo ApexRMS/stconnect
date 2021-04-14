@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (AGRICULTURAL EXPANSION: Grassland->Ag) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+6,0,0,255,255,AGRICULTURAL EXPANSION: Grassland->Ag

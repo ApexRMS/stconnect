@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (FIRE: Grassland High Severity [Type]) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+34,255,255,6,255,FIRE: Grassland High Severity

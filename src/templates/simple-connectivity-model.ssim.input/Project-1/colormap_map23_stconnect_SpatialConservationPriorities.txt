@@ -1,0 +1,7 @@
+# Syncrosim Generated Spatial Conservation Priorities Color Map (QGIS-compatible),,,,,
+INTERPOLATION:DISCRETE
+0,255,255,255,255,.
+0.82999,192,192,192,255,Bottom 73% priority areas
+0.89999,0,128,0,255,Top 10 - 17% priority areas
+0.94999,255,255,0,255,Top 5 - 10% priority areas
+1.00,255,0,0,255,Top 5% priority areas

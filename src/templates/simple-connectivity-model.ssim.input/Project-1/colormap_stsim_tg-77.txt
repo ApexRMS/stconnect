@@ -1,0 +1,3 @@
+# Syncrosim Generated Transition Group (FIRE: Forest Low Severity [Type]) Color Map (QGIS-compatible) Export File,,,,,
+INTERPOLATION:EXACT
+52,202,255,202,255,FIRE: Forest Low Severity

@@ -1,0 +1,5 @@
+# Syncrosim Generated State Class Color Map (QGIS-compatible),,,,,
+INTERPOLATION:EXACT
+1,128,0,0,255,Dry
+2,227,218,28,255,Mesic
+3,0,128,255,255,Wet
