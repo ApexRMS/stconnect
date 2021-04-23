@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.10" url="https://github.com/ApexRMS/stconnect">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.11" url="https://github.com/ApexRMS/stconnect">
 
   <transformers>
 
@@ -105,7 +105,18 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="HSOutputHabitatSuitability" dataScope="Scenario" isOutput="True">
+        <datafeed name="HSOutputOptions" displayName="Output Options" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="HSOutputOptions" displayName="HS Output Options" isSingleRow="True">
+              <columns>
+                <column name="OutputOptionsID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="SpatialOutputHSTimesteps" displayName="Habitat output frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+		<datafeed name="HSOutputHabitatSuitability" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="HSOutputHabitatSuitability" spatialMultiProcessing="True">
               <columns>
@@ -160,9 +171,9 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="CCResistance" displayName="Resistance" dataScope="Scenario">
+        <datafeed name="CCLULCResistance" displayName="LULC Resistance" dataScope="Scenario">
           <datasheets>
-            <datasheet name="CCResistance" displayName="Resistance">
+            <datasheet name="CCLULCResistance" displayName="LULC Resistance">
               <columns>
                 <column name="CCResistanceID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
@@ -171,6 +182,46 @@
                 <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
                 <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False"/>
                 <column name="Value" dataType="Integer" allowDbNull="False"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="CCAgeResistance" displayName="Age Resistance" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="CCAgeResistance" displayName="Age Resistance">
+              <columns>
+                <column name="CCResistanceID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d" isOptional="True"/>
+                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
+                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
+<!--                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False"/> -->
+                <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
+                <column name="Value" dataType="Integer" allowDbNull="False"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+		<datafeed name="CCOutputOptions" displayName="Output Options" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="CCOutputOptions" displayName="CC Output Options" isSingleRow="True">
+              <columns>
+                <column name="OutputOptionsID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="SpatialOutputCCTimesteps" displayName="Connectivity output frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="SpatialOutputCCRaw" displayName="Raw current density" dataType="Boolean"/>
+                <column name="SpatialOutputCCLog" displayName="Log-transformed current density" dataType="Boolean"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+		<datafeed name="CCJuliaConfig" displayName="Julia Configuration" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="CCJuliaConfig" displayName="Julia Configuration" isSingleRow="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" isPrimary="True" />
+                <column name="Filename" displayName="Julia executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Julia |julia.exe" externalFileAbsolute="True" />
               </columns>
             </datasheet>
           </datasheets>
@@ -223,14 +274,35 @@
               <columns>
                 <column name="RunSettingID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
-                <column name="RemovalValue" displayName="Removal Rule" dataType="Integer" defaultValue="1" validationType="List" formula1="1:Basic core-area Zonation|2:Additive benefit function|3:Target based planning|4:Generalized benefit function|5:Random removal"/>
-                <column name="WarpFactor" displayName="Warp Factor" dataType="Integer" defaultValue="1" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="EdgeRemoval" displayName="Edge Removal" dataType="Boolean" defaultValue="-1"/>
-                <column name="AddEdgePoints" displayName="Add Edge Points" dataType="Integer" defaultValue="0" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="RemovalValue" displayName="Removal rule" dataType="Integer" defaultValue="1" validationType="List" formula1="1:Basic core-area Zonation|2:Additive benefit function|3:Target based planning|4:Generalized benefit function|5:Random removal"/>
+                <column name="WarpFactor" displayName="Warp factor" dataType="Integer" defaultValue="1" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+                <column name="EdgeRemoval" displayName="Edge removal" dataType="Boolean" defaultValue="-1"/>
+                <column name="AddEdgePoints" displayName="Number of edge points to add" dataType="Integer" defaultValue="0" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
               </columns>
             </datasheet>
           </datasheets>
         </datafeed>
+		<datafeed name="CPOutputOptions" displayName="Output Options" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="CPOutputOptions" displayName="CP Output Options" isSingleRow="True">
+              <columns>
+                <column name="OutputOptionsID" dataType="Integer" isPrimary="True"/>
+                <column name="ScenarioID" dataType="Integer"/>
+                <column name="SpatialOutputCPTimesteps" displayName="Conservation prioritization output frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
+              </columns>
+            </datasheet>
+          </datasheets>
+		 </datafeed>
+		<datafeed name="CPZonationConfig" displayName="Zonation Configuration" dataScope="Scenario">
+          <datasheets>
+            <datasheet name="CPZonationConfig" displayName="Zonation Configuration" isSingleRow="True">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" isPrimary="True" />
+                <column name="Filename" displayName="Zonation executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Zonation |zig4.exe" externalFileAbsolute="True" />
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>		 
         <datafeed name="CPOutputCumulative" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CPOutputCumulative" spatialMultiProcessing="True">
@@ -385,8 +457,8 @@
           <item name="corestime_External" displayName="External Program"/>
         </group>
       </group>
-      <!--<group name="stsim_Advanced" displayName="Carbon">
-      </group>-->
+      <group name="stsim_Advanced" displayName="Carbon">
+      </group>
 	  <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
@@ -394,19 +466,25 @@
         </group>
         <item name="HSHabitatSuitability"/>
         <item name="HSHabitatPatch"/>
+		<item name="HSOutputOptions"/>
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
           <item name="CCLandcover" displayName="Manually Entered"/>
         </group>
-        <item name="CCResistance"/>
+        <item name="CCLULCResistance"/>
+        <item name="CCAgeResistance"/>
+		<item name="CCOutputOptions"/>
+		<item name="CCJuliaConfig"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-	    <!--<item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>-->
+	    <item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>
         <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
         <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
         <item name="CPRunSetting"/>
+		<item name="CPOutputOptions"/>
+		<item name="CPZonationConfig"/>
       </group>
     </layout>
 
