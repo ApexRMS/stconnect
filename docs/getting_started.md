@@ -11,6 +11,7 @@ This quickstart tutorial will introduce you to basics of working with ST-Connect
 <br>
 * Installing ST-Connect
 * Creating a new ST-Connect Library
+* Configuring the ST-Connect Library
 * Viewing model inputs
 * Running the model
 * Analyzing the results
