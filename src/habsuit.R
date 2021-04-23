@@ -11,10 +11,18 @@ library(rsyncrosim)
 e = ssimEnvironment()
 source(file.path(e$PackageDirectory, "common.R"))
 
-# Parameters
-# These will eventually be moved to the UI
-# Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 10
+# Output frequency of habitat analyses ---------------------------------------------------
+
+# Get the output options datasheet
+outputOptionsDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_HSOutputOptions")
+
+# If datasheet is not empty, get the output frequency
+if(is.na(outputOptionsDatasheet$SpatialOutputHSTimesteps)){
+    stop("No habitat output frequency specified.")
+} else {
+    outputFreq <- outputOptionsDatasheet$SpatialOutputHSTimesteps
+}
+
 
 #datasheets
 stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
@@ -29,7 +37,7 @@ habitatPatchOut = datasheet(GLOBAL_Scenario, "stconnect_HSOutputHabitatPatch")
 tempFolderPath = envTempFolder("HabitatSuitability")
 
 # Set of timesteps to analyse
-timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
+timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=outputFreq)
 
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
@@ -69,6 +77,8 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
             #Remove clump observations with frequency smaller than minimum habitat patch size (ha)
             habitatClumpID <- habitatClumpID[habitatClumpID$count < patchSizeThreshold/conversionFromHa,]
             habitatRaster[Which(habitatClump %in% habitatClumpID$value)] <- 0
+            #Set NA's from habitat suitability
+            habitatRaster[is.na(suitabilityRaster)]<-NA
 
             #Save rasters
             suitabilityName = file.path(tempFolderPath, CreateRasterFileName2("HabitatSuitability", speciesCode, iteration, timestep, "tif"))

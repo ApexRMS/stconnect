@@ -11,21 +11,47 @@ library(tidyverse)
 e = ssimEnvironment()
 source(file.path(e$PackageDirectory, "common.R"))
 
-# Parameters
-# These will eventually be moved to the UI
-# Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 10
+# Output frequency of circuit connectivity analyses ---------------------------------------------------
 
-#directory where Circuitscape is installed
-CS_exe<-"\"C:/Program Files/Circuitscape/cs_run.exe\"" # Don't forget the "Program Files" problem
+# Get the output options datasheet
+outputOptionsDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CCOutputOptions")
+
+# If datasheet is not empty, get the output frequency
+if(is.na(outputOptionsDatasheet$SpatialOutputCCTimesteps)){
+  stop("No circuit connectivity output frequency specified.")
+} else {
+  outputFreq <- outputOptionsDatasheet$SpatialOutputCCTimesteps
+}
+
+
+# Julia Info -------------------------------------------------------------
+
+# Get the spades datasheet 
+juliaDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CCJuliaConfig")
+
+# If datasheet is not empty, get the path
+if(nrow(juliaDatasheet) == 0){
+  stop("No Julia executable specified.")
+} else {
+  if (is.na(juliaDatasheet$Filename)){
+    stop("No Julia executable specified.")
+  } else {
+    juliaExePath <- juliaDatasheet$Filename
+  }
+}
+
 
 #file paths
 tempFolderPath = envTempFolder("CircuitConnectivity")
+#temporary folder to save outputs that is very short
+#this is a short-term fix because the Julia version of Circuitscape does not handle long file paths
+tempFolderPath1 = "C:"
 
 #datasheets
 stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
-resistanceIn = GetDataSheetExpectData("stconnect_CCResistance", GLOBAL_Scenario)
-resistanceIn <- merge(resistanceIn, stateClassIn, by.x="StateClassID", by.y="Name")
+resistanceLULCIn = GetDataSheetExpectData("stconnect_CCLULCResistance", GLOBAL_Scenario)
+resistanceLULCIn <- merge(resistanceLULCIn, stateClassIn, by.x="StateClassID", by.y="Name")
+resistanceAgeIn = GetDataSheetExpectData("stconnect_CCAgeResistance", GLOBAL_Scenario)
 resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputResistance")
 circuitOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputCumulativeCurrent", empty=T)
 
@@ -38,7 +64,7 @@ outputFolderPath <- envOutputFolder(GLOBAL_Scenario, "stconnect_CCOutputCumulati
 write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 
 # Set of timesteps to analyse
-timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
+timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=outputFreq)
 
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
@@ -53,18 +79,25 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       
       species = GLOBAL_Species[sprow, "Name"]
       speciesCode = GLOBAL_Species[sprow, "Code"]
-      resistanceValues <- resistanceIn[which(resistanceIn$SpeciesID == species), c("ID", "Value")]
+      resistanceLULCValues <- resistanceLULCIn[which(resistanceLULCIn$SpeciesID == species), c("ID", "Value")]
+      resistanceAgeValues <- resistanceAgeIn[which(resistanceAgeIn$SpeciesID == species), c("AgeMin", "AgeMax", "Value")]
       
-      if (nrow(resistanceValues) == 0) {
+      if (nrow(resistanceLULCValues) == 0) {
+        next
+      }
+      if (nrow(resistanceAgeValues) == 0) {
         next
       }
       
       #Input stateclass raster
       stateMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
+      ageMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "stsim_OutputSpatialAge", iteration = iteration, timestep = timestep)
       
       #Resistance map
-      resistanceRaster <- reclassify(stateMap, rcl = resistanceValues)
-
+      resistanceLULCRaster <- reclassify(stateMap, rcl = resistanceLULCValues)
+      resistanceAgeRaster <- reclassify(ageMap, rcl = resistanceAgeValues, right=TRUE, include.lowest=TRUE)
+      resistanceRaster <- resistanceLULCRaster * resistanceAgeRaster
+      
       #Save rasters
       resistanceName = file.path(tempFolderPath, CreateRasterFileName2("Resistance", speciesCode, iteration, timestep, "tif"))
       writeRaster(resistanceRaster, resistanceName, overwrite = TRUE)
@@ -89,16 +122,13 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       writeRaster(focalRegionNS, focalRegionNSName, overwrite = TRUE)
       writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
       
-      # Calculate the mean resistance value and use it to replace NA values
-      meanResistanceValue <- round(cellStats(resistanceRaster, mean),0)
-      
       #extend resistanceRaster NS
       resistanceRasterNS<-extend(resistanceRaster,extentNS,value=1)
-      resistanceRasterNS[is.na(resistanceRasterNS)]<-meanResistanceValue
+      resistanceRasterNS[is.na(resistanceRasterNS)]<-100
       
       #extend resistanceRaster EW
       resistanceRasterEW<-extend(resistanceRaster,extentEW,value=1)
-      resistanceRasterEW[is.na(resistanceRasterEW)]<-meanResistanceValue
+      resistanceRasterEW[is.na(resistanceRasterEW)]<-100
       
       #Save rasters to temp folder
       resistanceRasterNSName = file.path(tempFolderPath, CreateRasterFileName2("NSResistance", species, iteration, timestep, "asc"))
@@ -110,45 +140,67 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
       NS_ini<-c("[circuitscape options]", 
                 "data_type = raster",
                 "scenario = pairwise",
-                "write_cur_maps = TRUE",
+                "write_cum_cur_map_only = true",
+                "write_cur_maps = true",
                 paste0("point_file = ", file.path(tempFolderPath, "NSfocalRegion.asc")),
                 paste0("habitat_file = ", resistanceRasterNSName),
-                paste0("output_file = ", file.path(outputFolderPath,"NS.out")))
+                paste0("output_file = ", file.path(tempFolderPath1,"NS.out")))
       writeLines(NS_ini,file.path(outputFolderPath,"NS.ini"))
       
       #make a E-W .ini file and save
       EW_ini<-c("[circuitscape options]", 
                 "data_type = raster",
                 "scenario = pairwise",
-                "write_cur_maps = TRUE",
+                "write_cum_cur_map_only = true",
+                "write_cur_maps = true",
                 paste0("point_file = ", file.path(tempFolderPath, "EWfocalRegion.asc")),
                 paste0("habitat_file = ", resistanceRasterEWName),
-                paste0("output_file = ", file.path(outputFolderPath,"EW.out")))
+                paste0("output_file = ", file.path(tempFolderPath1,"EW.out")))
       writeLines(EW_ini,file.path(outputFolderPath,"EW.ini"))
       
+      #make Julia scripts
+      NS_run_jl <- file(file.path(outputFolderPath, "NSscript.jl"))
+      writeLines(c("using Circuitscape", paste0("compute(", "\"", file.path(outputFolderPath, "NS.ini"),"\")")), NS_run_jl)
+      close(NS_run_jl)
+      
+      EW_run_jl <- file(file.path(outputFolderPath, "EWscript.jl"))
+      writeLines(c("using Circuitscape", paste0("compute(", "\"", file.path(outputFolderPath, "EW.ini"),"\")")), EW_run_jl)
+      close(EW_run_jl)
+      
       #make the N-S and E-W CS run cmds
-      NS_run <- paste(CS_exe, paste0("\"",file.path(outputFolderPath,"NS.ini"),"\""))
-      EW_run <- paste(CS_exe, paste0("\"",file.path(outputFolderPath,"EW.ini"),"\""))
+      #NS_run <- paste(CS_exe, paste0("\"",file.path(outputFolderPath,"NS.ini"),"\""))
+      #EW_run <- paste(CS_exe, paste0("\"",file.path(outputFolderPath,"EW.ini"),"\""))
+      NS_run <- paste(juliaExePath, paste0("\"",file.path(outputFolderPath,"NSscript.jl"),"\""))
+      EW_run <- paste(juliaExePath, paste0("\"",file.path(outputFolderPath,"EWscript.jl"),"\""))
       
       #run the commands
       system(NS_run)
       system(EW_run)
       
-      currMapNS<-crop(raster(file.path(outputFolderPath,"NS_cum_curmap.asc")),resistanceRaster)
-      currMapEW<-crop(raster(file.path(outputFolderPath,"EW_cum_curmap.asc")),resistanceRaster)
+      # Read in NS and EW cum current maps and combine
+      currMapNS<-crop(raster(file.path(tempFolderPath1,"NS_cum_curmap.asc")),resistanceRaster)
+      currMapEW<-crop(raster(file.path(tempFolderPath1,"EW_cum_curmap.asc")),resistanceRaster)
       currMapOMNI<-currMapEW+currMapNS
       currMapOMNI[is.na(resistanceRaster)]<-NA
       
-      #      currMapOMNI01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
       
-      
-      currMapOMNI_log<-log(currMapOMNI)
-      currMapOMNI_log01<-(currMapOMNI_log-cellStats(currMapOMNI_log,"min"))/(cellStats(currMapOMNI_log,"max")-cellStats(currMapOMNI_log,"min"))
-      
-      #Save Omni-directional current density raster
-      currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
-      writeRaster(currMapOMNI_log01, currMapOMNIName, overwrite=TRUE)
-      
+      # If output options datasheet column SpatialOutputCCRaw is TURE, save raw outputs
+      if(outputOptionsDatasheet$SpatialOutputCCRaw==TRUE){
+        currMapOMNI01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
+        #Save raw omni-directional current density raster
+        currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
+        writeRaster(currMapOMNI01, currMapOMNIName, overwrite=TRUE)
+      } 
+
+      # If output options datasheet column SpatialOutputCCLog is TURE, save log outputs
+      if(outputOptionsDatasheet$SpatialOutputCCLog==TRUE){
+        currMapOMNI_log<-log(currMapOMNI)
+        currMapOMNI_log01<-(currMapOMNI_log-cellStats(currMapOMNI_log,"min"))/(cellStats(currMapOMNI_log,"max")-cellStats(currMapOMNI_log,"min"))
+        #Save log Omni-directional current density raster
+        currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
+        writeRaster(currMapOMNI_log01, currMapOMNIName, overwrite=TRUE)
+      } 
+
       #Write output file
       data <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = currMapOMNIName)
       circuitOut <- addRow(circuitOut, data)

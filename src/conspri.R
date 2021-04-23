@@ -12,12 +12,39 @@ library(tidyverse)
 e = ssimEnvironment()
 source(file.path(e$PackageDirectory, "common.R"))
 
+# Output frequency of conservation prioritization analyses ---------------------------------------------------
+
+# Get the output options datasheet
+outputOptionsDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CPOutputOptions")
+
+# If datasheet is not empty, get the output frequency
+if(is.na(outputOptionsDatasheet$SpatialOutputCPTimesteps)){
+  stop("No conservation prioritization output frequency specified.")
+} else {
+  outputFreq <- outputOptionsDatasheet$SpatialOutputCPTimesteps
+}
+
+
+# Zonation Info -------------------------------------------------------------
+
+# Get the spades datasheet 
+zonationDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CPZonationConfig")
+
+# If datasheet is not empty, get the path
+if(nrow(zonationDatasheet) == 0){
+  stop("No Zonation executable specified.")
+} else {
+  if (is.na(zonationDatasheet$Filename)){
+    stop("No Zonation executable specified.")
+  } else {
+    zonationExePath <- zonationDatasheet$Filename
+  }
+}
+
 # Parameters
 # These will eventually be moved to the UI
 # Which carbon stock group should be used in prioritization
 carbonPriorityStockGroupName <- "Total Ecosystem"
-# Temporal resolution of analysis in years, e.g. analye every 10 years
-temporalRes <- 10
 
 #datasheets
 runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)
@@ -25,7 +52,6 @@ prioritizationOut = datasheet(GLOBAL_Scenario, "stconnect_CPOutputCumulative")
 
 #file paths
 tempFolderPath = envTempFolder("ConservationPrioritization")
-zonationPath<-"C:/Program Files/zonation 4.0.0rc1_compact/bin/zig4.exe"
 
 rasTemplate<-datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = GLOBAL_MinIteration, timestep = GLOBAL_MinTimestep)[[1]]
 rasRes<-res(rasTemplate)[1]
@@ -42,7 +68,7 @@ zonationSetName <- paste(tempFolderPath, "RunSetting.dat", sep="/")
 writeLines(zonationSet, zonationSetName)
 
 # Set of timesteps to analyse
-timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=temporalRes)
+timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=outputFreq)
 
 #Simulation
 envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
@@ -53,33 +79,31 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     
     envReportProgress(iteration, timestep)
     
-    # carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
-    # # Keep only Total Ecosystem Carbon
-    # # Connect to SQLite database
-    # mydbname <- filepath(GLOBAL_Library)
-    # mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
-    # # Get Stock Group Table
-    # stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
-    # # Disconnect from database
-    # dbDisconnect(mydb)
-    # 
-    # # Get stock group id
-    # stockGroupID <- stockGroupTable %>%
-    #   filter(Name == carbonPriorityStockGroupName) %>%
-    #   pull(StockGroupID)
-    # 
-    # # Identify the focal raster from raster stack of stock groups
-    # result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
-    # for(i in 1:length(names(carbonStockRasters))){
-    #   result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
-    # }
-    # carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
-    # rasIn<-stack(carbonStockRasters,
-    #              datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
-    #              datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+    carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
+    # Keep only Total Ecosystem Carbon
+    # Connect to SQLite database
+    mydbname <- filepath(GLOBAL_Library)
+    mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
+    # Get Stock Group Table
+    stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
+    # Disconnect from database
+    dbDisconnect(mydb)
 
-    rasIn<-stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+    # Get stock group id
+    stockGroupID <- stockGroupTable %>%
+      filter(Name == carbonPriorityStockGroupName) %>%
+      pull(StockGroupID)
+    
+    # Identify the focal raster from raster stack of stock groups
+    result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
+    for(i in 1:length(names(carbonStockRasters))){
+      result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
+    }
+    carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
+    rasIn<-stack(carbonStockRasters,
+                 datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
                  datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+
     rasOut<-extend(rasIn, rasExtend, -9999)
     rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)
@@ -93,7 +117,7 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     writeLines(zonationScenario, zonationScenarioName)
             
     #run Zonation
-    system(paste0("\"",zonationPath, "\" ", zonationScenario))
+    system(paste0("\"",zonationExePath, "\" ", zonationScenario))
 
     df = data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
     prioritizationOut<-addRow(prioritizationOut, df)
