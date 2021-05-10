@@ -503,7 +503,7 @@
         <item name="CCJuliaConfig" itemTransformer="CircuitConnectivity" showIf="isParent"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-        <!--<item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps"/>-->
+        <item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps"/>
         <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" itemTransformer="ConservationPrioritization" showIf="isParent"/>
         <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" itemTransformer="ConservationPrioritization" showIf="isParent"/>
         <item name="CPRunSetting" itemTransformer="ConservationPrioritization" showIf="isParent"/>
