@@ -79,28 +79,28 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     
     envReportProgress(iteration, timestep)
     
-    # carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
-    # # Keep only Total Ecosystem Carbon
-    # # Connect to SQLite database
-    # mydbname <- filepath(GLOBAL_Library)
-    # mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
-    # # Get Stock Group Table
-    # stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
-    # # Disconnect from database
-    # dbDisconnect(mydb)
-    # 
-    # # Get stock group id
-    # stockGroupID <- stockGroupTable %>%
-    #   filter(Name == carbonPriorityStockGroupName) %>%
-    #   pull(StockGroupID)
-    # 
-    # # Identify the focal raster from raster stack of stock groups
-    # result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
-    # for(i in 1:length(names(carbonStockRasters))){
-    #   result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
-    # }
-    # carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
-    rasIn<-stack(#carbonStockRasters,
+    carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
+    # Keep only Total Ecosystem Carbon
+    # Connect to SQLite database
+    mydbname <- filepath(GLOBAL_Library)
+    mydb <- dbConnect(drv = SQLite(), dbname= mydbname)
+    # Get Stock Group Table
+    stockGroupTable <- dbGetQuery(mydb, 'SELECT * FROM stsimsf_StockGroup')
+    # Disconnect from database
+    dbDisconnect(mydb)
+
+    # Get stock group id
+    stockGroupID <- stockGroupTable %>%
+      filter(Name == carbonPriorityStockGroupName) %>%
+      pull(StockGroupID)
+    
+    # Identify the focal raster from raster stack of stock groups
+    result <- data.frame("CarbonPriority"=rep(NA, length(names(carbonStockRasters))))
+    for(i in 1:length(names(carbonStockRasters))){
+      result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
+    }
+    carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
+    rasIn<-stack(carbonStockRasters,
                  datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
                  datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
 

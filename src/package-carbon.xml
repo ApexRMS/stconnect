@@ -457,8 +457,8 @@
           <item name="corestime_External" displayName="External Program"/>
         </group>
       </group>
-      <!--<group name="stsim_Advanced" displayName="Carbon">
-      </group> -->
+      <group name="stsim_Advanced" displayName="Carbon">
+      </group>
 	  <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
@@ -479,7 +479,7 @@
 		<item name="CCJuliaConfig"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-	    <!--<item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>-->
+	    <item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>
         <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
         <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
         <item name="CPRunSetting"/>
