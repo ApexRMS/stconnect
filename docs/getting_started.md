@@ -13,8 +13,8 @@ This quickstart tutorial will introduce you to basics of working with ST-Connect
 * Creating a new ST-Connect Library
 * Configuring the ST-Connect Library
 * Viewing model inputs
-* Running the model
-* Analyzing the results
+* Running the model (coming soon)
+* Analyzing the results (coming soon)
 
 ## **Step 1: Install ST-Connect**
 **ST-Connect** is a Package within the [SyncroSim](https://syncrosim.com/) simulation modeling framework; as such, running **ST-Connect** requires that the **SyncroSim** software be installed on your computer. To install **ST-Connect**, follow the instructions under [How to Install](https://apexrms.github.io/stconnect/)
