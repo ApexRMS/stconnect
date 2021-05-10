@@ -13,7 +13,7 @@ permalink: /
 ### *ST-Connect* is an open-source [SyncroSim](https://syncrosim.com/download/) Base Package for forecasting landscape connectivity.
 
 
-**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change, landscape connectivity, and conservation prioritization.
+**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change, dispersal resistance, and landscape connectivity (Figure 1).
 **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/) modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/) R package.
 
 ## Requirements
@@ -38,17 +38,17 @@ Download and install [Circuitscape 4](https://circuitscape.org/downloads/).
 <br>
 Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 <br>
-Download the latest release of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
+Download the v1.1.10 of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
 <br>
 <br>
 Open SyncroSim and select **File -> Packages… -> Install…**, then select the **ST-Connect** package and click OK.
 
-Alternatively, download [the latest release from GitHub](https://github.com/ApexRMS/stconnect/releases/). Open SyncroSim and select File -> Packages… -> Install From File…, then navigate to the downloaded package file with the extension *.ssimpkg*.
+Alternatively, download [v1.1.10 from GitHub](https://github.com/ApexRMS/stconnect/releases/). Open SyncroSim and select File -> Packages… -> Install From File…, then navigate to the downloaded package file with the extension *.ssimpkg*.
 <br>
 <br>
 ## Getting Started
 
-For more information on **ST-Connect**, including a Quickstart Tutorial, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page.
+For more information on **ST-Connect**, including a Quickstart Tutorial (under construction), see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page.
 <br>
 <br>
 ## Links
