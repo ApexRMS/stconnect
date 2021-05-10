@@ -9,15 +9,13 @@
       name="Primary"
       displayName="Connectivity planning for future climate and land-use change"
       isPrimary="True">
-      <runtime>
-        <transformer name="STSimWrapper"/>
+      <include>
+        <transformer name="Global"/>
+        <transformer name="LandscapeChange"/>
         <transformer name="HabitatSuitability"/>
         <transformer name="CircuitConnectivity"/>
         <transformer name="ConservationPrioritization"/>
-      </runtime>
-      <include>
         <transformer name="corestime_Runtime"/>
-        <transformer name="Global"/>
       </include>
     </transformer>
 
@@ -41,14 +39,12 @@
       </datafeeds>
     </transformer>
 
-    <!--STSimWrapper Transformer-->
+    <!--LandscapeChange Transformer-->
     <transformer
-      name="STSimWrapper"
+      name="LandscapeChange"
       displayName ="Landscape Change"
-      userRunnable="True">
-      <runtime>
-        <transformer name="stsim_Primary" displayName="Landscape Change"/>
-      </runtime>
+      isRunnable="True"
+      isProxyFor="stsim_Primary">    
     </transformer>
 
     <!--HabitatSuitability Transformer-->
@@ -60,7 +56,15 @@
       className="SyncroSim.StochasticTime.StochasticTimeTransformer"
       classAssembly="SyncroSim.StochasticTime"
       configurationSheet="stsim_RunControl"
-      userRunnable="True">
+      isRunnable="True">
+      <pipeline>
+        <datafeed name="stsim_RunControl"/>      
+        <datafeed name="stsim_OutputOptionsSpatial"/>          
+        <datafeed name="stsim_OutputSpatialState"/>
+        <datafeed name="HSOutputOptions"/>  
+        <datafeed name="HSHabitatSuitability"/>    
+        <datafeed name="HSHabitatPatch"/>       
+      </pipeline>
       <datafeeds>
         <datafeed name="HSHabitatSuitability" displayName="Habitat Suitability" dataScope="Scenario">
           <datasheets>
@@ -116,7 +120,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-		<datafeed name="HSOutputHabitatSuitability" dataScope="Scenario" isOutput="True">
+        <datafeed name="HSOutputHabitatSuitability" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="HSOutputHabitatSuitability" spatialMultiProcessing="True">
               <columns>
@@ -156,7 +160,16 @@
       className="SyncroSim.StochasticTime.StochasticTimeTransformer"
       classAssembly="SyncroSim.StochasticTime"
       configurationSheet="stsim_RunControl"
-      userRunnable="True">
+      isRunnable="True">
+      <pipeline>
+        <datafeed name="stsim_RunControl"/> 
+        <datafeed name="stsim_OutputSpatialState"/>
+        <datafeed name="stsim_OutputSpatialAge"/>  
+        <datafeed name="CCOutputOptions"/>   
+        <datafeed name="CCJuliaConfig"/>  
+        <datafeed name="CCLULCResistance"/>   
+        <datafeed name="CCAgeResistance"/>             
+      </pipeline>
       <datafeeds>
         <datafeed name="HSLandcover" displayName="Landcover Maps" dataScope="Scenario">
           <datasheets>
@@ -195,7 +208,7 @@
                 <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d" isOptional="True"/>
                 <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" isOptional="True"/>
                 <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
-<!--                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False"/> -->
+                <!--                <column name="StateClassID" dataType="Integer" displayName="State Class" validationType="Datasheet" formula1="stsim_StateClass" allowDbNull="False"/> -->
                 <column name="AgeMin" displayName="Age Min" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="AgeMax" displayName="Age Max" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
                 <column name="Value" dataType="Integer" allowDbNull="False"/>
@@ -203,7 +216,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-		<datafeed name="CCOutputOptions" displayName="Output Options" dataScope="Scenario">
+        <datafeed name="CCOutputOptions" displayName="Output Options" dataScope="Scenario">
           <datasheets>
             <datasheet name="CCOutputOptions" displayName="CC Output Options" isSingleRow="True">
               <columns>
@@ -216,7 +229,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-		<datafeed name="CCJuliaConfig" displayName="Julia Configuration" dataScope="Scenario">
+        <datafeed name="CCJuliaConfig" displayName="Julia Configuration" dataScope="Scenario">
           <datasheets>
             <datasheet name="CCJuliaConfig" displayName="Julia Configuration" isSingleRow="True">
               <columns>
@@ -226,7 +239,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-		<datafeed name="CCOutputResistance" dataScope="Scenario" isOutput="True">
+        <datafeed name="CCOutputResistance" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CCOutputResistance" spatialMultiProcessing="True">
               <columns>
@@ -240,7 +253,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-       <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
+        <datafeed name="CCOutputCumulativeCurrent" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CCOutputCumulativeCurrent" spatialMultiProcessing="True">
               <columns>
@@ -254,7 +267,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-       </datafeeds>
+      </datafeeds>
     </transformer>
 
     <!--ConservationPrioritization Transformer-->
@@ -266,7 +279,12 @@
       className="SyncroSim.StochasticTime.StochasticTimeTransformer"
       classAssembly="SyncroSim.StochasticTime"
       configurationSheet="stsim_RunControl"
-      userRunnable="True">
+      isRunnable="True">
+      <pipeline>
+        <datafeed name="stsim_RunControl"/> 
+        <datafeed name="stconnect_HSOutputHabitatSuitability"/>
+        <datafeed name="stconnect_CCOutputCumulativeCurrent"/>
+      </pipeline>
       <datafeeds>
         <datafeed name="CPRunSetting" displayName="Run Settings" dataScope="Scenario">
           <datasheets>
@@ -282,7 +300,7 @@
             </datasheet>
           </datasheets>
         </datafeed>
-		<datafeed name="CPOutputOptions" displayName="Output Options" dataScope="Scenario">
+        <datafeed name="CPOutputOptions" displayName="Output Options" dataScope="Scenario">
           <datasheets>
             <datasheet name="CPOutputOptions" displayName="CP Output Options" isSingleRow="True">
               <columns>
@@ -292,8 +310,8 @@
               </columns>
             </datasheet>
           </datasheets>
-		 </datafeed>
-		<datafeed name="CPZonationConfig" displayName="Zonation Configuration" dataScope="Scenario">
+        </datafeed>
+        <datafeed name="CPZonationConfig" displayName="Zonation Configuration" dataScope="Scenario">
           <datasheets>
             <datasheet name="CPZonationConfig" displayName="Zonation Configuration" isSingleRow="True">
               <columns>
@@ -302,7 +320,7 @@
               </columns>
             </datasheet>
           </datasheets>
-        </datafeed>		 
+        </datafeed>
         <datafeed name="CPOutputCumulative" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CPOutputCumulative" spatialMultiProcessing="True">
@@ -401,90 +419,96 @@
         </group>
         <item name="stsim_Terminology"/>
       </group>
-	        <group name="stsim_Advanced" displayName="Carbon">
+      <!--<group name="stsim_Advanced" displayName="Carbon">
+      </group> -->
+      <group name="Pipeline">
+        <item name="core_Transformer"/>
+        <item name="core_StageName"/>
+        <item name="core_StageValue"/>
       </group>
     </layout>
 
     <!--Scenario Datafeeds Layout-->
     <layout name="coreforms_ScenarioDatafeeds">
+      <item name="core_Pipeline"/>
       <item name="stsim_RunControl"/>
       <group name="LandscapeChangeGroup" displayName="Landscape Change">
-        <item name="stsim_Transition" displayName="Transition Pathways"/>
+        <item name="stsim_Transition" displayName="Transition Pathways" itemTransformer="LandscapeChange" showIf="isParent"/>
         <group name="InitialConditions" displayName="Initial Conditions">
-          <item name="stsim_InitialConditionsNonSpatial" displayName="Non Spatial"/>
-          <item name="stsim_InitialConditionsSpatial" displayName="Spatial"/>
+          <item name="stsim_InitialConditionsNonSpatial" displayName="Non Spatial" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_InitialConditionsSpatial" displayName="Spatial" itemTransformer="LandscapeChange" showIf="isParent"/>
         </group>
-        <item name="stsim_TransitionTarget"/>
-        <group name="OutputOptions" displayName="Output Options"> 
-          <item name="stsim_OutputOptions"/>
-          <item name="stsim_OutputOptionsSpatial"/>
-          <item name="stsim_OutputOptionsSpatialAverage"/>
+        <item name="stsim_TransitionTarget" itemTransformer="LandscapeChange" showIf="isParent"/>
+        <group name="OutputOptions" displayName="Output Options">
+          <item name="stsim_OutputOptions" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_OutputOptionsSpatial" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_OutputOptionsSpatialAverage" itemTransformer="LandscapeChange" showIf="isParent"/>
         </group>
         <group name="Advanced">
-          <item name="stsim_TransitionMultiplierValue" displayName="Transitions - Multipliers"/>
+          <item name="stsim_TransitionMultiplierValue" displayName="Transitions - Multipliers" itemTransformer="LandscapeChange" showIf="isParent"/>
           <group name="TransitionsSpatialGroup" displayName="Transitions - Spatial">
             <group name="TransitionsSizeGroup" displayName="Transition Size">
-              <item name="stsim_TransitionSizeDistribution"/>
-              <item name="stsim_TransitionSizePrioritization"/>
+              <item name="stsim_TransitionSizeDistribution" itemTransformer="LandscapeChange" showIf="isParent"/>
+              <item name="stsim_TransitionSizePrioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
             </group>
-            <item name="stsim_TransitionSpreadDistribution"/>
-            <item name="stsim_TransitionPatchPrioritization"/>
-            <item name="stsim_TransitionSpatialMultiplier"/>
-            <item name="stsim_TransitionSpatialInitiationMultiplier"/>
-            <item name="stsim_TransitionDirectionMultiplier"/>
-            <item name="stsim_TransitionSlopeMultiplier"/>
-            <item name="stsim_TransitionAdjacencyMultiplier"/>
-            <item name="stsim_TransitionPathwayAutoCorrelation"/>
+            <item name="stsim_TransitionSpreadDistribution" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionPatchPrioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionSpatialMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionSpatialInitiationMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionDirectionMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionSlopeMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionAdjacencyMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionPathwayAutoCorrelation" itemTransformer="LandscapeChange" showIf="isParent"/>
           </group>
-          <item name="stsim_TransitionOrder" displayName="Transitions - Order"/>
-          <item name="stsim_TransitionTargetPrioritization" displayName="Transitions - Target Prioritization"/>
+          <item name="stsim_TransitionOrder" displayName="Transitions - Order" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_TransitionTargetPrioritization" displayName="Transitions - Target Prioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
           <group name="TSTGroup" displayName="Time Since Transition">
-            <item name="stsim_TimeSinceTransitionGroup"/>
-            <item name="stsim_TimeSinceTransitionRandomize"/>
+            <item name="stsim_TimeSinceTransitionGroup" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TimeSinceTransitionRandomize" itemTransformer="LandscapeChange" showIf="isParent"/>
           </group>
           <group name="Attributes">
-            <item name="stsim_StateAttributeValue"/>
-            <item name="stsim_TransitionAttributeValue"/>
-            <item name="stsim_TransitionAttributeTarget"/>
-            <item name="stsim_TransitionAttributeTargetPrioritization" displayName="Attribute Target Prioritization"/>
+            <item name="stsim_StateAttributeValue" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionAttributeValue" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionAttributeTarget" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionAttributeTargetPrioritization" displayName="Attribute Target Prioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
           </group>
-          <item name="stsim_DistributionValue"/>
-          <item name="corestime_ExternalVariableValue"/>
+          <item name="stsim_DistributionValue" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="corestime_ExternalVariableValue" itemTransformer="LandscapeChange" showIf="isParent"/>
           <group name="Multiprocessing">
-            <item name="stsim_Multiprocessing"/>
-            <item name="corestime_Multiprocessing"/>
+            <item name="stsim_Multiprocessing" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="corestime_Multiprocessing" itemTransformer="LandscapeChange" showIf="isParent"/>
           </group>
-          <item name="corestime_External" displayName="External Program"/>
+          <item name="corestime_External" displayName="External Program" itemTransformer="LandscapeChange" showIf="isParent"/>
         </group>
       </group>
       <!--<group name="stsim_Advanced" displayName="Carbon">
       </group> -->
-	  <group name="Habitat">
+	    <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
-          <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
-          <item name="HSLandcover" displayName="Manually Entered"/>
+          <item name="stsim_OutputSpatialState" displayName="From Model" itemTransformer="HabitatSuitability" showIf="isParent"/>
+          <item name="HSLandcover" displayName="Manually Entered" itemTransformer="HabitatSuitability" showIf="isParent"/>
         </group>
-        <item name="HSHabitatSuitability"/>
-        <item name="HSHabitatPatch"/>
-		<item name="HSOutputOptions"/>
+        <item name="HSHabitatSuitability" itemTransformer="HabitatSuitability" showIf="isParent"/>
+        <item name="HSHabitatPatch" itemTransformer="HabitatSuitability" showIf="isParent"/>
+        <item name="HSOutputOptions" itemTransformer="HabitatSuitability" showIf="isParent"/>
       </group>
-      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
+      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity" itemTransformer="CircuitConnectivity" showIf="isParent">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
-          <item name="stsim_OutputSpatialState" displayName="From Model" forceVisible="True"/>
-          <item name="CCLandcover" displayName="Manually Entered"/>
+          <item name="stsim_OutputSpatialState" displayName="From Model" itemTransformer="CircuitConnectivity" showIf="isParent"/>
+          <item name="CCLandcover" displayName="Manually Entered" itemTransformer="CircuitConnectivity" showIf="isParent"/>
         </group>
-        <item name="CCLULCResistance"/>
-        <item name="CCAgeResistance"/>
-		<item name="CCOutputOptions"/>
-		<item name="CCJuliaConfig"/>
+        <item name="CCLULCResistance" itemTransformer="CircuitConnectivity" showIf="isParent"/>
+        <item name="CCAgeResistance" itemTransformer="CircuitConnectivity" showIf="isParent"/>
+        <item name="CCOutputOptions" itemTransformer="CircuitConnectivity" showIf="isParent"/>
+        <item name="CCJuliaConfig" itemTransformer="CircuitConnectivity" showIf="isParent"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
-	    <!--<item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>-->
-        <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" forceVisible="True"/>
-        <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" forceVisible="True"/>
-        <item name="CPRunSetting"/>
-		<item name="CPOutputOptions"/>
-		<item name="CPZonationConfig"/>
+        <!--<item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>-->
+        <item name="HSOutputHabitatSuitability" displayName="Habitat Suitability Maps" itemTransformer="ConservationPrioritization" showIf="isParent"/>
+        <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" itemTransformer="ConservationPrioritization" showIf="isParent"/>
+        <item name="CPRunSetting" itemTransformer="ConservationPrioritization" showIf="isParent"/>
+        <item name="CPOutputOptions" itemTransformer="ConservationPrioritization" showIf="isParent"/>
+        <item name="CPZonationConfig" itemTransformer="ConservationPrioritization" showIf="isParent"/>
       </group>
     </layout>
 
@@ -529,11 +553,11 @@
 
     <!--Maps Layout-->
     <layout name="corestimeforms_Maps" configurationSheet="stsim_RunControl">
-	  <group name="LandscapeChangeGroup" displayName="Landscape Change">
+      <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_sc" displayName="State Classes" dataSheet="stsim_OutputSpatialState" column="Filename" xcolorMapSource="stsim_StateClass"/>
         <item name="stsim_scavg" displayName="State Classes (avg)" dataSheet="stsim_OutputSpatialAverageStateClass" column="Filename" filter="StateClassID" extendedIdentifier="(Probability for all Iterations)"/>
         <item name="stsim_tg" displayName="Transitions" dataSheet="stsim_OutputSpatialTransition" column="Filename" filter="TransitionGroupID" colorMapSource="stsim_TransitionType"/>
-        <item name="stsim_tgavg" displayName="Transitions (avg)" dataSheet="stsim_OutputSpatialAverageTransitionProbability" column="Filename" filter="TransitionGroupID" extendedIdentifier="(Probability for all Iterations)"/>    
+        <item name="stsim_tgavg" displayName="Transitions (avg)" dataSheet="stsim_OutputSpatialAverageTransitionProbability" column="Filename" filter="TransitionGroupID" extendedIdentifier="(Probability for all Iterations)"/>
       </group>
       <group name="Habitat">
         <item name="HSHabitatSuitability" displayName="Habitat Suitability" dataSheet="HSOutputHabitatSuitability" column="Filename" filter="SpeciesID" extendedIdentifier="Habitat Suitability"></item>
