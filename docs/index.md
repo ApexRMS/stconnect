@@ -13,7 +13,7 @@ permalink: /
 ### *ST-Connect* is an open-source [SyncroSim](https://syncrosim.com/download/) Base Package for forecasting landscape connectivity.
 
 
-**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change, dispersal resistance, and landscape connectivity (Figure 1).
+**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change, dispersal resistance, and landscape connectivity.
 **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/) modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/) R package.
 
 ## Requirements
@@ -38,7 +38,7 @@ Download and install [Circuitscape 4](https://circuitscape.org/downloads/).
 <br>
 Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 <br>
-Download the v1.1.10 of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
+Download v1.1.10 of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
 <br>
 <br>
 Open SyncroSim and select **File -> Packages… -> Install…**, then select the **ST-Connect** package and click OK.
