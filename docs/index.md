@@ -14,6 +14,9 @@ permalink: /
 
 
 **ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change, dispersal resistance, and landscape connectivity.
+<br>
+<img align="middle" style="padding: 3px" width="700" src="assets/images/pipeline-1.PNG">
+<br>
 **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/) modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/) R package.
 
 ## Requirements
