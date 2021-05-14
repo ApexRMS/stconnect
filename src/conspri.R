@@ -25,6 +25,9 @@ if(is.na(outputOptionsDatasheet$SpatialOutputCPTimesteps)){
 }
 
 
+currMapOMNI_log01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
+
+
 # Zonation Info -------------------------------------------------------------
 
 # Get the spades datasheet 

@@ -223,8 +223,7 @@
                 <column name="OutputOptionsID" dataType="Integer" isPrimary="True"/>
                 <column name="ScenarioID" dataType="Integer"/>
                 <column name="SpatialOutputCCTimesteps" displayName="Connectivity output frequency" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0" format="d"/>
-                <column name="SpatialOutputCCRaw" displayName="Raw current density" dataType="Boolean"/>
-                <column name="SpatialOutputCCLog" displayName="Log-transformed current density" dataType="Boolean"/>
+                <column name="SpatialOutputCCLog" displayName="Log-transform current density" dataType="Boolean"/>
               </columns>
             </datasheet>
           </datasheets>
@@ -235,6 +234,19 @@
               <columns>
                 <column name="ScenarioID" dataType="Integer" isPrimary="True" />
                 <column name="Filename" displayName="Julia executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Julia |julia.exe" externalFileAbsolute="True" />
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="CCOutputMetric" dataScope="Scenario" isOutput="True">
+          <datasheets>
+            <datasheet name="CCOutputMetric">
+              <columns>
+                <column name="ScenarioID" dataType="Integer" isCompositeIndex="True"/>
+                <column name="Iteration" dataType="Integer" isCompositeIndex="True" format="d"/>
+                <column name="Timestep" dataType="Integer" isCompositeIndex="True" format="d"/>
+                <column name="SpeciesID" displayName="Species" dataType="Integer" validationType="Datasheet" formula1="Species" allowDbNull="False"/>
+                <column name="EffectivePermeability" displayName="Effective Permeability" dataType="Double" allowDbNull="False"/>
               </columns>
             </datasheet>
           </datasheets>
@@ -433,52 +445,52 @@
       <item name="core_Pipeline"/>
       <item name="stsim_RunControl"/>
       <group name="LandscapeChangeGroup" displayName="Landscape Change">
-        <item name="stsim_Transition" displayName="Transition Pathways" itemTransformer="LandscapeChange" showIf="isParent"/>
+        <item name="stsim_Transition" displayName="Transition Pathways" itemTransformer="LandscapeChange" showIf="isEither"/>
         <group name="InitialConditions" displayName="Initial Conditions">
-          <item name="stsim_InitialConditionsNonSpatial" displayName="Non Spatial" itemTransformer="LandscapeChange" showIf="isParent"/>
-          <item name="stsim_InitialConditionsSpatial" displayName="Spatial" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_InitialConditionsNonSpatial" displayName="Non Spatial" itemTransformer="LandscapeChange" showIf="isEither"/>
+          <item name="stsim_InitialConditionsSpatial" displayName="Spatial" itemTransformer="LandscapeChange" showIf="isEither"/>
         </group>
-        <item name="stsim_TransitionTarget" itemTransformer="LandscapeChange" showIf="isParent"/>
+        <item name="stsim_TransitionTarget" itemTransformer="LandscapeChange" showIf="isEither"/>
         <group name="OutputOptions" displayName="Output Options">
-          <item name="stsim_OutputOptions" itemTransformer="LandscapeChange" showIf="isParent"/>
-          <item name="stsim_OutputOptionsSpatial" itemTransformer="LandscapeChange" showIf="isParent"/>
-          <item name="stsim_OutputOptionsSpatialAverage" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_OutputOptions" itemTransformer="LandscapeChange" showIf="isEither"/>
+          <item name="stsim_OutputOptionsSpatial" itemTransformer="LandscapeChange" showIf="isEither"/>
+          <item name="stsim_OutputOptionsSpatialAverage" itemTransformer="LandscapeChange" showIf="isEither"/>
         </group>
         <group name="Advanced">
-          <item name="stsim_TransitionMultiplierValue" displayName="Transitions - Multipliers" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_TransitionMultiplierValue" displayName="Transitions - Multipliers" itemTransformer="LandscapeChange" showIf="isEither"/>
           <group name="TransitionsSpatialGroup" displayName="Transitions - Spatial">
             <group name="TransitionsSizeGroup" displayName="Transition Size">
-              <item name="stsim_TransitionSizeDistribution" itemTransformer="LandscapeChange" showIf="isParent"/>
-              <item name="stsim_TransitionSizePrioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
+              <item name="stsim_TransitionSizeDistribution" itemTransformer="LandscapeChange" showIf="isEither"/>
+              <item name="stsim_TransitionSizePrioritization" itemTransformer="LandscapeChange" showIf="isEither"/>
             </group>
-            <item name="stsim_TransitionSpreadDistribution" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionPatchPrioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionSpatialMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionSpatialInitiationMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionDirectionMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionSlopeMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionAdjacencyMultiplier" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionPathwayAutoCorrelation" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TransitionSpreadDistribution" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionPatchPrioritization" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionSpatialMultiplier" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionSpatialInitiationMultiplier" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionDirectionMultiplier" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionSlopeMultiplier" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionAdjacencyMultiplier" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionPathwayAutoCorrelation" itemTransformer="LandscapeChange" showIf="isEither"/>
           </group>
-          <item name="stsim_TransitionOrder" displayName="Transitions - Order" itemTransformer="LandscapeChange" showIf="isParent"/>
-          <item name="stsim_TransitionTargetPrioritization" displayName="Transitions - Target Prioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_TransitionOrder" displayName="Transitions - Order" itemTransformer="LandscapeChange" showIf="isEither"/>
+          <item name="stsim_TransitionTargetPrioritization" displayName="Transitions - Target Prioritization" itemTransformer="LandscapeChange" showIf="isEither"/>
           <group name="TSTGroup" displayName="Time Since Transition">
-            <item name="stsim_TimeSinceTransitionGroup" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TimeSinceTransitionRandomize" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_TimeSinceTransitionGroup" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TimeSinceTransitionRandomize" itemTransformer="LandscapeChange" showIf="isEither"/>
           </group>
           <group name="Attributes">
-            <item name="stsim_StateAttributeValue" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionAttributeValue" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionAttributeTarget" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="stsim_TransitionAttributeTargetPrioritization" displayName="Attribute Target Prioritization" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_StateAttributeValue" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionAttributeValue" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionAttributeTarget" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="stsim_TransitionAttributeTargetPrioritization" displayName="Attribute Target Prioritization" itemTransformer="LandscapeChange" showIf="isEither"/>
           </group>
-          <item name="stsim_DistributionValue" itemTransformer="LandscapeChange" showIf="isParent"/>
-          <item name="corestime_ExternalVariableValue" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="stsim_DistributionValue" itemTransformer="LandscapeChange" showIf="isEither"/>
+          <item name="corestime_ExternalVariableValue" itemTransformer="LandscapeChange" showIf="isEither"/>
           <group name="Multiprocessing">
-            <item name="stsim_Multiprocessing" itemTransformer="LandscapeChange" showIf="isParent"/>
-            <item name="corestime_Multiprocessing" itemTransformer="LandscapeChange" showIf="isParent"/>
+            <item name="stsim_Multiprocessing" itemTransformer="LandscapeChange" showIf="isEither"/>
+            <item name="corestime_Multiprocessing" itemTransformer="LandscapeChange" showIf="isEither"/>
           </group>
-          <item name="corestime_External" displayName="External Program" itemTransformer="LandscapeChange" showIf="isParent"/>
+          <item name="corestime_External" displayName="External Program" itemTransformer="LandscapeChange" showIf="isEither"/>
         </group>
       </group>
       <!--<group name="stsim_Advanced" displayName="Carbon">
@@ -548,6 +560,9 @@
       <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_StateClassNormalVariable" displayName="State Class Area" dataSheet="stsim_OutputStratumState" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID" defaultValue="0.0"/>
         <item name="stsim_TransitionNormalVariable" displayName="Transition Area" dataSheet="stsim_OutputStratumTransition" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID" defaultValue="0.0" skipTimestepZero="True"/>
+      </group>
+      <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
+        <item name="EffectivePermeability" displayName="Effective Permeability" dataSheet="stconnect_CCOutputMetric" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID" defaultValue="0.0"/>
       </group>
     </layout>
 

@@ -1,142 +1,144 @@
-# Workspace setup
+# Workspace setup -------------------------------------------------------------------------------------
 # Check for installed packages and install missing ones
-list.of.packages <- c("raster", "rsyncrosim", "tidyverse")
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-
-library(raster)
-library(rsyncrosim)
-library(tidyverse)
-
-e = ssimEnvironment()
-source(file.path(e$PackageDirectory, "common.R"))
-
-# Output frequency of circuit connectivity analyses ---------------------------------------------------
-
-# Get the output options datasheet
-outputOptionsDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CCOutputOptions")
-
-# If datasheet is not empty, get the output frequency
-if(is.na(outputOptionsDatasheet$SpatialOutputCCTimesteps)){
-  stop("No circuit connectivity output frequency specified.")
-} else {
-  outputFreq <- outputOptionsDatasheet$SpatialOutputCCTimesteps
-}
+packagesToLoad <- c("raster", "rsyncrosim", "dplyr")
+# Identify packages that are not already installed
+packagesToInstall <- packagesToLoad[!(packagesToLoad %in% installed.packages()[,"Package"])]
+# Install missing packages
+if(length(packagesToInstall)) install.packages(packagesToInstall)
+# Load packages
+lapply(packagesToLoad, library, character.only = TRUE)
 
 
-# Julia Info -------------------------------------------------------------
-
-# Get the spades datasheet 
-juliaDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CCJuliaConfig")
-
-# If datasheet is not empty, get the path
-if(nrow(juliaDatasheet) == 0){
-  stop("No Julia executable specified.")
-} else {
-  if (is.na(juliaDatasheet$Filename)){
-    stop("No Julia executable specified.")
-  } else {
-    juliaExePath <- juliaDatasheet$Filename
-  }
-}
-
-
-#file paths
+# Connect to ST-Connect library -----------------------------------------------------------------------
+# Path to package
+packagePath <- ssimEnvironment()$PackageDirectory
+# Active project
+myProject <- project()
+# Active scenario
+myScenario <- scenario()
+# Create SyncroSim temporary folder
 tempFolderPath = envTempFolder("CircuitConnectivity")
-#temporary folder to save outputs that is very short
-#this is a short-term fix because the Julia version of Circuitscape does not handle long file paths
-tempFolderPath1 = "C:"
-
-#datasheets
-stateClassIn = datasheet(GLOBAL_Scenario,"stsim_StateClass")
-resistanceLULCIn = GetDataSheetExpectData("stconnect_CCLULCResistance", GLOBAL_Scenario)
-resistanceLULCIn <- merge(resistanceLULCIn, stateClassIn, by.x="StateClassID", by.y="Name")
-resistanceAgeIn = GetDataSheetExpectData("stconnect_CCAgeResistance", GLOBAL_Scenario)
-resistanceOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputResistance")
-circuitOut = datasheet(GLOBAL_Scenario, "stconnect_CCOutputCumulativeCurrent", empty=T)
-
-#file paths
-tempFolderPath = envTempFolder("CircuitConnectivity")
-
-#Create ouput folder
-outputFolderPath <- envOutputFolder(GLOBAL_Scenario, "stconnect_CCOutputCumulativeCurrent")
-#Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
+# Temporary Hack: create folder to save outputs that is very short
+# This is a short-term fix because the Julia version of Circuitscape does not handle long file paths
+tempFolderPath1 = "C:\\Users\\bronw\\Documents\\CircuitscapeTemp"
+# Create output folder
+outputFolderPath <- envOutputFolder(myScenario, "stconnect_CCOutputCumulativeCurrent")
+# Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
 write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 
+# Source common R functions for error messaging
+source(file.path(packagePath, "common.R"))
+
+# Read in project datasheets
+speciesSet <- datasheetExpectData(myProject, "stconnect_Species")
+
+# Read in scenario datasheets
+# Input datasheets
+runSettings <- datasheetExpectData(myScenario, "stsim_RunControl")
+outputOptions <- datasheetExpectData(myScenario, "stconnect_CCOutputOptions")
+stateClass = datasheet(myScenario,"stsim_StateClass")
+resistanceLULCIn = datasheetExpectData(myScenario, "stconnect_CCLULCResistance")
+resistanceAgeIn = datasheetExpectData(myScenario, "stconnect_CCAgeResistance")
+juliaDatasheet <- datasheetExpectData(myScenario, "stconnect_CCJuliaConfig")
+
+# Output datasheets
+resistanceOut <- datasheet(myScenario, "stconnect_CCOutputResistance")
+circuitOut <- datasheet(myScenario, "stconnect_CCOutputCumulativeCurrent")
+effectivePermeabilityOut <- datasheet(myScenario, "stconnect_CCOutputMetric")
+
+# Manipulate datasheets and prep for simulation --------------------------------------------
+# Add state class id values to resistance LULC datasheet to be used when reclassing state class rasters
+resistanceLULCIn <- resistanceLULCIn %>%
+  left_join(stateClass, by = c("StateClassID" = "Name"))
+
 # Set of timesteps to analyse
-timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=outputFreq)
+timestepSet <- seq(runSettings$MinimumTimestep, runSettings$MaximumTimestep, by=outputOptions$SpatialOutputCCTimesteps)
 
-#Simulation
-envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
+# Total iterations
+totalIterations <- runSettings$MaximumIteration - runSettings$MinimumIteration + 1
+# Total timesteps
+totalTimesteps <- runSettings$MaximumTimestep - runSettings$MinimumTimestep + 1
 
-for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
+
+# Run simulation ---------------------------------------------------------------------------
+# Report on simulation progress
+envBeginSimulation(totalIterations * totalTimesteps)
+
+# Loop over all iterations, timesteps, and species
+for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
   
   for (timestep in timestepSet) {
     
+    # Report on simulation progress
     envReportProgress(iteration, timestep)
     
-    for (sprow in 1:nrow(GLOBAL_Species)) {
+    #Read in state class and age rasters for this iteration and timestep
+    stateclassMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
+    ageMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialAge", iteration = iteration, timestep = timestep)
+    
+    for (speciesRow in 1:nrow(speciesSet)) {
       
-      species = GLOBAL_Species[sprow, "Name"]
-      speciesCode = GLOBAL_Species[sprow, "Code"]
-      resistanceLULCValues <- resistanceLULCIn[which(resistanceLULCIn$SpeciesID == species), c("ID", "Value")]
-      resistanceAgeValues <- resistanceAgeIn[which(resistanceAgeIn$SpeciesID == species), c("AgeMin", "AgeMax", "Value")]
+      # Temporary Hack: create folder that has a short path for Circuitscape to write results to
+      dir.create(tempFolderPath1, recursive = TRUE)
       
-      if (nrow(resistanceLULCValues) == 0) {
+      # Species name
+      species <- speciesSet[speciesRow, "Name"]
+      # Species code
+      speciesCode <- speciesSet[speciesRow, "Code"]
+      
+      # Species resistance values LULC
+      resistanceLULCValues <- resistanceLULCIn %>%
+        filter(SpeciesID == species) %>%
+        select("ID", "Value")
+      # Species resistance values Age
+      resistanceAgeValues <- resistanceAgeIn %>%
+        filter(resistanceAgeIn$SpeciesID == species) %>%
+        select("AgeMin", "AgeMax", "Value")
+      
+      # Check if values exist for this species, if not move to next species 
+      if (nrow(resistanceLULCValues) == 0 || nrow(resistanceAgeValues) == 0) {
         next
       }
-      if (nrow(resistanceAgeValues) == 0) {
-        next
-      }
-      
-      #Input stateclass raster
-      stateMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
-      ageMap <- datasheetRaster(GLOBAL_Scenario, datasheet = "stsim_OutputSpatialAge", iteration = iteration, timestep = timestep)
-      
-      #Resistance map
-      resistanceLULCRaster <- reclassify(stateMap, rcl = resistanceLULCValues)
+
+      # Species resistance raster
+      resistanceLULCRaster <- reclassify(stateclassMap, rcl = resistanceLULCValues)
       resistanceAgeRaster <- reclassify(ageMap, rcl = resistanceAgeValues, right=TRUE, include.lowest=TRUE)
       resistanceRaster <- resistanceLULCRaster * resistanceAgeRaster
-      
-      #Save rasters
-      resistanceName = file.path(tempFolderPath, CreateRasterFileName2("Resistance", speciesCode, iteration, timestep, "tif"))
-      writeRaster(resistanceRaster, resistanceName, overwrite = TRUE)
-      df = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = resistanceName)
-      resistanceOut = addRow(resistanceOut, df)
 
-      #create focal region raster for N-S by adding top and bottom rows
+      # Create focal regions
+      # Create focal region raster for N-S by adding top and bottom rows
       extentNS<-extent(xmin(resistanceRaster),xmax(resistanceRaster),ymin(resistanceRaster)-res(resistanceRaster)[1],ymax(resistanceRaster)+res(resistanceRaster)[1])
       focalRegionNS<-raster(extentNS,nrow=nrow(resistanceRaster)+2,ncol=ncol(resistanceRaster))
       focalRegionNS[1,]<-1
       focalRegionNS[nrow(focalRegionNS),]<-2
       
-      #create focal region raster for E-W by adding left and right columns
+      # Create focal region raster for E-W by adding left and right columns
       extentEW<-extent(xmin(resistanceRaster)-res(resistanceRaster)[2],xmax(resistanceRaster)+res(resistanceRaster)[2],ymin(resistanceRaster),ymax(resistanceRaster))
       focalRegionEW<-raster(extentEW,nrow=nrow(resistanceRaster),ncol=ncol(resistanceRaster)+2)
       focalRegionEW[,1]<-1
       focalRegionEW[,ncol(focalRegionEW)]<-2
       
-      #Save rasters
+      # Extend resistance rasters to match NS and EW extents
+      resistanceRasterNS<-extend(resistanceRaster, extentNS,value=1)
+      resistanceRasterNS[is.na(resistanceRasterNS)]<-100
+      resistanceRasterEW<-extend(resistanceRaster, extentEW,value=1)
+      resistanceRasterEW[is.na(resistanceRasterEW)]<-100
+      
+      # Save focal region and extended resistance rasters to temporary folder as Circuitscape inputs
+      # Focal region rasters
       focalRegionNSName = file.path(tempFolderPath, "NSfocalRegion.asc")
       focalRegionEWName = file.path(tempFolderPath, "EWfocalRegion.asc")
       writeRaster(focalRegionNS, focalRegionNSName, overwrite = TRUE)
       writeRaster(focalRegionEW, focalRegionEWName, overwrite = TRUE)
       
-      #extend resistanceRaster NS
-      resistanceRasterNS<-extend(resistanceRaster,extentNS,value=1)
-      resistanceRasterNS[is.na(resistanceRasterNS)]<-100
-      
-      #extend resistanceRaster EW
-      resistanceRasterEW<-extend(resistanceRaster,extentEW,value=1)
-      resistanceRasterEW[is.na(resistanceRasterEW)]<-100
-      
-      #Save rasters to temp folder
-      resistanceRasterNSName = file.path(tempFolderPath, CreateRasterFileName2("NSResistance", species, iteration, timestep, "asc"))
-      resistanceRasterEWName = file.path(tempFolderPath, CreateRasterFileName2("EWResistance", species, iteration, timestep, "asc"))
+      # Extended resistance rasters
+      resistanceRasterNSName = file.path(tempFolderPath, rasterFileNameSpecies("NSResistance", species, iteration, timestep, "asc"))
+      resistanceRasterEWName = file.path(tempFolderPath, rasterFileNameSpecies("EWResistance", species, iteration, timestep, "asc"))
       writeRaster(resistanceRasterNS, resistanceRasterNSName, overwrite=TRUE)
       writeRaster(resistanceRasterEW, resistanceRasterEWName, overwrite=TRUE)
       
-      #make a N-S .ini file to output folder
+      # Make .ini files and save to output folder
+      # Note that these files specify the path for Circuitscape outputs to be written to short temp folder (tempFolderPath1)
       NS_ini<-c("[circuitscape options]", 
                 "data_type = raster",
                 "scenario = pairwise",
@@ -147,7 +149,6 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
                 paste0("output_file = ", file.path(tempFolderPath1,"NS.out")))
       writeLines(NS_ini,file.path(outputFolderPath,"NS.ini"))
       
-      #make a E-W .ini file and save
       EW_ini<-c("[circuitscape options]", 
                 "data_type = raster",
                 "scenario = pairwise",
@@ -158,59 +159,73 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
                 paste0("output_file = ", file.path(tempFolderPath1,"EW.out")))
       writeLines(EW_ini,file.path(outputFolderPath,"EW.ini"))
       
-      #make Julia scripts
+      # Make Julia scripts and save to output folder
       NS_run_jl <- file(file.path(outputFolderPath, "NSscript.jl"))
       writeLines(c("using Circuitscape", paste0("compute(", "\"", file.path(outputFolderPath, "NS.ini"),"\")")), NS_run_jl)
       close(NS_run_jl)
-      
+
       EW_run_jl <- file(file.path(outputFolderPath, "EWscript.jl"))
       writeLines(c("using Circuitscape", paste0("compute(", "\"", file.path(outputFolderPath, "EW.ini"),"\")")), EW_run_jl)
       close(EW_run_jl)
       
-      #make the N-S and E-W CS run cmds
-      #NS_run <- paste(CS_exe, paste0("\"",file.path(outputFolderPath,"NS.ini"),"\""))
-      #EW_run <- paste(CS_exe, paste0("\"",file.path(outputFolderPath,"EW.ini"),"\""))
-      NS_run <- paste(juliaExePath, paste0("\"",file.path(outputFolderPath,"NSscript.jl"),"\""))
-      EW_run <- paste(juliaExePath, paste0("\"",file.path(outputFolderPath,"EWscript.jl"),"\""))
+      # Make the N-S and E-W Circuitscape run commands and save to output folder
+      NS_run <- paste(juliaDatasheet$Filename, paste0("\"",file.path(outputFolderPath,"NSscript.jl"),"\""))
+      EW_run <- paste(juliaDatasheet$Filename, paste0("\"",file.path(outputFolderPath,"EWscript.jl"),"\""))
       
-      #run the commands
+      # Run the commands
       system(NS_run)
       system(EW_run)
       
-      # Read in NS and EW cum current maps and combine
-      currMapNS<-crop(raster(file.path(tempFolderPath1,"NS_cum_curmap.asc")),resistanceRaster)
-      currMapEW<-crop(raster(file.path(tempFolderPath1,"EW_cum_curmap.asc")),resistanceRaster)
-      currMapOMNI<-currMapEW+currMapNS
-      currMapOMNI[is.na(resistanceRaster)]<-NA
+      # Read in NS and EW cum current maps, crop, and combine
+      currMapNS <- crop(raster(file.path(tempFolderPath1,"NS_cum_curmap.asc")), resistanceRaster)
+      currMapEW <- crop(raster(file.path(tempFolderPath1,"EW_cum_curmap.asc")), resistanceRaster)
+      currMapOMNI <- currMapEW+currMapNS
+      currMapOMNI[is.na(resistanceRaster)] <- NA
       
+      # Read in NS and EW effective resistance, take inverse, take mean
+      effectivePermeabilityNS <- 1/read.table(file.path(tempFolderPath1, "NS_Resistances_3columns.out"))$V3
+      effectivePermeabilityEW <- 1/read.table(file.path(tempFolderPath1, "EW_Resistances_3columns.out"))$V3
+      effectivePermeability <- mean(c(effectivePermeabilityNS, effectivePermeabilityEW))
+
+      # Add row to effectivePermabilityOut datasheet
+      newRow <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, EffectivePermeability = effectivePermeability)
+      effectivePermeabilityOut <- addRow(effectivePermeabilityOut, newRow)
       
-      # If output options datasheet column SpatialOutputCCRaw is TURE, save raw outputs
-      if(outputOptionsDatasheet$SpatialOutputCCRaw==TRUE){
-        currMapOMNI01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
-        #Save raw omni-directional current density raster
-        currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
-        writeRaster(currMapOMNI01, currMapOMNIName, overwrite=TRUE)
+      # Temporary Hack: delete tempFolderPath1 
+      unlink (tempFolderPath1, recursive = TRUE)
+      
+      # Save rasters to output folder
+      # Tag raster names with iteration, timestep, and species code
+      # Resistance
+      resistanceName = file.path(tempFolderPath, rasterFileNameSpecies("Resistance", speciesCode, iteration, timestep, "tif"))
+      writeRaster(resistanceRaster, resistanceName, overwrite = TRUE)
+      # Add row to resistanceOut datasheet
+      newRow = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = resistanceName)
+      resistanceOut = addRow(resistanceOut, newRow)
+      
+      # Current
+      # If output options datasheet column SpatialOutputCCLog is TRUE, log cummulative current map
+      if(outputOptions$SpatialOutputCCLog==TRUE){
+        currMapOMNI<-log(currMapOMNI)
       } 
-
-      # If output options datasheet column SpatialOutputCCLog is TURE, save log outputs
-      if(outputOptionsDatasheet$SpatialOutputCCLog==TRUE){
-        currMapOMNI_log<-log(currMapOMNI)
-        currMapOMNI_log01<-(currMapOMNI_log-cellStats(currMapOMNI_log,"min"))/(cellStats(currMapOMNI_log,"max")-cellStats(currMapOMNI_log,"min"))
-        #Save log Omni-directional current density raster
-        currMapOMNIName <- file.path(tempFolderPath, CreateRasterFileName2("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
-        writeRaster(currMapOMNI_log01, currMapOMNIName, overwrite=TRUE)
-      } 
-
-      #Write output file
-      data <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = currMapOMNIName)
-      circuitOut <- addRow(circuitOut, data)
-    }
-    
+      currMapOMNIName <- file.path(tempFolderPath, rasterFileNameSpecies("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
+      writeRaster(currMapOMNI, currMapOMNIName, overwrite=TRUE)
+      # Add row to circuitOut datasheet
+      newRow <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = currMapOMNIName)
+      circuitOut <- addRow(circuitOut, newRow)
+      
+    } # speciesRow
+    # Report on simulation progress
     envStepSimulation()
-  }
-}
+    
+  } # timestep
+  
+} # iteration
 
-saveDatasheet(GLOBAL_Scenario, resistanceOut, "stconnect_CCOutputResistance")
-saveDatasheet(GLOBAL_Scenario, circuitOut, "stconnect_CCOutputCumulativeCurrent")
+# Save output data sheets to library -------------------------------------------------------
+saveDatasheet(myScenario, resistanceOut, "stconnect_CCOutputResistance")
+saveDatasheet(myScenario, circuitOut, "stconnect_CCOutputCumulativeCurrent")
+saveDatasheet(myScenario, effectivePermeabilityOut, "stconnect_CCOutputMetric")
 
+# End simulation ---------------------------------------------------------------------------
 envEndSimulation()
