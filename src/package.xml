@@ -8,6 +8,7 @@
     <transformer
       name="Primary"
       displayName="Connectivity planning for future climate and land-use change"
+      isPipelineBased="True"
       isPrimary="True">
       <include>
         <transformer name="Global"/>
@@ -433,16 +434,10 @@
       </group>
       <!--<group name="stsim_Advanced" displayName="Carbon">
       </group> -->
-      <group name="Pipeline">
-        <item name="core_Transformer"/>
-        <item name="core_StageName"/>
-        <item name="core_StageValue"/>
-      </group>
     </layout>
 
     <!--Scenario Datafeeds Layout-->
     <layout name="coreforms_ScenarioDatafeeds">
-      <item name="core_Pipeline"/>
       <item name="stsim_RunControl"/>
       <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_Transition" displayName="Transition Pathways" itemTransformer="LandscapeChange" showIf="isEither"/>
