@@ -17,10 +17,10 @@ myProject <- project()
 # Active scenario
 myScenario <- scenario()
 # Create SyncroSim temporary folder
-tempFolderPath = envTempFolder("CircuitConnectivity")
+tempFolderPath <- envTempFolder("CircuitConnectivity")
 # Temporary Hack: create folder to save outputs that is very short
 # This is a short-term fix because the Julia version of Circuitscape does not handle long file paths
-tempFolderPath1 = "C:\\Users\\bronw\\Documents\\CircuitscapeTemp"
+tempFolderPath1 <- "C:\\Users\\bronw\\Documents\\CircuitscapeTemp"
 # Create output folder
 outputFolderPath <- envOutputFolder(myScenario, "stconnect_CCOutputCumulativeCurrent")
 # Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
@@ -36,11 +36,13 @@ speciesSet <- datasheetExpectData(myProject, "stconnect_Species")
 # Input datasheets
 runSettings <- datasheetExpectData(myScenario, "stsim_RunControl")
 outputOptions <- datasheetExpectData(myScenario, "stconnect_CCOutputOptions")
-stateClass = datasheet(myScenario,"stsim_StateClass")
-resistanceLULCIn = datasheetExpectData(myScenario, "stconnect_CCLULCResistance")
-resistanceAgeIn = datasheetExpectData(myScenario, "stconnect_CCAgeResistance")
+stateClass <- datasheet(myScenario,"stsim_StateClass")
+resistanceLULCIn <- datasheetExpectData(myScenario, "stconnect_CCLULCResistance")
+resistanceAgeIn <- datasheetExpectData(myScenario, "stconnect_CCAgeResistance")
 juliaDatasheet <- datasheetExpectData(myScenario, "stconnect_CCJuliaConfig")
-
+# Eventually add this to output options
+rescaleCurrMap <- TRUE
+   
 # Output datasheets
 resistanceOut <- datasheet(myScenario, "stconnect_CCOutputResistance")
 circuitOut <- datasheet(myScenario, "stconnect_CCOutputCumulativeCurrent")
@@ -192,22 +194,27 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
       effectivePermeabilityOut <- addRow(effectivePermeabilityOut, newRow)
       
       # Temporary Hack: delete tempFolderPath1 
-      unlink (tempFolderPath1, recursive = TRUE)
+      unlink(tempFolderPath1, recursive = TRUE)
       
       # Save rasters to output folder
       # Tag raster names with iteration, timestep, and species code
       # Resistance
-      resistanceName = file.path(tempFolderPath, rasterFileNameSpecies("Resistance", speciesCode, iteration, timestep, "tif"))
+      resistanceName <- file.path(tempFolderPath, rasterFileNameSpecies("Resistance", speciesCode, iteration, timestep, "tif"))
       writeRaster(resistanceRaster, resistanceName, overwrite = TRUE)
       # Add row to resistanceOut datasheet
-      newRow = data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = resistanceName)
-      resistanceOut = addRow(resistanceOut, newRow)
+      newRow <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = resistanceName)
+      resistanceOut <- addRow(resistanceOut, newRow)
       
       # Current
       # If output options datasheet column SpatialOutputCCLog is TRUE, log cummulative current map
       if(outputOptions$SpatialOutputCCLog==TRUE){
         currMapOMNI<-log(currMapOMNI)
       } 
+      
+      # Eventually add this to output options
+      if(rescaleCurrMap==TRUE){
+        currMapOMNI <- (currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
+      }
       currMapOMNIName <- file.path(tempFolderPath, rasterFileNameSpecies("OMNI_cum_curmap", speciesCode, iteration, timestep, "tif"))
       writeRaster(currMapOMNI, currMapOMNIName, overwrite=TRUE)
       # Add row to circuitOut datasheet

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.11" url="https://github.com/ApexRMS/stconnect">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.12" url="http://apexrms.github.io/stconnect/">
 
   <transformers>
 
@@ -8,6 +8,7 @@
     <transformer
       name="Primary"
       displayName="Connectivity planning for future climate and land-use change"
+	  isPipelineBased="True"
       isPrimary="True">
       <include>
         <transformer name="Global"/>
@@ -431,18 +432,12 @@
         </group>
         <item name="stsim_Terminology"/>
       </group>
-      <!--<group name="stsim_Advanced" displayName="Carbon">
-      </group> -->
-      <group name="Pipeline">
-        <item name="core_Transformer"/>
-        <item name="core_StageName"/>
-        <item name="core_StageValue"/>
+      <group name="stsim_Advanced" displayName="Carbon">
       </group>
     </layout>
 
     <!--Scenario Datafeeds Layout-->
     <layout name="coreforms_ScenarioDatafeeds">
-      <item name="core_Pipeline"/>
       <item name="stsim_RunControl"/>
       <group name="LandscapeChangeGroup" displayName="Landscape Change">
         <item name="stsim_Transition" displayName="Transition Pathways" itemTransformer="LandscapeChange" showIf="isEither"/>
@@ -493,8 +488,8 @@
           <item name="corestime_External" displayName="External Program" itemTransformer="LandscapeChange" showIf="isEither"/>
         </group>
       </group>
-      <!--<group name="stsim_Advanced" displayName="Carbon">
-      </group> -->
+      <group name="stsim_Advanced" displayName="Carbon">
+      </group>
 	    <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" itemTransformer="HabitatSuitability" showIf="isParent"/>
@@ -562,7 +557,7 @@
         <item name="stsim_TransitionNormalVariable" displayName="Transition Area" dataSheet="stsim_OutputStratumTransition" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|TransitionGroupID" defaultValue="0.0" skipTimestepZero="True"/>
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
-        <item name="EffectivePermeability" displayName="Effective Permeability" dataSheet="stconnect_CCOutputMetric" column="Amount" filter="StratumID|SecondaryStratumID|TertiaryStratumID|StateClassID|StateLabelXID|StateLabelYID" defaultValue="0.0"/>
+        <item name="EffectivePermeability" displayName="Effective Permeability" dataSheet="stconnect_CCOutputMetric" column="EffectivePermeability" filter="SpeciesID"/>
       </group>
     </layout>
 
