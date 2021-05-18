@@ -45,7 +45,7 @@
       name="LandscapeChange"
       displayName ="Landscape Change"
       isRunnable="True"
-      isProxyFor="stsim_Primary">    
+      isProxyFor="stsim_Primary">
     </transformer>
 
     <!--HabitatSuitability Transformer-->
@@ -59,12 +59,12 @@
       configurationSheet="stsim_RunControl"
       isRunnable="True">
       <pipeline>
-        <datafeed name="stsim_RunControl"/>      
-        <datafeed name="stsim_OutputOptionsSpatial"/>          
+        <datafeed name="stsim_RunControl"/>
+        <datafeed name="stsim_OutputOptionsSpatial"/>
         <datafeed name="stsim_OutputSpatialState"/>
-        <datafeed name="HSOutputOptions"/>  
-        <datafeed name="HSHabitatSuitability"/>    
-        <datafeed name="HSHabitatPatch"/>       
+        <datafeed name="HSOutputOptions"/>
+        <datafeed name="HSHabitatSuitability"/>
+        <datafeed name="HSHabitatPatch"/>
       </pipeline>
       <datafeeds>
         <datafeed name="HSHabitatSuitability" displayName="Habitat Suitability" dataScope="Scenario">
@@ -163,13 +163,13 @@
       configurationSheet="stsim_RunControl"
       isRunnable="True">
       <pipeline>
-        <datafeed name="stsim_RunControl"/> 
+        <datafeed name="stsim_RunControl"/>
         <datafeed name="stsim_OutputSpatialState"/>
-        <datafeed name="stsim_OutputSpatialAge"/>  
-        <datafeed name="CCOutputOptions"/>   
-        <datafeed name="CCJuliaConfig"/>  
-        <datafeed name="CCLULCResistance"/>   
-        <datafeed name="CCAgeResistance"/>             
+        <datafeed name="stsim_OutputSpatialAge"/>
+        <datafeed name="CCOutputOptions"/>
+        <datafeed name="CCJuliaConfig"/>
+        <datafeed name="CCLULCResistance"/>
+        <datafeed name="CCAgeResistance"/>
       </pipeline>
       <datafeeds>
         <datafeed name="HSLandcover" displayName="Landcover Maps" dataScope="Scenario">
@@ -294,7 +294,7 @@
       configurationSheet="stsim_RunControl"
       isRunnable="True">
       <pipeline>
-        <datafeed name="stsim_RunControl"/> 
+        <datafeed name="stsim_RunControl"/>
         <datafeed name="stconnect_HSOutputHabitatSuitability"/>
         <datafeed name="stconnect_CCOutputCumulativeCurrent"/>
       </pipeline>
