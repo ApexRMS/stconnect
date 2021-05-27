@@ -48,13 +48,12 @@ totalIterations <- runSettings$MaximumIteration - runSettings$MinimumIteration +
 # Total timesteps
 totalTimesteps <- runSettings$MaximumTimestep - runSettings$MinimumTimestep + 1
 
-
-currMapOMNI_log01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
-
-
+# Create Zonation run settings file
+# Read in template
 zonationSet <- readLines(file.path(packagePath, "ALL_set_template.dat"))
+# Data frame of removal rules
 removalRule <- data.frame(Code=c(1:5), Name=c("Basic core-area Zonation", "Additive benefit function", "Target based planning", "Generalized benefit function", "Random removal"))
-
+# Overwrite template with user-input values
 zonationSet[2] <- paste("removal rule =", removalRule$Code[which(removalRule$Name==zonationRunSettings$RemovalValue)])
 zonationSet[3] <- paste("warp factor =", zonationRunSettings$WarpFactor)
 edgeRemoval <- if(zonationRunSettings$EdgeRemoval=="TRUE") 1 else 0
@@ -99,21 +98,51 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
     # }
     # carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
 
-    # Read in non-carbon rasters and stack with carbon rasters
-    rasIn<-stack(#carbonStockRasters,
-                 datasheetRaster(myScenario, "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
-                 datasheetRaster(myScenario, "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+    # rasIn<-stack(carbonStockRasters,
+    #   datasheetRaster(myScenario, "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+    #   datasheetRaster(myScenario, "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+    
+    # Read in rasters and stack
+    # Check to see if habitat and/or connectivity layers were provided
+    includeHabitat <- ifelse(nrow(datasheet(myScenario, "stconnect_HSOutputHabitatSuitability")) > 0, TRUE, FALSE)
+    includeCircuit <- ifelse(nrow(datasheet(myScenario, "stconnect_CCOutputCumulativeCurrent")) > 0, TRUE, FALSE)
 
+    if(includeHabitat & includeCircuit){
+      
+      rasIn<-stack(datasheetRaster(myScenario, "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+                   datasheetRaster(myScenario, "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+      
+    } else if (includeHabitat){
+      
+      rasIn<-stack(datasheetRaster(myScenario, "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep))
+      
+    } else if (includeCircuit){
+      
+      rasIn<-stack(datasheetRaster(myScenario, "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+      
+    } else {
+      
+      stop("No data for stconnect_HSOutputHabitatSuitability and stconnect_CCOutputCumulativeCurrent")
+      
+    }
+    
+    
     # Use one of the rasters as a template for the extent
     rasTemplate <- rasIn[[1]]
 
     # Zonation requires a 1-pixel wide border of NA values
     # Calculate the Zonation extent from the template raster extent
-    zonationExtent <- c(xmin(rasTemplate) - res(rasTemplate)[1], xmax(rasTemplate) + res(rasTemplate)[1],
-                        ymin(rasTemplate) - res(rasTemplate)[1], ymax(rasTemplate) + res(rasTemplate)[1])
+    zonationExtent <- extent(c(xmin(rasTemplate) - res(rasTemplate)[1], 
+                               xmax(rasTemplate) + res(rasTemplate)[1],
+                               ymin(rasTemplate) - res(rasTemplate)[1], 
+                               ymax(rasTemplate) + res(rasTemplate)[1]))
     
     # Extend all rasters with NA value (-9999) using zonationExtent
-    rasOut <- extend(rasIn, zonationExtent, -9999)
+    if(nlayers(rasIn)==1){
+      rasOut <- extend(x=rasIn[[1]], y=zonationExtent, value=-9999)
+    } else {
+      rasOut <- extend(x=rasIn, y=zonationExtent, value=-9999)
+    }
     # Save extended rasters to be inputs for Zonation
     rasOutFilename <- paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)
@@ -123,16 +152,16 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
     zonationSppName <- paste(tempFolderPath, "BiodiversityFeatureList.spp", sep="/")
     write.table(zonationSpp, zonationSppName, row.names = FALSE, col.names=FALSE)
     # Make Zonation run file
-    zonationOutName <- file.path(tempFolderPath, paste0("OutputZonation", iteration, timestep, ".txt"))
+    zonationOutName <- file.path(tempFolderPath, rasterFileName("OutputZonation", iteration, timestep, "txt"))
     zonationRun <- paste0("-r ", "\"", zonationSetName, "\" ", "\"", zonationSppName, "\" ", "\"", zonationOutName, "\" ", "0.0 0 1.0 0")
     zonationRunName <- paste(tempFolderPath, "ZonationRun.bat", sep="/")
     writeLines(zonationRun, zonationRunName)
             
     # Run Zonation
-    system(paste0("\"", zonationDatasheet$Filename, "\" ", zonationScenario))
+    system(paste0("\"", zonationDatasheet$Filename, "\" ", zonationRun))
 
     # Add row to prioritizationOut datasheet
-    newRow <- data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
+    newRow <- data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, rasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
     prioritizationOut <- addRow(prioritizationOut, newRow)
     
     envStepSimulation()
