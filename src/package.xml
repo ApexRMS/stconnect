@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.12" url="http://apexrms.github.io/stconnect/">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.13" url="http://apexrms.github.io/stconnect/">
 
   <transformers>
 
@@ -23,6 +23,26 @@
     <!--Global Transformer-->
     <transformer name="Global">
       <datafeeds>
+        <datafeed name="CCJuliaConfig" displayName="Julia Configuration" dataScope="Library">
+          <datasheets>
+            <datasheet name="CCJuliaConfig" displayName="Julia Configuration" isSingleRow="True">
+              <columns>
+                <column name="CCJuliaConfigID" dataType="Integer" isPrimary="True" />
+                <column name="Filename" displayName="Julia executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Julia |julia.exe" externalFileAbsolute="True" />
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
+        <datafeed name="CPZonationConfig" displayName="Zonation Configuration" dataScope="Library">
+          <datasheets>
+            <datasheet name="CPZonationConfig" displayName="Zonation Configuration" isSingleRow="True">
+              <columns>
+                <column name="CPZonationConfigID" dataType="Integer" isPrimary="True" />
+                <column name="Filename" displayName="Zonation executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Zonation |zig4.exe" externalFileAbsolute="True" />
+              </columns>
+            </datasheet>
+          </datasheets>
+        </datafeed>
         <datafeed name="Species" dataScope="Project">
           <datasheets>
             <datasheet name="Species" valueMember="SpeciesID" displayMember="Name">
@@ -229,16 +249,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="CCJuliaConfig" displayName="Julia Configuration" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="CCJuliaConfig" displayName="Julia Configuration" isSingleRow="True">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isPrimary="True" />
-                <column name="Filename" displayName="Julia executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Julia |julia.exe" externalFileAbsolute="True" />
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
         <datafeed name="CCOutputMetric" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CCOutputMetric">
@@ -324,16 +334,6 @@
             </datasheet>
           </datasheets>
         </datafeed>
-        <datafeed name="CPZonationConfig" displayName="Zonation Configuration" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="CPZonationConfig" displayName="Zonation Configuration" isSingleRow="True">
-              <columns>
-                <column name="ScenarioID" dataType="Integer" isPrimary="True" />
-                <column name="Filename" displayName="Zonation executable" dataType="String" allowDbNull="False" isExternalFile="True" externalFileFilter="Zonation |zig4.exe" externalFileAbsolute="True" />
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
         <datafeed name="CPOutputCumulative" dataScope="Scenario" isOutput="True">
           <datasheets>
             <datasheet name="CPOutputCumulative" spatialMultiProcessing="True">
@@ -390,6 +390,8 @@
       <group name="Options">
         <item name="core_Options" displayName="General"/>
         <item name="core_Rconfig"/>
+		<item name="CCJuliaConfig"/>
+		<item name="CPZonationConfig"/>
       </group>
     </layout>
 
@@ -507,7 +509,6 @@
         <item name="CCLULCResistance" itemTransformer="CircuitConnectivity" showIf="isParent"/>
         <item name="CCAgeResistance" itemTransformer="CircuitConnectivity" showIf="isParent"/>
         <item name="CCOutputOptions" itemTransformer="CircuitConnectivity" showIf="isParent"/>
-        <item name="CCJuliaConfig" itemTransformer="CircuitConnectivity" showIf="isParent"/>
       </group>
       <group name="ConservationPrioritizationGroup" displayName="Conservation Prioritization">
         <!--<item name="stsimsf_OutputSpatialStockGroup" displayName="Carbon Maps" forceVisible="True"/>-->
@@ -515,7 +516,6 @@
         <item name="CCOutputCumulativeCurrent" displayName="Circuit Connectivity Maps" itemTransformer="ConservationPrioritization" showIf="isParent"/>
         <item name="CPRunSetting" itemTransformer="ConservationPrioritization" showIf="isParent"/>
         <item name="CPOutputOptions" itemTransformer="ConservationPrioritization" showIf="isParent"/>
-        <item name="CPZonationConfig" itemTransformer="ConservationPrioritization" showIf="isParent"/>
       </group>
     </layout>
 
