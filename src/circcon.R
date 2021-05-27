@@ -18,9 +18,6 @@ myProject <- project()
 myScenario <- scenario()
 # Create SyncroSim temporary folder
 tempFolderPath <- envTempFolder("CircuitConnectivity")
-# Temporary Hack: create folder to save outputs that is very short
-# This is a short-term fix because the Julia version of Circuitscape does not handle long file paths
-tempFolderPath1 <- "C:\\Users\\bronw\\Documents\\CircuitscapeTemp"
 # Create output folder
 outputFolderPath <- envOutputFolder(myScenario, "stconnect_CCOutputCumulativeCurrent")
 # Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
@@ -29,17 +26,20 @@ write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 # Source common R functions for error messaging
 source(file.path(packagePath, "common.R"))
 
-# Read in project datasheets
+# Read in datasheets
+# Library datasheets
+juliaDatasheet <- datasheetExpectData(myScenario, "stconnect_CCJuliaConfig")
+
+# Project datasheets
 speciesSet <- datasheetExpectData(myProject, "stconnect_Species")
 
-# Read in scenario datasheets
+# Scenario datasheets
 # Input datasheets
 runSettings <- datasheetExpectData(myScenario, "stsim_RunControl")
 outputOptions <- datasheetExpectData(myScenario, "stconnect_CCOutputOptions")
 stateClass <- datasheet(myScenario,"stsim_StateClass")
 resistanceLULCIn <- datasheetExpectData(myScenario, "stconnect_CCLULCResistance")
 resistanceAgeIn <- datasheetExpectData(myScenario, "stconnect_CCAgeResistance")
-juliaDatasheet <- datasheetExpectData(myScenario, "stconnect_CCJuliaConfig")
 # Eventually add this to output options
 rescaleCurrMap <- TRUE
    
@@ -79,9 +79,6 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
     ageMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialAge", iteration = iteration, timestep = timestep)
     
     for (speciesRow in 1:nrow(speciesSet)) {
-      
-      # Temporary Hack: create folder that has a short path for Circuitscape to write results to
-      dir.create(tempFolderPath1, recursive = TRUE)
       
       # Species name
       species <- speciesSet[speciesRow, "Name"]
@@ -140,7 +137,7 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
       writeRaster(resistanceRasterEW, resistanceRasterEWName, overwrite=TRUE)
       
       # Make .ini files and save to output folder
-      # Note that these files specify the path for Circuitscape outputs to be written to short temp folder (tempFolderPath1)
+      # Note that these files specify the path for Circuitscape outputs to be written to temp folder
       NS_ini<-c("[circuitscape options]", 
                 "data_type = raster",
                 "scenario = pairwise",
@@ -148,7 +145,7 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
                 "write_cur_maps = true",
                 paste0("point_file = ", file.path(tempFolderPath, "NSfocalRegion.asc")),
                 paste0("habitat_file = ", resistanceRasterNSName),
-                paste0("output_file = ", file.path(tempFolderPath1,"NS.out")))
+                paste0("output_file = ", file.path(tempFolderPath,"NS.out")))
       writeLines(NS_ini,file.path(outputFolderPath,"NS.ini"))
       
       EW_ini<-c("[circuitscape options]", 
@@ -158,7 +155,7 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
                 "write_cur_maps = true",
                 paste0("point_file = ", file.path(tempFolderPath, "EWfocalRegion.asc")),
                 paste0("habitat_file = ", resistanceRasterEWName),
-                paste0("output_file = ", file.path(tempFolderPath1,"EW.out")))
+                paste0("output_file = ", file.path(tempFolderPath,"EW.out")))
       writeLines(EW_ini,file.path(outputFolderPath,"EW.ini"))
       
       # Make Julia scripts and save to output folder
@@ -176,25 +173,40 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
       
       # Run the commands
       system(NS_run)
+      # Check to make sure the results were saved
+      # If not then print the Julia script
+      if(file.exists(file.path(tempFolderPath,"NS_cum_curmap.asc")) == FALSE){
+        stop(
+          paste("Circuitscape failed to save results. Here is the failed Julia script:", 
+                "using Circuitscape", 
+                paste0("compute(", "\"", file.path(outputFolderPath, "NS.ini"),"\")"), 
+                sep="\n")
+          )
+      }
       system(EW_run)
+      if(file.exists(file.path(tempFolderPath,"EW_cum_curmap.asc")) == FALSE){
+        stop(
+          paste("Circuitscape failed to save results. Here is the failed Julia script:", 
+                "using Circuitscape", 
+                paste0("compute(", "\"", file.path(outputFolderPath, "EW.ini"),"\")"), 
+                sep="/n")
+        )
+      }
       
       # Read in NS and EW cum current maps, crop, and combine
-      currMapNS <- crop(raster(file.path(tempFolderPath1,"NS_cum_curmap.asc")), resistanceRaster)
-      currMapEW <- crop(raster(file.path(tempFolderPath1,"EW_cum_curmap.asc")), resistanceRaster)
+      currMapNS <- crop(raster(file.path(tempFolderPath,"NS_cum_curmap.asc")), resistanceRaster)
+      currMapEW <- crop(raster(file.path(tempFolderPath,"EW_cum_curmap.asc")), resistanceRaster)
       currMapOMNI <- currMapEW+currMapNS
       currMapOMNI[is.na(resistanceRaster)] <- NA
       
       # Read in NS and EW effective resistance, take inverse, take mean
-      effectivePermeabilityNS <- 1/read.table(file.path(tempFolderPath1, "NS_Resistances_3columns.out"))$V3
-      effectivePermeabilityEW <- 1/read.table(file.path(tempFolderPath1, "EW_Resistances_3columns.out"))$V3
+      effectivePermeabilityNS <- 1/read.table(file.path(tempFolderPath, "NS_Resistances_3columns.out"))$V3
+      effectivePermeabilityEW <- 1/read.table(file.path(tempFolderPath, "EW_Resistances_3columns.out"))$V3
       effectivePermeability <- mean(c(effectivePermeabilityNS, effectivePermeabilityEW))
 
       # Add row to effectivePermabilityOut datasheet
       newRow <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, EffectivePermeability = effectivePermeability)
       effectivePermeabilityOut <- addRow(effectivePermeabilityOut, newRow)
-      
-      # Temporary Hack: delete tempFolderPath1 
-      unlink(tempFolderPath1, recursive = TRUE)
       
       # Save rasters to output folder
       # Tag raster names with iteration, timestep, and species code
