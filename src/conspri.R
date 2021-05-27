@@ -1,87 +1,82 @@
-# Workspace setup
+# Workspace setup -------------------------------------------------------------------------------------
 # Check for installed packages and install missing ones
-list.of.packages <- c("raster", "rsyncrosim", "RSQLite", "tidyverse")
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+packagesToLoad <- c("raster", "rsyncrosim", "RSQLite", "tidyverse")
+# Identify packages that are not already installed
+packagesToInstall <- packagesToLoad[!(packagesToLoad %in% installed.packages()[,"Package"])]
+# Install missing packages
+if(length(packagesToInstall)) install.packages(packagesToInstall)
+# Load packages
+lapply(packagesToLoad, library, character.only = TRUE)
 
-library(raster)
-library(rsyncrosim)
-library(RSQLite)
-library(tidyverse)
+# Parameters
+# These will eventually be moved to the UI
+# Which carbon stock group should be used in prioritization
+# carbonPriorityStockGroupName <- "Total Ecosystem"
 
-e = ssimEnvironment()
-source(file.path(e$PackageDirectory, "common.R"))
+# Connect to ST-Connect library -----------------------------------------------------------------------
+# Path to package
+packagePath <- ssimEnvironment()$PackageDirectory
+# Active project
+myProject <- project()
+# Active scenario
+myScenario <- scenario()
+# Create SyncroSim temporary folder
+tempFolderPath = envTempFolder("ConservationPrioritization")
 
-# Output frequency of conservation prioritization analyses ---------------------------------------------------
+# Source common R functions for error messaging
+source(file.path(packagePath, "common.R"))
 
-# Get the output options datasheet
-outputOptionsDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CPOutputOptions")
+# Read in datasheets
+# Library datasheets
+zonationDatasheet <- datasheetExpectData(myScenario, "stconnect_CPZonationConfig")
 
-# If datasheet is not empty, get the output frequency
-if(is.na(outputOptionsDatasheet$SpatialOutputCPTimesteps)){
-  stop("No conservation prioritization output frequency specified.")
-} else {
-  outputFreq <- outputOptionsDatasheet$SpatialOutputCPTimesteps
-}
+# Scenario datasheets
+# Input datasheets
+runSettings <- datasheetExpectData(myScenario, "stsim_RunControl")
+zonationRunSettings <- datasheetExpectData(myScenario, "stconnect_CPRunSetting")
+outputOptions <- datasheetExpectData(myScenario, "stconnect_CPOutputOptions")
+
+# Output datasheets
+prioritizationOut <- datasheet(myScenario, "stconnect_CPOutputCumulative")
+
+
+# Manipulate datasheets and prep for simulation --------------------------------------------
+# Set of timesteps to analyse
+timestepSet <- seq(runSettings$MinimumTimestep, runSettings$MaximumTimestep, by=outputOptions$SpatialOutputCPTimesteps)
+# Total iterations
+totalIterations <- runSettings$MaximumIteration - runSettings$MinimumIteration + 1
+# Total timesteps
+totalTimesteps <- runSettings$MaximumTimestep - runSettings$MinimumTimestep + 1
 
 
 currMapOMNI_log01<-(currMapOMNI-cellStats(currMapOMNI,"min"))/(cellStats(currMapOMNI,"max")-cellStats(currMapOMNI,"min"))
 
 
-# Zonation Info -------------------------------------------------------------
+zonationSet <- readLines(file.path(packagePath, "ALL_set_template.dat"))
+removalRule <- data.frame(Code=c(1:5), Name=c("Basic core-area Zonation", "Additive benefit function", "Target based planning", "Generalized benefit function", "Random removal"))
 
-# Get the spades datasheet 
-zonationDatasheet <- datasheet(ssimObject = GLOBAL_Scenario, name = "stconnect_CPZonationConfig")
-
-# If datasheet is not empty, get the path
-if(nrow(zonationDatasheet) == 0){
-  stop("No Zonation executable specified.")
-} else {
-  if (is.na(zonationDatasheet$Filename)){
-    stop("No Zonation executable specified.")
-  } else {
-    zonationExePath <- zonationDatasheet$Filename
-  }
-}
-
-# Parameters
-# These will eventually be moved to the UI
-# Which carbon stock group should be used in prioritization
-carbonPriorityStockGroupName <- "Total Ecosystem"
-
-#datasheets
-runSettingsIn = GetDataSheetExpectData("stconnect_CPRunSetting", GLOBAL_Scenario)
-prioritizationOut = datasheet(GLOBAL_Scenario, "stconnect_CPOutputCumulative")
-
-#file paths
-tempFolderPath = envTempFolder("ConservationPrioritization")
-
-rasTemplate<-datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = GLOBAL_MinIteration, timestep = GLOBAL_MinTimestep)[[1]]
-rasRes<-res(rasTemplate)[1]
-rasExtend<-c(xmin(rasTemplate)-rasRes,xmax(rasTemplate)+rasRes,ymin(rasTemplate)-rasRes,ymax(rasTemplate)+rasRes)
-
-zonationSet<-readLines(file.path(e$PackageDirectory, "ALL_set_template.dat"))
-removalRule<-data.frame(Code=c(1:5), Name=c("Basic core-area Zonation", "Additive benefit function", "Target based planning", "Generalized benefit function", "Random removal"))
-zonationSet[2]<-paste("removal rule =", removalRule$Code[which(removalRule$Name==runSettingsIn$RemovalValue)])
-zonationSet[3]<-paste("warp factor =", runSettingsIn$WarpFactor)
-edgeRemoval<-if(runSettingsIn$EdgeRemoval=="TRUE") 1 else 0
-zonationSet[4]<-paste("edge removal =", edgeRemoval)
-zonationSet[5]<-paste("add edge points =", runSettingsIn$AddEdgePoints)
+zonationSet[2] <- paste("removal rule =", removalRule$Code[which(removalRule$Name==zonationRunSettings$RemovalValue)])
+zonationSet[3] <- paste("warp factor =", zonationRunSettings$WarpFactor)
+edgeRemoval <- if(zonationRunSettings$EdgeRemoval=="TRUE") 1 else 0
+zonationSet[4] <- paste("edge removal =", edgeRemoval)
+zonationSet[5] <- paste("add edge points =", zonationRunSettings$AddEdgePoints)
 zonationSetName <- paste(tempFolderPath, "RunSetting.dat", sep="/")
 writeLines(zonationSet, zonationSetName)
 
-# Set of timesteps to analyse
-timestepSet <- seq(GLOBAL_MinTimestep, GLOBAL_MaxTimestep, by=outputFreq)
 
-#Simulation
-envBeginSimulation(GLOBAL_TotalIterations * GLOBAL_TotalTimesteps)
+# Run simulation ---------------------------------------------------------------------------
+# Report on simulation progress
+envBeginSimulation(totalIterations * totalTimesteps)
 
-for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
+# Loop over all iterations and timesteps
+for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
   
   for (timestep in timestepSet) {
-    
+
+    # Report on simulation progress
     envReportProgress(iteration, timestep)
     
+    # Read in carbon stock rasters
     # carbonStockRasters <- stack(datasheetRaster(GLOBAL_Scenario, datasheet = "stsimsf_OutputSpatialStockGroup", iteration = iteration, timestep = timestep))
     # # Keep only Total Ecosystem Carbon
     # # Connect to SQLite database
@@ -103,31 +98,51 @@ for (iteration in GLOBAL_MinIteration:GLOBAL_MaxIteration) {
     #   result$CarbonPriority[i]<-grepl(paste0("stkg_", stockGroupID), names(carbonStockRasters)[i], fixed=TRUE)
     # }
     # carbonStockRasters <- dropLayer(carbonStockRasters, which(result==FALSE))
-    rasIn<-stack(#carbonStockRasters,
-                 datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
-                 datasheetRaster(GLOBAL_Scenario, datasheet = "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
 
-    rasOut<-extend(rasIn, rasExtend, -9999)
-    rasOutFilename<-paste0(tempFolderPath,"\\",names(rasOut),".tif")
+    # Read in non-carbon rasters and stack with carbon rasters
+    rasIn<-stack(#carbonStockRasters,
+                 datasheetRaster(myScenario, "stconnect_HSOutputHabitatSuitability", iteration = iteration, timestep = timestep), 
+                 datasheetRaster(myScenario, "stconnect_CCOutputCumulativeCurrent", iteration = iteration, timestep = timestep))
+
+    # Use one of the rasters as a template for the extent
+    rasTemplate <- rasIn[[1]]
+
+    # Zonation requires a 1-pixel wide border of NA values
+    # Calculate the Zonation extent from the template raster extent
+    zonationExtent <- c(xmin(rasTemplate) - res(rasTemplate)[1], xmax(rasTemplate) + res(rasTemplate)[1],
+                        ymin(rasTemplate) - res(rasTemplate)[1], ymax(rasTemplate) + res(rasTemplate)[1])
+    
+    # Extend all rasters with NA value (-9999) using zonationExtent
+    rasOut <- extend(rasIn, zonationExtent, -9999)
+    # Save extended rasters to be inputs for Zonation
+    rasOutFilename <- paste0(tempFolderPath,"\\",names(rasOut),".tif")
     writeRaster(rasOut, rasOutFilename, bylayer=TRUE, overwrite=TRUE)
   
-    zonationSpp<-data.frame(1, 0, 1, 1, 1, rasOutFilename)
+    # Make Zonation input file of biodiversity features
+    zonationSpp <- data.frame(1, 0, 1, 1, 1, rasOutFilename)
     zonationSppName <- paste(tempFolderPath, "BiodiversityFeatureList.spp", sep="/")
     write.table(zonationSpp, zonationSppName, row.names = FALSE, col.names=FALSE)
-    zonationOutName <- file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "txt"))
-    zonationScenario<-paste0("-r ", "\"", zonationSetName, "\" ", "\"", zonationSppName, "\" ", "\"", zonationOutName, "\" ", "0.0 0 1.0 0")
-    zonationScenarioName<-paste(tempFolderPath, "ZonationScenario.bat",sep="/")
-    writeLines(zonationScenario, zonationScenarioName)
+    # Make Zonation run file
+    zonationOutName <- file.path(tempFolderPath, paste0("OutputZonation", iteration, timestep, ".txt"))
+    zonationRun <- paste0("-r ", "\"", zonationSetName, "\" ", "\"", zonationSppName, "\" ", "\"", zonationOutName, "\" ", "0.0 0 1.0 0")
+    zonationRunName <- paste(tempFolderPath, "ZonationRun.bat", sep="/")
+    writeLines(zonationRun, zonationRunName)
             
-    #run Zonation
-    system(paste0("\"",zonationExePath, "\" ", zonationScenario))
+    # Run Zonation
+    system(paste0("\"", zonationDatasheet$Filename, "\" ", zonationScenario))
 
-    df = data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
-    prioritizationOut<-addRow(prioritizationOut, df)
+    # Add row to prioritizationOut datasheet
+    newRow <- data.frame(Iteration = iteration, Timestep = timestep, Filename = file.path(tempFolderPath, CreateRasterFileName("OutputZonation", iteration, timestep, "rank.compressed.tif")))
+    prioritizationOut <- addRow(prioritizationOut, newRow)
     
     envStepSimulation()
-  }
-}
-    
-saveDatasheet(GLOBAL_Scenario, prioritizationOut, "stconnect_CPOutputCumulative")
 
+    } # timestep
+
+} # iteration
+
+# Save output data sheets to library -------------------------------------------------------
+saveDatasheet(myScenario, prioritizationOut, "stconnect_CPOutputCumulative")
+
+# End simulation ---------------------------------------------------------------------------
+envEndSimulation()
