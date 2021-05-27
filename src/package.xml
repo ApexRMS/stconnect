@@ -305,6 +305,9 @@
       isRunnable="True">
       <pipeline>
         <datafeed name="stsim_RunControl"/> 
+        <datafeed name="stconnect_CPRunSetting"/>   
+        <datafeed name="stconnect_CPOutputOptions"/>   
+        <datafeed name="stconnect_CPZonationConfig"/>  
         <datafeed name="stconnect_HSOutputHabitatSuitability"/>
         <datafeed name="stconnect_CCOutputCumulativeCurrent"/>
       </pipeline>
