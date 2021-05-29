@@ -1,8 +1,8 @@
 # Syncrosim Generated Maui Parrotbill Color Map (QGIS-compatible),,,,,
 INTERPOLATION:DISCRETE
-1.0000,252,253,191,255,High movement probability
--3.2200,252,135,97,255,.
--3.6900,182,54,121,255,.
--3.9700,80,18,123,255,.
--4.2600,0,0,0,255,Low movement probability
--7.0000,192,192,192,255,.
+0.3170,0,0,0,255,0 - 0.32 - Low movement
+0.3780,80,18,123,255,0.33 - 0.38
+0.4330,182,54,121,255,0.39 - 0.43
+0.5440,252,135,97,255,0.44 - 0.54
+1.0000,252,253,191,255,0.55 - 1.00 - High movement
+-1.0000,192,192,192,255,No data
