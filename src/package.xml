@@ -65,7 +65,8 @@
       name="LandscapeChange"
       displayName ="Landscape Change"
       isRunnable="True"
-      isProxyFor="stsim_Primary">    
+      isProxyFor="stsim_Primary"
+      transformerSpecificOutput="False">    
     </transformer>
 
     <!--HabitatSuitability Transformer-->
@@ -77,6 +78,7 @@
       className="SyncroSim.StochasticTime.StochasticTimeTransformer"
       classAssembly="SyncroSim.StochasticTime"
       configurationSheet="stsim_RunControl"
+      transformerSpecificOutput="False"
       isRunnable="True">
       <pipeline>
         <datafeed name="stsim_RunControl"/>      
@@ -181,6 +183,7 @@
       className="SyncroSim.StochasticTime.StochasticTimeTransformer"
       classAssembly="SyncroSim.StochasticTime"
       configurationSheet="stsim_RunControl"
+      transformerSpecificOutput="False"
       isRunnable="True">
       <pipeline>
         <datafeed name="stsim_RunControl"/> 
@@ -302,6 +305,7 @@
       className="SyncroSim.StochasticTime.StochasticTimeTransformer"
       classAssembly="SyncroSim.StochasticTime"
       configurationSheet="stsim_RunControl"
+      transformerSpecificOutput="False"
       isRunnable="True">
       <pipeline>
         <datafeed name="stsim_RunControl"/> 
