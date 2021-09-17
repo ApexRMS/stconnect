@@ -24,7 +24,7 @@ permalink: /
 This package requires the following software:
 <br>
 <br>
-SyncroSim [version 2.2.27](https://syncrosim.com/download/).
+The [latest SyncroSim release](https://syncrosim.com/download/).
 <br>
 R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
