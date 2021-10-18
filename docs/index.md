@@ -28,7 +28,7 @@ The [latest SyncroSim release](https://syncrosim.com/download/).
 <br>
 R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
-[Circuitscape 4](https://circuitscape.org/downloads/).
+[Circuitscape 5](https://circuitscape.org/downloads/) (optional).
 <br>
 Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 <br>
@@ -37,16 +37,16 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
 
 Download and install R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
-Download and install [Circuitscape 4](https://circuitscape.org/downloads/).
+Download and install [Circuitscape 5](https://circuitscape.org/downloads/).
 <br>
-Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
+Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases) (only required if including Conservation Prioritization in the model).
 <br>
-Download v1.1.10 of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
+Download v1.1.14 of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/) from GitHub.
 <br>
 <br>
 Open SyncroSim and select **File -> Packages… -> Install…**, then select the **ST-Connect** package and click OK.
 
-Alternatively, download [v1.1.10 from GitHub](https://github.com/ApexRMS/stconnect/releases/). Open SyncroSim and select File -> Packages… -> Install From File…, then navigate to the downloaded package file with the extension *.ssimpkg*.
+Alternatively, download [v1.1.14 from GitHub](https://github.com/ApexRMS/stconnect/releases/). Open SyncroSim and select File -> Packages… -> Install From File…, then navigate to the downloaded package file with the extension *.ssimpkg*.
 <br>
 <br>
 ## Getting Started
