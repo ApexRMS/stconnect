@@ -28,9 +28,9 @@ The [latest SyncroSim release](https://syncrosim.com/download/).
 <br>
 R [version 4.0.4](https://www.r-project.org/) or higher.
 <br>
-[Circuitscape 5](https://circuitscape.org/downloads/) (optional).
+[Circuitscape 5](https://circuitscape.org/downloads/).
 <br>
-Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases).
+Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases) (optional).
 <br>
 <br>
 ## How to Install
