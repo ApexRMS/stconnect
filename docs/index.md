@@ -35,7 +35,7 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases) (option
 <br>
 ## How to Install
 
-Download and install R [version 4.0.4](https://www.r-project.org/) or higher.
+Download and install R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
 <br>
 Download and install [Circuitscape 5](https://circuitscape.org/downloads/).
 <br>
