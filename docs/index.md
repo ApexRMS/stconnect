@@ -24,7 +24,7 @@ permalink: /
 This package requires the following software:
 <br>
 <br>
-This package requires the <a href="https://syncrosim.com/download/" target="_blank">latest version</a> of Syncrosim.
+The <a href="https://syncrosim.com/download/" target="_blank">latest version</a> of Syncrosim.
 <br>
 R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
 <br>
@@ -40,8 +40,6 @@ Download and install R [version 4.0.4](https://www.r-project.org/){:target="_bla
 Download and install [Circuitscape 5](https://circuitscape.org/downloads/){:target="_blank"}.
 <br>
 Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (only required if including Conservation Prioritization in the model).
-<br>
-Download v1.1.14 of [ST-Connect](https://github.com/ApexRMS/stconnect/releases/){:target="_blank"} from GitHub.
 <br>
 <br>
 Open SyncroSim and select **File -> Packages… -> Install…**, then select the **ST-Connect** package and click OK.
