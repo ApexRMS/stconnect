@@ -39,7 +39,7 @@ Download and install R [version 4.0.4](https://www.r-project.org/){:target="_bla
 <br>
 Download and install [Circuitscape 5](https://circuitscape.org/downloads/){:target="_blank"}.
 <br>
-Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (only required if including Conservation Prioritization in the model).
+Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (only required if including Conservation Prioritization).
 <br>
 <br>
 Open SyncroSim and select **File -> Packages… -> Install…**, then select the **ST-Connect** package and click OK.
