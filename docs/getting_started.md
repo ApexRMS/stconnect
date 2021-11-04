@@ -53,13 +53,13 @@ To view the details of the first of these Scenarios:
 
 This opens the Scenario Properties window.
 <br>
-<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-3.PNG">
+<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.PNG">
 <br>
 The first tab in this window, called **Summary**, displays some generic information for the Scenario. The second tab, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 20 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** analyses are run every 10 years.
 <br>
-<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.PNG">
+<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-5.PNG">
 <br>
 Click on the **Landscape Change**, **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** tabs to familiarize yourself with this Scenario's inputs.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-5.PNG">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-6.PNG">
 <br>
