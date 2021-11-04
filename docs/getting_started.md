@@ -34,7 +34,7 @@ In this window:
 When you are ready to create the Library file, click **OK**. A new Library will be created and loaded into the Library Explorer.
 
 ## **Step 3: Configure library settings**
-* In order for the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer, then click **Open**.
+In order for the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer, then click **Open**.
 <br>
 <img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-2.png">
 <br>
@@ -43,11 +43,11 @@ When you are ready to create the Library file, click **OK**. A new Library will 
 The contents of your newly created Library are now displayed in the Library Explorer. Model inputs in SyncroSim are organized into Scenarios, where each Scenario consists of a suite of values, one for each of the Model's required inputs.
 
 > **Note:**
-> Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains two pre-configured Scenarios with model inputs. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios: one a Baseline Scenario, and another Low Urbanization Scenario.
+> Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains two pre-configured Scenarios with model inputs. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios: one a Baseline Scenario, and another 4X Less Urbanization Scenario.
 
 <img align="middle" style="padding: 3px" width="400" src="assets/images/screencap-3.PNG">
 <br>
-As shown in the image above, the Library you have just opened contains two Scenarios, each with a unique ID. The first of these scenarios (with ID=350, as shown above in square brackets) is named ***Baseline Scenario***; this scenario contains a suite of model inputs corresponding to a hypothetical baseline harvest plan. The second scenario (with ID=358 and named ***Low Urbanization Scenario***) contains model inputs corresponding to an alternative plan where urbanization targets are 4 times less than those of the Baseline Scenario.
+As shown in the image above, the Library you have just opened contains two Scenarios, each with a unique ID. The first of these scenarios (with ID=350, as shown above in square brackets) is named ***Baseline Scenario***; this scenario contains a suite of model inputs corresponding to a hypothetical baseline harvest plan. The second scenario (with ID=358 and named ***4X Less Urbanization Scenario***) contains model inputs corresponding to an alternative plan where urbanization targets are 4 times less than those of the Baseline Scenario.
 <br>
 To view the details of the first of these Scenarios:
 <br>
