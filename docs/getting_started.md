@@ -36,7 +36,7 @@ When you are ready to create the Library file, click **OK**. A new Library will 
 ## **Step 3: Configure library settings**
 * In order for the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer, then click **Open**.
 <br>
-<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-2.PNG">
+<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-2.png">
 <br>
 
 ## **Step 4: Review the model inputs**
