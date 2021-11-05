@@ -74,7 +74,7 @@ Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiari
 <br>
 
 ## **Step 5: Run the model**
-Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. This run will take some time (about 30 minutes). If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
+In the toolbar, enable **Multiprocessing**. This will run 3 iterations simultaneously, cutting down the time required to run the simulation (Expected run time without multiprocessing is ~20 minutes). Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-8.png">
 <br>
