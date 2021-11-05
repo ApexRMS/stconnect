@@ -80,3 +80,6 @@ Run the **4X Less Urbanization Scenario** next by repeating the steps above.
 
 ## **Step 6: Analyze the results**
 To view results for your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
+<br>
+<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-9.png">
+<br>
