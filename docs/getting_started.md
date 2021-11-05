@@ -85,5 +85,5 @@ To view results for your run, move to the **Charts** tab at the bottom left of t
 <br>
 You can now view and compare the results of running your two Scenarios through the model from the ST-Connect Package.
 <br>
-<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-10.png">
 <br>
