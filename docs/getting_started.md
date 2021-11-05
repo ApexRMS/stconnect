@@ -88,3 +88,6 @@ You can now view and compare the results of running your two Scenarios through t
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-10.png">
 <br>
 Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see how **Landscape Change** and **Circuit Connectivity** have changed over the simulation.
+<br>
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-11.png">
+<br>
