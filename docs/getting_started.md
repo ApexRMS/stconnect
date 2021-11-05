@@ -34,7 +34,7 @@ In this window:
 When you are ready to create the Library file, click **OK**. A new Library will be created and loaded into the Library Explorer.
 
 ## **Step 3: Configure library settings**
-In order for the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer, then click **Open**.
+For the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer, then click **Open**.
 <br>
 <img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-2.png">
 <br>
@@ -58,7 +58,7 @@ This opens the Scenario Properties window.
 <br>
 <img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.PNG">
 <br>
-The first tab in this window, called **Summary**, displays some generic information for the Scenario. The second tab, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 20 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** analyses are run every 10 years.
+The first tab in this window, called **General**, contains three datasheets. The first, **Summary** displays some generic information for the Scenario. The second, **Pipeline** allows the user to select the run order of the inputs in the model. The second tab in the window, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 20 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** analyses are run every 10 years.
 <br>
 <img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-5.PNG">
 <br>
