@@ -67,3 +67,6 @@ The second tab in the window, **Run Control**, contains parameters for running a
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-6.PNG">
 <br>
 Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs.
+<br>
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-7.PNG">
+<br>
