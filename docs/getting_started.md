@@ -56,15 +56,15 @@ To view the details of the first of these Scenarios:
 
 This opens the Scenario Properties window.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-4.PNG">
+<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-4.PNG">
 <br>
 The first tab in this window, called **General**, contains three datasheets. The first, **Summary**, displays some generic information for the Scenario. The second, **Pipeline**, allows the user to select the run order of the inputs in the model. Finally, the **Datafeeds** datasheet displays a list of all data sources inputted into the model. 
 <br>
-<img align="middle" style="padding: 3px" width="400" src="assets/images/screencap-5.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-5.png">
 <br>
 The second tab in the window, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 20 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** analyses are run every 10 years.
 <br>
-<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-6.PNG">
+<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-6.PNG">
 <br>
 Click on the **Landscape Change**, **Habitat**, **Circuit Connectivity**, and **Conservation Prioritization** tabs to familiarize yourself with this Scenario's inputs.
 <br>
