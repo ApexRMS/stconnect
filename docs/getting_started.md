@@ -6,6 +6,7 @@ title: Getting started
 # Getting started with **ST-Connect**
 
 ## Quickstart Tutorial
+> **Note:** This tutorial corresponds to ST-Connect v1.1.15, which will be released soon.
 
 This quickstart tutorial will introduce you to basics of working with ST-Connect. The steps include:
 <br>
@@ -92,7 +93,6 @@ Next, select the **Maps** tab from the bottom of the **Scenario Manager** window
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-11.png">
 <br>
-You can also select the **Export** tab at the bottom of the **Scenario Manager** window. Double click on **State Classes** to generate a file with the model state class classifications. By default, an Excel file should open automatically (look for it on your Windows Task Bar) showing the projected state class by iteration and timestep.
 
 > **Note:**
 > You can add and remove Results Scenarios from the list of scenarios being analyzed by selecting a Scenario in the Library Explorer and then choosing either **Add to Results** or **Remove from Results** from the Scenario menu. **Scenarios** currently selected for analysis are highlighted in **bold** in the Library Explorer.
