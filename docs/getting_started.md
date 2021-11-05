@@ -49,6 +49,7 @@ The contents of your newly created Library are now displayed in the Library Expl
 <br>
 As shown in the image above, the Library you have just opened contains two Scenarios, each with a unique ID. The first of these scenarios (with ID=350, as shown above in square brackets) is named ***Baseline Scenario***; this scenario contains a suite of model inputs corresponding to a hypothetical baseline harvest plan. The second scenario (with ID=358 and named ***4X Less Urbanization Scenario***) contains model inputs corresponding to an alternative plan where urbanization targets are 4 times less than those of the Baseline Scenario.
 <br>
+
 To view the details of the first of these Scenarios:
 <br>
 * Select the scenario named ***Baseline Scenario*** in the Library Explorer.
