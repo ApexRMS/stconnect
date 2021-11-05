@@ -13,7 +13,7 @@ This quickstart tutorial will introduce you to basics of working with ST-Connect
 * Creating a new ST-Connect Library
 * Configuring the ST-Connect Library
 * Viewing model inputs
-* Running the model (coming soon)
+* Running the model
 * Analyzing the results (coming soon)
 
 ## **Step 1: Install ST-Connect**
@@ -56,7 +56,7 @@ To view the details of the first of these Scenarios:
 
 This opens the Scenario Properties window.
 <br>
-<img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-4.PNG">
+<img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-4.png">
 <br>
 The first tab in this window, called **General**, contains three datasheets. The first, **Summary**, displays some generic information for the Scenario. The second, **Pipeline**, allows the user to select the run order of the inputs in the model. Finally, the **Datafeeds** datasheet displays a list of all data sources inputted into the model. 
 <br>
@@ -70,3 +70,6 @@ Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiari
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-7.PNG">
 <br>
+
+## **Step 5: Run the model**
+Right-click on the Baseline Scenario in the Scenario Manager window and select Run from the context menu. If prompted to save your project, click Yes. This run will take some time (about 30 minutes). If the run is successful, you will see a Status of Done in the Run Monitor window, at which point you can close the Run Monitor window; otherwise, click on the Run Log link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
