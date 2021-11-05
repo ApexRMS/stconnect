@@ -72,4 +72,7 @@ Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiari
 <br>
 
 ## **Step 5: Run the model**
-Right-click on the Baseline Scenario in the Scenario Manager window and select Run from the context menu. If prompted to save your project, click Yes. This run will take some time (about 30 minutes). If the run is successful, you will see a Status of Done in the Run Monitor window, at which point you can close the Run Monitor window; otherwise, click on the Run Log link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
+Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. This run will take some time (about 30 minutes). If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
+<br>
+<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-8.png">
+<br>
