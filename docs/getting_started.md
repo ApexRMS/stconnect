@@ -66,11 +66,11 @@ The first tab in this window, called **General**, contains three datasheets. The
 <br>
 The second tab in the window, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 10 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Landscape Change** and **Circuit Connectivity** analyses are run every 10 years.
 <br>
-<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-6.PNG">
+<img align="middle" style="padding: 3px" width="400" src="assets/images/screencap-6.PNG">
 <br>
 Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-7.PNG">
+<img align="middle" style="padding: 3px" width="850" src="assets/images/screencap-7.PNG">
 <br>
 
 ## **Step 5: Run the model**
