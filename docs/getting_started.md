@@ -46,7 +46,7 @@ The contents of your newly created Library are now displayed in the Library Expl
 > **Note:**
 > Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains two pre-configured Scenarios with model inputs. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios: one a Baseline Scenario, and another 4X Less Urbanization Scenario.
 
-<img align="middle" style="padding: 3px" width="300" src="assets/images/screencap-3.PNG">
+<img align="middle" style="padding: 3px" width="350" src="assets/images/screencap-3.PNG">
 <br>
 As shown in the image above, the Library you have just opened contains two Scenarios, each with a unique ID. The first of these scenarios (with ID=350, as shown above in square brackets) is named ***Baseline Scenario***; this scenario contains a suite of model inputs corresponding to a hypothetical baseline harvest plan. The second scenario (with ID=358 and named ***4X Less Urbanization Scenario***) contains model inputs corresponding to an alternative plan where urbanization targets are 4 times less than those of the Baseline Scenario.
 <br>
