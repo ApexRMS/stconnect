@@ -24,7 +24,7 @@ This quickstart tutorial will introduce you to basics of working with ST-Connect
 ## **Step 2: Create a new ST-Connect Library**
 Having installed the **ST-Connect** Package, you are now ready to create your first SyncroSim Library. A Library is a file (with extension *.ssim*) that contains all of your model inputs and outputs. Note that the format of each Library is specific to the Package for which it was initially created. To create a new Library, choose **New Library...** from the **File** menu.
 <br>
-<img align="middle" style="padding: 3px" width="700" src="assets/images/screencap-1.PNG">
+<img align="middle" style="padding: 3px" width="680" src="assets/images/screencap-1.PNG">
 <br>
 In this window:
 <br>
@@ -70,7 +70,7 @@ The second tab in the window, **Run Control**, contains parameters for running a
 <br>
 Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs.
 <br>
-<img align="middle" style="padding: 3px" width="850" src="assets/images/screencap-7.PNG">
+<img align="middle" style="padding: 3px" width="825" src="assets/images/screencap-7.PNG">
 <br>
 
 ## **Step 5: Run the model**
