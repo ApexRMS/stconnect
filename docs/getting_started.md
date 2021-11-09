@@ -79,7 +79,7 @@ Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiari
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-8.png">
 <br>
 Run the **4X Less Urbanization Scenario** next by repeating the steps above.
-> **Note:** The simulation will result in an error if multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
+> **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
 
 ## **Step 6: Analyze the results**
 To view results for your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
