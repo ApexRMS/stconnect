@@ -71,11 +71,11 @@ The second tab in the window, **Run Control**, contains parameters for running a
 <br>
 Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the Baseline Scenario, Urbanization has a target area of 10 to 19 square kilometres from 2012 to 2018.
 <br>
-<img align="middle" style="padding: 3px" width="1500" src="assets/images/screencap-7.PNG">
+<img align="middle" style="padding: 3px" width="2500" src="assets/images/screencap-7.PNG">
 <br>
 Next, open the Scenario Properties window for the **4X Less Urbanization Scenario**. Notice that the target areas within the Urbanization transition type are much lower.
 <br>
-<img align="middle" style="padding: 3px" width="1500" src="assets/images/screencap-8.png">
+<img align="middle" style="padding: 3px" width="2500" src="assets/images/screencap-8.png">
 <br>
 
 ## **Step 5: Run the model**
