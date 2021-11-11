@@ -13,7 +13,7 @@ permalink: /
 ### *ST-Connect* is an open-source [SyncroSim](https://syncrosim.com/download/){:target="_blank"} Base Package for forecasting landscape connectivity.
 
 
-**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change and habitat connectivity.
+**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change and habitat connectivity. By including [ST-Sim](http://docs.stsim.net/){:target="_blank"} in the pipeline, **ST-Connect** is able to forecast landscape dynamics, projecting changes in both vegetation and land use. This package also makes use of [Circuitscape](https://circuitscape.org/){:target="_blank"}, which uses algorithms from electronic circuit theory to predict connectivity in heterogenous landscapes.
 <br>
 <img align="middle" style="padding: 3px" width="350" src="assets/images/pipeline-1.PNG">
 <br>
