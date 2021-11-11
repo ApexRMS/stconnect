@@ -19,7 +19,7 @@ This quickstart tutorial will introduce you to basics of working with ST-Connect
 
 ## **Step 1: Install required programs**
 **ST-Connect** is a Package within the [SyncroSim](https://syncrosim.com/){:target="_blank"} simulation modeling framework; as such, running **ST-Connect** requires that the **SyncroSim** software be installed on your computer. To install **ST-Connect**, and a list of other required programs, follow the instructions under [How to Install](https://apexrms.github.io/stconnect/){:target="_blank"}.
-> **Note:** When installing **Circuitscape** follow the Circuitscape.jl installation link and not the Windows executable.
+> **Note:** When installing **Circuitscape**, follow the Circuitscape.jl installation link and not the Windows executable.
 
 ## **Step 2: Create a new ST-Connect Library**
 Having installed the **ST-Connect** Package, you are now ready to create your first SyncroSim Library. A Library is a file (with extension *.ssim*) that contains all of your model inputs and outputs. Note that the format of each Library is specific to the Package for which it was initially created. To create a new Library, choose **New Library...** from the **File** menu.
@@ -39,7 +39,8 @@ For the model to run, SyncroSim needs to locate the locations of your R, Julia, 
 <br>
 <img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-2.png">
 <br>
-
+> **Note:** As shown, the AppData folder will need to be accessed. This is normally a hidden folder on your computer. To asccess this folder, open your Windows Explorer, open the View tab, and select Hidden Items.
+<br>
 ## **Step 4: Review the model inputs**
 The contents of your newly created Library are now displayed in the Library Explorer. Model inputs in SyncroSim are organized into Scenarios, where each Scenario consists of a suite of values, one for each of the Model's required inputs.
 
