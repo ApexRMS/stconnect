@@ -77,7 +77,7 @@ Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiari
 ## **Step 5: Run the model**
  In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~30 minutes when **Multiprocessing** is disabled). Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
-<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-8.png">
+<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-9.png">
 <br>
 Run the **4X Less Urbanization Scenario** next by repeating the steps above.
 > **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
@@ -85,15 +85,15 @@ Run the **4X Less Urbanization Scenario** next by repeating the steps above.
 ## **Step 6: Analyze the results**
 To view results for your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
 <br>
-<img align="middle" style="padding: 3px" width="375" src="assets/images/screencap-9.png">
+<img align="middle" style="padding: 3px" width="375" src="assets/images/screencap-10.png">
 <br>
 You can now view and compare the results of running your two Scenarios through the model from the ST-Connect Package.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-10.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-11.png">
 <br>
 Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see how **Landscape Change** and **Circuit Connectivity** have changed over the simulation.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-11.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
 
 > **Note:**
