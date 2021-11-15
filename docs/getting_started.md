@@ -35,7 +35,7 @@ In this window:
 When you are ready to create the Library file, click **OK**. A new Library will be created and loaded into the Library Explorer.
 
 ## **Step 3: Configure library settings**
-For the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The R executable will be found automatically. To check, double-click on **Simple Conn. Model** and navigate to the **Options** tab. In the **R Configuration** datasheet, you should see the file path to your R executable. If not, click **Browse** and navigate to the correct file location. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer (example shown below), then click **Open**.
+For the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. The R executable will be found automatically. To check, double-click on **Simple Conn. Model** and navigate to the **Options** tab. In the **R Configuration** datasheet, you should see the file path to your R executable. If not, click **Browse...** and navigate to the correct file location. The default file location of the Julia executable is blank. Select the Folder icon, navigate to the proper location on your local computer (example shown below), then click **Open**.
 <br>
 <img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-2.png">
 <br>
