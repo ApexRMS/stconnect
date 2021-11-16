@@ -61,7 +61,7 @@ This opens the Scenario Properties window.
 <br>
 <img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-4.png">
 <br>
-The first tab in this window, called **General**, contains three datasheets. The first, **Summary**, displays some generic information for the Scenario. The second, **Pipeline**, allows the user to select the run order of the inputs in the model. Finally, the **Datafeeds** datasheet displays a list of all data sources inputted into the model. 
+The first tab in this window, called **General**, contains three datasheets. The first, **Summary**, displays some general information for the Scenario. The second, **Pipeline**, allows the user to select the run order of the inputs in the model. Finally, the **Datafeeds** datasheet displays a list of all data sources inputted into the model. 
 <br>
 <img align="middle" style="padding: 3px" width="760" src="assets/images/screencap-5.png">
 <br>
