@@ -37,7 +37,7 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target
 
 Download and install R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
 <br>
-Download and install [Circuitscape 5](https://circuitscape.org/downloads/){:target="_blank"}.
+Download and install [Circuitscape 5](https://circuitscape.org/downloads/){:target="_blank"}. (when installing **Circuitscape**, follow the Circuitscape.jl installation link and not the link to the Windows executable)
 <br>
 Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (only required if including Conservation Prioritization).
 <br>
