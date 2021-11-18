@@ -97,7 +97,7 @@ Next, select the **Maps** tab from the bottom of the **Scenario Manager** window
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
-For comparison, the maps pertaining to the **4X Less Urbanization Scenario** should appear like the following:
+For comparison, the maps pertaining to the **4X Less Urbanization Scenario** should appear as shown below. Pixels indicating **Developed** areas are found in lower density.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
