@@ -6,7 +6,6 @@ title: Getting started
 # Getting started with **ST-Connect**
 
 ## Quickstart Tutorial
-> **Note:** This tutorial corresponds to ST-Connect v1.1.15, which will be released soon.
 
 This quickstart tutorial will introduce you to basics of working with ST-Connect. The steps include:
 <br>
@@ -49,7 +48,7 @@ The contents of your newly created Library are now displayed in the Library Expl
 
 <img align="middle" style="padding: 3px" width="350" src="assets/images/screencap-3.PNG">
 <br>
-As shown in the image above, the Library you have just opened contains two Scenarios, each with a unique ID. The first of these scenarios (with ID=350, as shown above in square brackets) is named ***Baseline Scenario***; this scenario contains a suite of model inputs corresponding to a hypothetical baseline harvest plan. The second scenario (with ID=358 and named ***4X Less Urbanization Scenario***) contains model inputs corresponding to an alternative plan where urbanization targets are 4 times less than those of the Baseline Scenario.
+As shown in the image above, the Library you have just opened contains two Scenarios, each with a unique ID. The first of these scenarios (with ID=350, as shown above in square brackets) is named ***Baseline Scenario***; this scenario contains a suite of model inputs derived from historical land change data. The second scenario (with ID=358 and named ***4X Less Urbanization Scenario***) contains model inputs corresponding to an alternative land management plan where urbanization targets are 4 times less than those of the Baseline Scenario.
 <br>
 
 To view the details of the first of these Scenarios:
@@ -61,7 +60,7 @@ This opens the Scenario Properties window.
 <br>
 <img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-4.png">
 <br>
-The first tab in this window, called **General**, contains three datasheets. The first, **Summary**, displays some general information for the Scenario. The second, **Pipeline**, allows the user to select the run order of the inputs in the model. Finally, the **Datafeeds** datasheet displays a list of all data sources inputted into the model. 
+The first tab in this window, called **General**, contains three datasheets. The first, **Summary**, displays some general information for the Scenario. The second, **Pipeline**, allows the user to select the run order of the inputs in the model. Finally, the **Datafeeds** datasheet displays a list of all data sources inputted into the model.
 <br>
 <img align="middle" style="padding: 3px" width="760" src="assets/images/screencap-5.png">
 <br>
@@ -95,7 +94,7 @@ You can now view and compare the results of running your two Scenarios through t
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-11.png">
 <br>
-Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see how **Landscape Change** and **Circuit Connectivity** have changed over the simulation.
+Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see how the landscape and connectivity have change under the two scenarios.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
