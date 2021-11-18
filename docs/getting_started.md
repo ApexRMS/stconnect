@@ -97,6 +97,9 @@ Next, select the **Maps** tab from the bottom of the **Scenario Manager** window
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
-
+For comparison, the maps pertaining to the **4X Less Urbanization Scenario** should appear like the following:
+<br>
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
+<br>
 > **Note:**
 > You can add and remove Results Scenarios from the list of scenarios being analyzed by selecting a Scenario in the Library Explorer and then choosing either **Add to Results** or **Remove from Results** from the Scenario menu. **Scenarios** currently selected for analysis are highlighted in **bold** in the Library Explorer. When adding or removing results from the Scenario menu, make sure to click on "Full Zoom", in the mapping window, after the desired scenarios are selected.
