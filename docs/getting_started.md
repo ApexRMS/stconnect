@@ -79,7 +79,7 @@ Next, open the Scenario Properties window for the **4X Less Urbanization Scenari
 ## **Step 5: Run the model**
  In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~30 minutes when **Multiprocessing** is disabled). Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
-<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-9.png">
+<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
 <br>
 Run the **4X Less Urbanization Scenario** next by repeating the steps above.
 > **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
@@ -87,19 +87,19 @@ Run the **4X Less Urbanization Scenario** next by repeating the steps above.
 ## **Step 6: Analyze the results**
 To view results from your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
 <br>
-<img align="middle" style="padding: 3px" width="375" src="assets/images/screencap-10.png">
+<img align="middle" style="padding: 3px" width="375" src="assets/images/screencap-11.png">
 <br>
 You can now view and compare the results of running your two Scenarios through the model from the ST-Connect Package.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-11.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
 Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see spatial changes in the landscape and in connectivity for the Hawaii Creeper.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
 For comparison, the maps pertaining to the **4X Less Urbanization Scenario** should appear as shown below. Pixels indicating **Developed** areas are found in lower density.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14.png">
 <br>
 > **Note:**
 > You can add and remove Results Scenarios from the list of scenarios being analyzed by selecting a Scenario in the Library Explorer and then choosing either **Add to Results** or **Remove from Results** from the Scenario menu. **Scenarios** currently selected for analysis are highlighted in **bold** in the Library Explorer. When adding or removing results from the Scenario menu, make sure to click on "Full Zoom", in the mapping window, after the desired scenarios are selected.
