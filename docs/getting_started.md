@@ -77,7 +77,11 @@ Next, open the Scenario Properties window for the **4X Less Urbanization Scenari
 <br>
 
 ## **Step 5: Run the model**
- In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~30 minutes when **Multiprocessing** is disabled). Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
+ In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~30 minutes when **Multiprocessing** is disabled). 
+ <br>
+<img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-9.png">
+<br>
+ Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
 <br>
