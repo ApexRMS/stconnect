@@ -33,20 +33,6 @@ R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
 Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (optional).
 <br>
 <br>
-## How to Install
-
-Download and install R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
-<br>
-Download and install [Circuitscape 5](https://circuitscape.org/downloads/){:target="_blank"}. (follow the Circuitscape.jl installation link and not the link to the Windows executable)
-<br>
-Download and install Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (only required if including Conservation Prioritization).
-<br>
-<br>
-Open SyncroSim and select **File -> Packages… -> Install…**, then select the **ST-Connect** package and click OK.
-
-Alternatively, download the [latest release](https://github.com/ApexRMS/stconnect/releases/){:target="_blank"} from GitHub. Open SyncroSim and select File -> Packages… -> Install From File…, then navigate to the downloaded package file with the extension *.ssimpkg*.
-<br>
-<br>
 ## Getting Started
 
 For more information on **ST-Connect**, including a Quickstart Tutorial (under construction), see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html){:target="_blank"} page.
