@@ -80,7 +80,7 @@ Next, open the Scenario Properties window for the **4X Less Urbanization Scenari
 <br>
 
 ## **Step 5: Run the model**
- In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~30 minutes when **Multiprocessing** is disabled). 
+ In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~12 minutes when **Multiprocessing** is enabled, ~36 minutes when is disabled). 
  <br>
 <img align="middle" style="padding: 3px" width="575" src="assets/images/screencap-9-border.png">
 <br>
