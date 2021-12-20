@@ -75,7 +75,7 @@ Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiari
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-7.PNG">
 <br>
-Next, open the Scenario Properties window for the **4X Less Urbanization Scenario**. Notice that the target areas within the Urbanization transition type have decreased relative to the **Baseline Scenario**.
+Next, open the Scenario Properties window for the **4X Less Urbanization Scenario**. Notice that the target minimum and maximum within the Urbanization transition type have decreased relative to the **Baseline Scenario**.
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-8.png">
 <br>
