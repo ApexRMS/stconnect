@@ -32,6 +32,7 @@ In this window:
 * Select the row for ***stconnect - Connectivity planning for future climate and land-use change***. Note that as you select a row, the list of **Templates** available and suggested **File name** for that base package are updated.
 * Select the ***Simple Conn. Model*** Template as shown above.
 * Optionally type in a new **File name** for the Library (or accept the default); you can also change the **Folder** containing the file using the **Browse...** button.
+
 <br>
 When you are ready to create the Library file, click **OK**. A new Library will be created and loaded into the Library Explorer.
 
