@@ -41,7 +41,7 @@ For the model to run, SyncroSim needs to locate the locations of your R, Julia, 
 <br>
 <img align="middle" style="padding: 3px" width="800" src="assets/images/screencap-2.png">
 <br>
-> **Note:** As shown, the AppData folder will need to be accessed. This is normally a hidden folder on your computer. To access this folder, open your Windows Explorer, open the View tab, and select Hidden Items.
+> **Note:** As shown, the AppData folder will need to be accessed. This is normally a hidden folder on your computer. To access this folder, open your Windows Explorer, open the View tab, and enable Hidden Items.
 
 ## **Step 4: Review the model inputs**
 The contents of your newly created Library are now displayed in the Library Explorer. Model inputs in SyncroSim are organized into Scenarios, where each Scenario consists of a suite of values, one for each of the Model's required inputs.
