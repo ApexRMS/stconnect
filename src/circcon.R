@@ -17,9 +17,9 @@ myProject <- project()
 # Active scenario
 myScenario <- scenario()
 # Create SyncroSim temporary folder
-tempFolderPath <- envTempFolder("CircuitConnectivity")
+tempFolderPath <- runtimeTempFolder("CircuitConnectivity")
 # Create output folder
-outputFolderPath <- envOutputFolder(myScenario, "stconnect_CCOutputCumulativeCurrent")
+outputFolderPath <- runtimeOutputFolder(myScenario, "stconnect_CCOutputCumulativeCurrent")
 # Temporary Hack: save a small file to the output folder so that it doesn't get deleted when SyncroSim cleans the library and automatically deletes empty folders 
 write.table("file to save folder", file.path(outputFolderPath,"saveFolder.txt"))
 
@@ -64,7 +64,7 @@ totalTimesteps <- runSettings$MaximumTimestep - runSettings$MinimumTimestep + 1
 
 # Run simulation ---------------------------------------------------------------------------
 # Report on simulation progress
-envBeginSimulation(totalIterations * totalTimesteps)
+progressBar(type="begin", totalSteps=as.integer(totalIterations*totalTimesteps))
 
 # Loop over all iterations, timesteps, and species
 for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
@@ -72,8 +72,8 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
   for (timestep in timestepSet) {
     
     # Report on simulation progress
-    envReportProgress(iteration, timestep)
-    
+    progressBar(type="report", iteration=iteration, timestep=timestep)
+
     #Read in state class and age rasters for this iteration and timestep
     stateclassMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
     ageMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialAge", iteration = iteration, timestep = timestep)
@@ -235,8 +235,8 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
       
     } # speciesRow
     # Report on simulation progress
-    envStepSimulation()
-    
+    progressBar(type="step")
+
   } # timestep
   
 } # iteration
@@ -247,4 +247,4 @@ saveDatasheet(myScenario, circuitOut, "stconnect_CCOutputCumulativeCurrent")
 saveDatasheet(myScenario, effectivePermeabilityOut, "stconnect_CCOutputMetric")
 
 # End simulation ---------------------------------------------------------------------------
-envEndSimulation()
+progressBar(type="end")
