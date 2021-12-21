@@ -101,11 +101,11 @@ You can now view and compare the results of running your two Scenarios through t
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
-Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see spatial changes in the landscape and in connectivity for the Hawaii Creeper. The mapping window should display changes in state class by default. As you can see in the top row, the ***Baseline Scenario*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario** (second row).
+Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables**. The mapping window should display changes in state class by default. As you can see in the top row, the ***Baseline Scenario*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario** (second row).
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
-Uncheck the State Classes box and turn on the Hawaii Creeper maps under Cumulative Current to view the maps pertaining to Circuit Connectivity.
+Uncheck the **State Classes** box and turn on the Hawaii Creeper maps under **Cumulative Current** to view the maps pertaining to Circuit Connectivity.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14.png">
 <br>
