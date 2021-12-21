@@ -71,11 +71,11 @@ The second tab in the window, **Run Control**, contains parameters for running a
 <br>
 <img align="middle" style="padding: 3px" width="410" src="assets/images/screencap-6.PNG">
 <br>
-Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the **Baseline Scenario**, Urbanization has a target area of 12 to 32 square kilometres.
+Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the ***Baseline Scenario***, Urbanization has a target area of 12 to 32 square kilometres.
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-7.PNG">
 <br>
-Next, open the Scenario Properties window for the **4X Less Urbanization Scenario**. Notice that the target minimum and maximum within the Urbanization transition type have decreased relative to the **Baseline Scenario**.
+Next, open the Scenario Properties window for the ***4X Less Urbanization Scenario***. Notice that the target minimum and maximum within the Urbanization transition type have decreased relative to the ***Baseline Scenario***.
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-8.png">
 <br>
@@ -89,7 +89,7 @@ Next, open the Scenario Properties window for the **4X Less Urbanization Scenari
 <br>
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
 <br>
-Run the **4X Less Urbanization Scenario** next by repeating the steps above.
+Run the ***4X Less Urbanization Scenario*** next by repeating the steps above.
 > **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
 
 ## **Step 6: Analyze the results**
@@ -101,7 +101,7 @@ You can now view and compare the results of running your two Scenarios through t
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
-Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see spatial changes in the landscape and in connectivity for the Hawaii Creeper. The mapping window should display changes in state class by default. As you can see in the top row, the **Baseline Scenario** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario** (second row).
+Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables** to see spatial changes in the landscape and in connectivity for the Hawaii Creeper. The mapping window should display changes in state class by default. As you can see in the top row, the ***Baseline Scenario*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario** (second row).
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
