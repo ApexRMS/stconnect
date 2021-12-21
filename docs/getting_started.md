@@ -71,7 +71,7 @@ The second tab in the window, **Run Control**, contains parameters for running a
 <br>
 <img align="middle" style="padding: 3px" width="410" src="assets/images/screencap-6.PNG">
 <br>
-Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the Baseline Scenario, Urbanization has a target area of 12 to 32 square kilometres.
+Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the **Baseline Scenario**, Urbanization has a target area of 12 to 32 square kilometres.
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-7.PNG">
 <br>
