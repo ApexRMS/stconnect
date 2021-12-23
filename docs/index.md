@@ -31,13 +31,11 @@ R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
 [Circuitscape 5](https://circuitscape.org/downloads/){:target="_blank"}.
 <br>
 Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (optional).
-<br>
-<br>
+
 ## Getting Started
 
 For more information on **ST-Connect**, including a Quickstart Tutorial, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html){:target="_blank"} page.
-<br>
-<br>
+
 ## Links
 
 Browse source code at
@@ -45,8 +43,7 @@ Browse source code at
 <br>
 Report a bug at
 [http://github.com/ApexRMS/stconnect/issues](http://github.com/ApexRMS/stconnect/issues){:target="_blank"}
-<br>
-<br>
+
 ## Developers
 
 Bronwyn Rayfield (Author, maintainer) <a href="https://orcid.org/0000-0003-1768-1300" target="_blank"><img align="middle" style="padding: 0.5px" width="17" src="assets/images/ORCID.png"></a>
