@@ -32,7 +32,7 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target
 
 ## How to Install
 
-To learn how to install **ST-Connect**, see the **Install ST-Connect** section on the Getting Started page.
+For installation instructions, see the **Install ST-Connect** section on the Getting Started page.
 
 ## Getting Started
 
