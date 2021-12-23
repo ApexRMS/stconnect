@@ -22,8 +22,6 @@ permalink: /
 ## Requirements
 
 This package requires the following software:
-<br>
-<br>
 The <a href="https://syncrosim.com/download/" target="_blank">latest version</a> of Syncrosim.
 <br>
 R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
