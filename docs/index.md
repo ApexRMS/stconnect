@@ -30,6 +30,10 @@ R [version 4.0.4](https://www.r-project.org/){:target="_blank"} or higher.
 <br>
 Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target="_blank"} (optional).
 
+## How to Install
+
+To learn how to install **ST-Connect**, see the **Install ST-Connect** section on the Getting Started page.
+
 ## Getting Started
 
 For more information on **ST-Connect**, including a Quickstart Tutorial, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page.
