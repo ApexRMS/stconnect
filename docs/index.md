@@ -32,7 +32,7 @@ Zonation [version 4.0.0](https://github.com/cbig/zonation-core/releases){:target
 
 ## Getting Started
 
-For more information on **ST-Connect**, including a Quickstart Tutorial, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html){:target="_blank"} page.
+For more information on **ST-Connect**, including a Quickstart Tutorial, see the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page.
 
 ## Links
 
