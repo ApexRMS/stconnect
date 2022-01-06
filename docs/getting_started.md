@@ -66,7 +66,7 @@ The first tab in this window, called **General**, contains three datasheets. The
 <br>
 <img align="middle" style="padding: 3px" width="760" src="assets/images/screencap-5.png">
 <br>
-The second tab in the window, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 20 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Landscape Change** and **Circuit Connectivity** analyses are run every 10 years.
+The second tab in the window, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 10 years, starting in the year 2011, and repeated for 3 Monte Carlo iterations. By default the **Landscape Change** and **Circuit Connectivity** analyses are run every 10 years.
 <br>
 <img align="middle" style="padding: 3px" width="410" src="assets/images/screencap-6.PNG">
 <br>
