@@ -105,7 +105,7 @@ Next, select the **Maps** tab from the bottom of the **Scenario Manager** window
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
-
+Scenarios featuring the entirety of Hawaii's Big Island are included in the Library. Follow the previous steps to explore these scenarios. Notice that these scenarios run from 2011 to 2015. Expect the model run to take about 1.5 hours per scenario.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14.png">
 <br>
