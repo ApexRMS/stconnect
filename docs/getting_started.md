@@ -50,7 +50,7 @@ The contents of your newly created Library are now displayed in the Library Expl
 
 <img align="middle" style="padding: 3px" width="450" src="assets/images/screencap-3.PNG">
 <br>
-As shown in the image above, the Library you have just opened contains two folders, each containing two Scenarios. Each Scenario is also given a unique ID. These scenarios contain a suite of model inputs derived from historical land change data.  The scenarios named ***4X Less Urbanization Scenario*** contain model inputs corresponding to an alternative land management plan where urbanization targets are 4 times less than those of the paired ***Baseline Scenario***.
+As shown in the image above, the Library you have just opened contains two folders, each containing two Scenarios. Each Scenario is also given a unique ID. These scenarios contain a suite of model inputs derived from historical land change data.  The scenarios named ***4X Less Urbanization Scenario - Hilo Focal Region*** contain model inputs corresponding to an alternative land management plan where urbanization targets are 4 times less than those of the paired ***Baseline Scenario - Hilo Focal Region***.
 <br>
 
 To view the details of the first of these Scenarios:
