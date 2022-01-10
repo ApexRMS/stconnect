@@ -55,7 +55,7 @@ As shown in the image above, the Library you have just opened contains two folde
 
 To view the details of the first of these Scenarios:
 <br>
-* Select the scenario named ***Baseline Scenario*** in the Library Explorer.
+* Select the scenario named ***Baseline Scenario - Hilo Focal Region*** in the Library Explorer.
 * Right-click and choose **Properties** from the context menu to view the details of the Scenario.
 
 This opens the Scenario Properties window.
