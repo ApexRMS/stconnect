@@ -89,7 +89,7 @@ Next, open the Scenario Properties window for the ***4X Less Urbanization Scenar
 <br>
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
 <br>
-Run the ***4X Less Urbanization Scenario  - Hilo Focal Region*** next by repeating the steps above.
+Run the ***4X Less Urbanization Scenario - Hilo Focal Region*** next by repeating the steps above.
 
 ## **Step 6: Analyze the results**
 To view results from your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
@@ -100,11 +100,11 @@ You can now view and compare the results of running your two Scenarios through t
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
-Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables**. The mapping window should display changes in state class and circuit connectivity by default. As you can see in the state class maps, the ***Baseline Scenario*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario**. Likewise, the **Baseline Scenario** results in less movement across the landscape by 2021, compared to the **4X Less Urbanization Scenario**.
+Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables**. The mapping window should display changes in state class and circuit connectivity by default. As you can see in the state class maps, the ***Baseline Scenario - Hilo Focal Region*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario - Hilo Focal Region**. Likewise, the **Baseline Scenario - Hilo Focal Region** results in less movement across the landscape by 2021, compared to the **4X Less Urbanization Scenario - Hilo Focal Region**.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
-Scenarios featuring the entirety of Hawaii's Big Island are included in the Library. Follow the previous steps to explore these scenarios. Notice that these scenarios run from 2011 to 2015. Expect the model run to take about 1.5 hours per scenario.
+Scenarios featuring the entirety of Hawaii's Big Island are included in the Library. Follow the previous steps to explore these scenarios. Notice that these scenarios run from 2011 to 2051. Expect the model run to take about 1.5 hours per scenario.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14.png">
 <br>
