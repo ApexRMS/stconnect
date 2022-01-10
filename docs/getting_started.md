@@ -70,11 +70,11 @@ The second tab in the window, **Run Control**, contains parameters for running a
 <br>
 <img align="middle" style="padding: 3px" width="410" src="assets/images/screencap-6.PNG">
 <br>
-Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the ***Baseline Scenario***, Urbanization has a target area of 12 to 32 square kilometres.
+Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. Notice that, in the ***Baseline Scenario - Hilo Focal Region***, Urbanization has a target area of 12 to 32 square kilometres.
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-7.PNG">
 <br>
-Next, open the Scenario Properties window for the ***4X Less Urbanization Scenario***. Notice that the target minimum and maximum within the Urbanization transition type have decreased relative to the ***Baseline Scenario***.
+Next, open the Scenario Properties window for the ***4X Less Urbanization Scenario - Hilo Focal Region***. Notice that the target minimum and maximum within the Urbanization transition type have decreased relative to the ***Baseline Scenario***.
 <br>
 <img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-8.png">
 <br>
