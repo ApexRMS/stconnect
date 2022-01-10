@@ -85,7 +85,7 @@ Next, open the Scenario Properties window for the ***4X Less Urbanization Scenar
 <img align="middle" style="padding: 3px" width="575" src="assets/images/screencap-9-border.png">
 > **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
 
- Right-click on the ***Baseline Scenario*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
+ Right-click on the ***Baseline Scenario - Hilo Focal Region*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
 <br>
