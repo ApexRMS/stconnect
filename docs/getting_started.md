@@ -32,6 +32,7 @@ In this window:
 * Select the row for ***stconnect - Connectivity planning for future climate and land-use change***. Note that as you select a row, the list of **Templates** available and suggested **File name** for that base package are updated.
 * Select the ***Simple Conn. Model*** Template as shown above.
 * Optionally type in a new **File name** for the Library (or accept the default); you can also change the **Folder** containing the file using the **Browse...** button.
+> **Note:** If you intend on using Multiprocessing (recommended) ensure your SyncroSim Library is saved to the C: Drive. Saving your library to OneDrive will result in an error when completing a model run.
 
 When you are ready to create the Library file, click **OK**. A new Library will be created and loaded into the Library Explorer.
 
@@ -83,7 +84,6 @@ Next, open the Scenario Properties window for the ***4X Less Urbanization Scenar
  In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~8 minutes when **Multiprocessing** is enabled, ~24 minutes when is disabled). 
  <br>
 <img align="middle" style="padding: 3px" width="575" src="assets/images/screencap-9-border.png">
-> **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
 
  Right-click on the ***Baseline Scenario - Hilo Focal Region*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
