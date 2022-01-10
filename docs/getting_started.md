@@ -89,7 +89,7 @@ Next, open the Scenario Properties window for the ***4X Less Urbanization Scenar
 <br>
 <img align="middle" style="padding: 3px" width="500" src="assets/images/screencap-10.png">
 <br>
-Run the ***4X Less Urbanization Scenario*** next by repeating the steps above.
+Run the ***4X Less Urbanization Scenario  - Hilo Focal Region*** next by repeating the steps above.
 
 ## **Step 6: Analyze the results**
 To view results from your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
