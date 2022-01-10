@@ -100,7 +100,7 @@ You can now view and compare the results of running your two Scenarios through t
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-12.png">
 <br>
-Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables**. The mapping window should display changes in state class and circuit connectivity by default. As you can see in the state class maps, the ***Baseline Scenario - Hilo Focal Region*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario - Hilo Focal Region**. Likewise, the **Baseline Scenario - Hilo Focal Region** results in less movement across the landscape by 2021, compared to the **4X Less Urbanization Scenario - Hilo Focal Region**.
+Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables**. The mapping window should display changes in state class and circuit connectivity by default. In the state class maps, ***Baseline Scenario - Hilo Focal Region*** results in a more drastic increase in developed land than **4X Less Urbanization Scenario - Hilo Focal Region**. Likewise, **Baseline Scenario - Hilo Focal Region** results in less movement across the landscape by 2021, compared to **4X Less Urbanization Scenario - Hilo Focal Region**.
 <br>
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
