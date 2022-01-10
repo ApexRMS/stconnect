@@ -80,7 +80,7 @@ Next, open the Scenario Properties window for the ***4X Less Urbanization Scenar
 <br>
 
 ## **Step 5: Run the model**
- In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~12 minutes when **Multiprocessing** is enabled, ~36 minutes when is disabled). 
+ In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~8 minutes when **Multiprocessing** is enabled, ~24 minutes when is disabled). 
  <br>
 <img align="middle" style="padding: 3px" width="575" src="assets/images/screencap-9-border.png">
 > **Note:** The simulation will result in an error if Multiprocessing is enabled and your SyncroSim Library is saved to OneDrive. Instead, save your Library to the C: Drive.
