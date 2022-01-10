@@ -95,7 +95,7 @@ Run the ***4X Less Urbanization Scenario*** next by repeating the steps above.
 ## **Step 6: Analyze the results**
 To view results from your run, move to the **Charts** tab at the bottom left of the **Scenario Manager** screen and double-click on **Summary** to open it.
 <br>
-<img align="middle" style="padding: 3px" width="375" src="assets/images/screencap-11.png">
+<img align="middle" style="padding: 3px" width="350" src="assets/images/screencap-11.png">
 <br>
 You can now view and compare the results of running your two Scenarios through the model from the ST-Connect Package.
 <br>
