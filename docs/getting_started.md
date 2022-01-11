@@ -7,7 +7,7 @@ title: Getting started
 
 ## Quickstart Tutorial
 
-This quickstart tutorial will introduce you to basics of working with ST-Connect. The steps include:
+This quickstart tutorial will introduce you to the basics of working with ST-Connect. The steps include:
 <br>
 * Installing ST-Connect
 * Creating a new ST-Connect Library
