@@ -46,11 +46,11 @@ For the model to run, SyncroSim needs to locate the locations of your R, Julia, 
 ## **Step 4: Review the model inputs**
 The contents of your newly created Library are now displayed in the Library Explorer. Model inputs in SyncroSim are organized into Scenarios, where each Scenario consists of a suite of values, one for each of the Model's required inputs.
 
-Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains four pre-configured Scenarios with model inputs. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios. It is recommended that you follow the quickstart tutorial using the **Hilo Focal Region** Scenarios (with IDs=350 and 358, as shown below in square brackets). These Scenarios use cropped landscapes of the **Big Island** Scenarios. As such, it will take a significantly shorter amount of time to complete a run. Explore the **Big Island** Scenarios afterwards if desired.
+Because you chose the ***Simple Conn. Model*** Template when you created your Library, your Library already contains four pre-configured Scenarios with model inputs derived from historical land change data. These inputs were filled in and distributed as a sample with the package to help you get started quickly, and represent hypothetical management Scenarios. The scenarios named ***4X Less Urbanization Scenario*** contain model inputs corresponding to an alternative land management plan where urbanization targets are 4 times less than in ***Baseline Scenario***. 
+
+It is recommended that you follow the quickstart tutorial using the **Hilo Focal Region** Scenarios (with IDs=350 and 358, as shown below in square brackets). These Scenarios use cropped landscapes of the **Big Island** Scenarios. As such, it will take a significantly shorter amount of time to complete a run. Explore the **Big Island** Scenarios afterwards if desired.
 
 <img align="middle" style="padding: 3px" width="450" src="assets/images/screencap-3.PNG">
-<br>
-As shown in the image above, the Library you have just opened contains two folders, each containing two Scenarios. These scenarios contain a suite of model inputs derived from historical land change data.  In each folder, the scenarios named ***4X Less Urbanization Scenario*** contain model inputs corresponding to an alternative land management plan where urbanization targets are 4 times less than in ***Baseline Scenario***.
 <br>
 
 To view the details of the first of these Scenarios:
