@@ -105,7 +105,7 @@ Next, select the **Maps** tab from the bottom of the **Scenario Manager** window
 <br>
 Scenarios featuring the entirety of Hawaii's Big Island are included in the Library. Follow Steps 4 and 5 to explore these scenarios. Notice that these scenarios run from 2011 to 2051. Expect the model run to take about 1.5 hours per scenario.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14-update.png">
 <br>
 > **Note:**
 > You can add and remove Results Scenarios from the list of scenarios being analyzed by selecting a Scenario in the Library Explorer and then choosing either **Add to Results** or **Remove from Results** from the Scenario menu. **Scenarios** currently selected for analysis are highlighted in **bold** in the Library Explorer. When adding or removing results from the Scenario menu, make sure to click on "Full Zoom", in the mapping window, after the desired scenarios are selected.
