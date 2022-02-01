@@ -101,6 +101,8 @@ You can now view and compare the results of running your two Scenarios through t
 <br>
 Next, select the **Maps** tab from the bottom of the **Scenario Manager** window (i.e. beside the **Charts** tab). Double click on **All Variables**. The mapping window should display changes in state class and circuit connectivity by default. In the state class maps, the ***Baseline Scenario*** results in a more drastic increase in developed land than the **4X Less Urbanization Scenario**. Likewise, the **Baseline Scenario** results in less movement across the landscape by 2021, compared to the **4X Less Urbanization Scenario**.
 <br>
+> **Note:** Legends can be customized by double-clicking on the bins.
+
 <img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-13.png">
 <br>
 Scenarios featuring the entirety of Hawaii's Big Island are included in the Library. Follow Steps 4 and 5 to explore these scenarios. Notice that these scenarios run from 2011 to 2051. Expect the model run to take about 1.5 hours per scenario.
