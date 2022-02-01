@@ -82,7 +82,7 @@ Next, open the Scenario Properties window for the scenario named ***4X Less Urba
 ## **Step 5: Run the model**
  In the toolbar, enable **Multiprocessing** with 3 jobs. This will cut down the time required to run the simulation (~8 minutes when **Multiprocessing** is enabled, ~24 minutes when is disabled). 
  <br>
-<img align="middle" style="padding: 3px" width="575" src="assets/images/screencap-9-border.png">
+<img align="middle" style="padding: 3px" width="575" src="assets/images/screencap-9.png">
 
  Right-click on the ***Baseline Scenario - Hilo Focal Region*** in the **Scenario Manager** window and select **Run** from the context menu. If prompted to save your project, click **Yes**. If the run is successful, you will see a Status of **Done** in the **Run Monitor** window, at which point you can close the **Run Monitor** window; otherwise, click on the **Run Log** link to see a report of any problems. Make any necessary changes to your Scenario, then re-run the Scenario.
 <br>
@@ -105,7 +105,7 @@ Next, select the **Maps** tab from the bottom of the **Scenario Manager** window
 <br>
 Scenarios featuring the entirety of Hawaii's Big Island are included in the Library. Follow Steps 4 and 5 to explore these scenarios. Notice that these scenarios run from 2011 to 2051. Expect the model run to take about 1.5 hours per scenario.
 <br>
-<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14-update.png">
+<img align="middle" style="padding: 3px" width="900" src="assets/images/screencap-14.png">
 <br>
 > **Note:**
 > You can add and remove Results Scenarios from the list of scenarios being analyzed by selecting a Scenario in the Library Explorer and then choosing either **Add to Results** or **Remove from Results** from the Scenario menu. **Scenarios** currently selected for analysis are highlighted in **bold** in the Library Explorer. When adding or removing results from the Scenario menu, make sure to click on "Full Zoom", in the mapping window, after the desired scenarios are selected.
