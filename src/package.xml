@@ -66,7 +66,7 @@
       displayName ="Landscape Change"
       isRunnable="True"
       isProxyFor="stsim_Primary"
-      transformerSpecificOutput="False">    
+      transformerSpecificOutput="False">
     </transformer>
 
     <!--HabitatSuitability Transformer-->
@@ -81,12 +81,12 @@
       transformerSpecificOutput="False"
       isRunnable="True">
       <pipeline>
-        <datafeed name="stsim_RunControl"/>      
-        <datafeed name="stsim_OutputOptionsSpatial"/>          
-        <datafeed name="stsim_OutputSpatialState"/>
-        <datafeed name="HSOutputOptions"/>  
-        <datafeed name="HSHabitatSuitability"/>    
-        <datafeed name="HSHabitatPatch"/>       
+        <datafeed name="stsim_RunControl" type="Input"/>
+        <datafeed name="stsim_OutputOptionsSpatial" type="Input"/>
+        <datafeed name="stsim_OutputSpatialState" type="Input"/>
+        <datafeed name="HSOutputOptions" type="Input"/>
+        <datafeed name="HSHabitatSuitability" type="Output"/>
+        <datafeed name="HSHabitatPatch" type="Output"/>
       </pipeline>
       <datafeeds>
         <datafeed name="HSHabitatSuitability" displayName="Habitat Suitability" dataScope="Scenario">
@@ -186,28 +186,17 @@
       transformerSpecificOutput="False"
       isRunnable="True">
       <pipeline>
-        <datafeed name="stsim_RunControl"/> 
-        <datafeed name="stsim_OutputSpatialState"/>
-        <datafeed name="stsim_OutputSpatialAge"/>  
-        <datafeed name="CCOutputOptions"/>   
-        <datafeed name="CCJuliaConfig"/>  
-        <datafeed name="CCLULCResistance"/>   
-        <datafeed name="CCAgeResistance"/>             
+        <datafeed name="stsim_RunControl" type="Input"/>
+        <datafeed name="stsim_OutputSpatialState" type="Input"/>
+        <datafeed name="stsim_OutputSpatialAge" type="Input"/>      
+        <datafeed name="CCOutputOptions" type="Input"/>
+        <datafeed name="CCJuliaConfig" type="Input"/>
+        <datafeed name="CCLULCResistance" type="Output"/>
+        <datafeed name="CCAgeResistance" type="Output"/>
+        <datafeed name="CCOutputCumulativeCurrent" type="Output"/>   
+        <datafeed name="CCOutputMetric" type="Output"/>           
       </pipeline>
       <datafeeds>
-        <datafeed name="HSLandcover" displayName="Landcover Maps" dataScope="Scenario">
-          <datasheets>
-            <datasheet name="HSLandcover">
-              <columns>
-                <column name="HSLandcoverMapID" dataType="Integer" isPrimary="True"/>
-                <column name="ScenarioID" dataType="Integer"/>
-                <column name="Iteration" dataType="Integer" validationType="WholeNumber" validationCondition="Greater" formula1="0" format="d"/>
-                <column name="Timestep" dataType="Integer" validationType="WholeNumber" validationCondition="GreaterEqual" formula1="0"/>
-                <column name="Filename" dataType="String" displayName="Landscape State Class Map" isExternalFile="True" isRaster="True" allowDbNull="False"/>
-              </columns>
-            </datasheet>
-          </datasheets>
-        </datafeed>
         <datafeed name="CCLULCResistance" displayName="LULC Resistance" dataScope="Scenario">
           <datasheets>
             <datasheet name="CCLULCResistance" displayName="LULC Resistance">
@@ -308,12 +297,13 @@
       transformerSpecificOutput="False"
       isRunnable="True">
       <pipeline>
-        <datafeed name="stsim_RunControl"/> 
-        <datafeed name="stconnect_CPRunSetting"/>   
-        <datafeed name="stconnect_CPOutputOptions"/>   
-        <datafeed name="stconnect_CPZonationConfig"/>  
-        <datafeed name="stconnect_HSOutputHabitatSuitability"/>
-        <datafeed name="stconnect_CCOutputCumulativeCurrent"/>
+        <datafeed name="stsim_RunControl" type="Input"/>
+        <datafeed name="stconnect_CPRunSetting" type="Input"/>
+        <datafeed name="stconnect_CPOutputOptions" type="Input"/>
+        <datafeed name="stconnect_CPZonationConfig" type="Input"/>
+        <datafeed name="stconnect_HSOutputHabitatSuitability" type="Input"/>
+        <datafeed name="stconnect_CCOutputCumulativeCurrent" type="Input"/>
+        <datafeed name="CPOutputCumulative" type="Output"/>
       </pipeline>
       <datafeeds>
         <datafeed name="CPRunSetting" displayName="Run Settings" dataScope="Scenario">
@@ -397,8 +387,8 @@
       <group name="Options">
         <item name="core_Options" displayName="General"/>
         <item name="core_Rconfig"/>
-		<item name="CCJuliaConfig"/>
-		<item name="CPZonationConfig"/>
+        <item name="CCJuliaConfig"/>
+        <item name="CPZonationConfig"/>
       </group>
     </layout>
 
@@ -499,10 +489,9 @@
       </group>
       <group name="stsim_Advanced" displayName="Carbon">
       </group>
-	    <group name="Habitat">
+      <group name="Habitat">
         <group name="LandscapeMapsGroup" displayName="Landscape Maps">
           <item name="stsim_OutputSpatialState" displayName="From Model" itemTransformer="HabitatSuitability" showIf="isParent"/>
-          <item name="HSLandcover" displayName="Manually Entered" itemTransformer="HabitatSuitability" showIf="isParent"/>
         </group>
         <item name="HSHabitatSuitability" itemTransformer="HabitatSuitability" showIf="isParent"/>
         <item name="HSHabitatPatch" itemTransformer="HabitatSuitability" showIf="isParent"/>
