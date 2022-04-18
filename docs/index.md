@@ -17,7 +17,7 @@ permalink: /
 <br>
 <img align="middle" style="padding: 3px" width="350" src="assets/images/pipeline-1.PNG">
 <br>
-**ST-Connect**'s accessible framework has helped support natural resource management projects such as a conservation prioritization project focusing on key wildlife species in Quebec [(Rayfield, Larocque, Martins et al., 2021)](https://quebio.ca/en/connectivity_report){:target="_blank"}. **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/){:target="_blank"} modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/){:target="_blank"} R package.
+**ST-Connect**'s accessible framework has helped support natural resource management projects such as a conservation prioritization project focusing on key wildlife species in Quebec [(Rayfield, Larocque, Martins et al., 2021)](https://quebio.ca/en/connectivity_report){:target="_blank"}. **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/){:target="_blank"} modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/){:target="_blank"} R package and from the Python programming language using the [pysyncrosim](https://pysyncrosim.readthedocs.io/en/latest/){:target="_blank"} Python package.
 
 ## Requirements
 
