@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<update>
+  
+  <!--Insert New Column into Existing Table-->   
+  <action code="Exec" condition="TableExists" criteria="stconnect_CCLULCResistance">
+    <item>ALTER TABLE stconnect_CCLULCResistance RENAME to stconnect_CCResistance</item>
+  </action>
+
+</update>
