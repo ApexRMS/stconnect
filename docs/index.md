@@ -15,7 +15,7 @@ permalink: /
 
 **ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change and habitat connectivity. A simple **ST-Connect** model pipeline consists of two stages: a state-and-transition simulation model of landscape change ([ST-Sim](http://docs.stsim.net/){:target="_blank"}) and a circuit model of landscape connectivity ([Circuitscape](https://circuitscape.org/){:target="_blank"}). ST-Sim projects changes in both vegetation and land use, with uncertainty, while Circuitscape infers the connectivity consequences of these changes.
 <br>
-<img align="middle" style="padding: 3px" width="350" src="assets/images/pipeline-1.PNG">
+<img align="right" style="padding: 3px" width="350" src="assets/images/pipeline-1.PNG">
 <br>
 **ST-Connect** has been used to support connectivity conservation planning in Quebec, Canada by creating forecasts of ecological connectivity for forest-dependent wildlife under a range of land use and climate scenarios [(Rayfield, Larocque, Martins et al., 2021)](https://quebio.ca/en/connectivity_report){:target="_blank"}. **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/){:target="_blank"} modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/){:target="_blank"} R package and from the Python programming language using the [pysyncrosim](https://pysyncrosim.readthedocs.io/en/latest/){:target="_blank"} Python package.
 
