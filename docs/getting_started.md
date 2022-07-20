@@ -25,7 +25,7 @@ Once all required programs are installed, open **SyncroSim** and select **File -
 ## **Step 2: Create a new ST-Connect Library**
 Having installed the **ST-Connect** Package, you are now ready to create your first SyncroSim Library. A Library is a file (with extension *.ssim*) that contains all of your model inputs and outputs. Note that the format of each Library is specific to the Package for which it was initially created. To create a new Library, choose **New Library...** from the **File** menu.
 <br>
-<img align="middle" style="padding: 3px" width="680" src="assets/images/screencap-1.png">
+<img align="middle" style="padding: 3px" width="680" src="assets/images/screencap-1.PNG">
 <br>
 In this window:
 <br>
@@ -50,7 +50,7 @@ Because you chose the ***Simple Conn. Model*** Template when you created your Li
 
 It is recommended that you follow the quickstart tutorial using the **Hilo Focal Region** Scenarios (with IDs=350 and 358, as shown below in square brackets). These Scenarios use cropped landscapes of the **Big Island** Scenarios and will take a significantly shorter amount of time to run. Explore the **Big Island** Scenarios afterwards if desired.
 
-<img align="middle" style="padding: 3px" width="450" src="assets/images/screencap-3.png">
+<img align="middle" style="padding: 3px" width="450" src="assets/images/screencap-3.PNG">
 <br>
 
 To view the details of the first of these Scenarios:
@@ -68,11 +68,11 @@ The first tab in this window, called **General**, contains three datasheets. The
 <br>
 The second tab in the window, **Run Control**, contains parameters for running a model simulation. In this example, the Scenario will run for 10 years, starting in the year 2011, and is repeated for 3 Monte Carlo iterations.
 <br>
-<img align="middle" style="padding: 3px" width="410" src="assets/images/screencap-6.png">
+<img align="middle" style="padding: 3px" width="410" src="assets/images/screencap-6.PNG">
 <br>
 Click on the **Landscape Change** and **Circuit Connectivity** tabs to familiarize yourself with this Scenario's inputs. The **Landscape Change - Output Options Spatial** and **Circuit Connectivity - Output Options** are both set to an output frequency of 10 years in order to speed up the run times and save on disk space. Also notice that, in the ***Baseline Scenario***, Urbanization has a target area of 12 to 32 sq. km.
 <br>
-<img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-7.png">
+<img align="middle" style="padding: 3px" width="950" src="assets/images/screencap-7.PNG">
 <br>
 Next, open the Scenario Properties window for the scenario named ***4X Less Urbanization Scenario - Hilo Focal Region***. Notice that the target minimum and maximum within the Urbanization transition type have decreased relative to the ***Baseline Scenario***.
 <br>
