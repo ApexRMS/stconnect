@@ -13,11 +13,11 @@ permalink: /
 ### *ST-Connect* is an open-source [SyncroSim](https://syncrosim.com/download/){:target="_blank"} Base Package for forecasting landscape connectivity.
 
 
-**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change and habitat connectivity. A simple **ST-Connect** model consists of two components. [ST-Sim](http://docs.stsim.net/){:target="_blank"} forecasts landscape dynamics, projecting changes in both vegetation and land use. [Circuitscape](https://circuitscape.org/){:target="_blank"} predicts connectivity in heterogenous landscapes, using algorithms from electronic circuit theory.
+**ST-Connect** uses a pipeline approach to chain together spatially-explicit models of landscape change and habitat connectivity. A simple **ST-Connect** model pipeline consists of two stages: a state-and-transition simulation model of landscape change ([ST-Sim](http://docs.stsim.net/){:target="_blank"}) and a circuit model of landscape connectivity ([Circuitscape](https://circuitscape.org/){:target="_blank"}). ST-Sim projects changes in both vegetation and land use, with uncertainty, while Circuitscape infers the connectivity consequences of these changes.
 <br>
 <img align="middle" style="padding: 3px" width="350" src="assets/images/pipeline-1.PNG">
 <br>
-**ST-Connect**'s accessible framework has helped support natural resource management projects such as a conservation prioritization project focusing on key wildlife species in Quebec [(Rayfield, Larocque, Martins et al., 2021)](https://quebio.ca/en/connectivity_report){:target="_blank"}. **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/){:target="_blank"} modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/){:target="_blank"} R package and from the Python programming language using the [pysyncrosim](https://pysyncrosim.readthedocs.io/en/latest/){:target="_blank"} Python package.
+**ST-Connect** has been used to forecast ecological connectivity for forest-dependent wildlife in Quebec and to identify connectivity conservation priorities [(Rayfield, Larocque, Martins et al., 2021)](https://quebio.ca/en/connectivity_report){:target="_blank"}. **ST-Connect** is a package that plugs into the [SyncroSim](https://syncrosim.com/){:target="_blank"} modeling framework. It can also be run from the R programming language using the [rsyncrosim](https://syncrosim.com/r-package/){:target="_blank"} R package and from the Python programming language using the [pysyncrosim](https://pysyncrosim.readthedocs.io/en/latest/){:target="_blank"} Python package.
 
 ## Requirements
 
