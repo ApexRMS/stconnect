@@ -58,7 +58,7 @@ totalTimesteps <- runSettings$MaximumTimestep - runSettings$MinimumTimestep + 1
 
 # Run simulation ---------------------------------------------------------------------------
 # Report on simulation progress
-envBeginSimulation(totalIterations * totalTimesteps)
+progressBar(type="begin", totalSteps=as.integer(totalIterations*totalTimesteps))
 
 # Loop over all iterations, timesteps, and species
 for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
@@ -66,8 +66,8 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
     for (timestep in timestepSet) {
 
         # Report on simulation progress
-        envReportProgress(iteration, timestep)
-
+        progressBar(type="report", iteration=iteration, timestep=timestep)
+      
         #Read in state class raster for this iteration and timestep
         stateclassMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
         
@@ -113,6 +113,8 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
             # Remove clump observations with frequency smaller than minimum patch size threshold (ha)
             habitatPatchID <- habitatPatchID[habitatPatchID$count < patchSizeThreshold/conversionFromHa,]
             habitatPatch[Which(habitatPatch %in% habitatPatchID$value)] <- 0
+            # Create binary layer instead of patch id layer
+            habitatPatch[habitatPatch>0] <- 1
             # Set NAs from habitat suitability
             habitatPatch[is.na(suitabilityRaster)]<-NA
 
@@ -128,14 +130,14 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
             habitatSuitabilityOut <- addRow(habitatSuitabilityOut, newRow)
 
             # Write habitat patch raster
-            writeRaster(patchRaster, patchName, overwrite = TRUE)
+            writeRaster(habitatPatch, patchName, overwrite = TRUE)
             # Add row to habitatPatchOut datasheet
             newRow <- data.frame(Iteration = iteration, Timestep = timestep, SpeciesID = species, Filename = patchName)
             habitatPatchOut = addRow(habitatPatchOut, newRow)
 
         } # speciesRow
         # Report on simulation progress
-        envStepSimulation()
+        progressBar(type="step")
         
     } # timestep
 
@@ -146,7 +148,7 @@ saveDatasheet(myScenario, habitatSuitabilityOut, "stconnect_HSOutputHabitatSuita
 saveDatasheet(myScenario, habitatPatchOut, "stconnect_HSOutputHabitatPatch")
 
 # End simulation ---------------------------------------------------------------------------
-envEndSimulation()
+progressBar(type="end")
 
 # This does not work! The temporary HabitatSuitability folder has to be deleted manually
 # Deleting it here, removes the temp folder before its contents have been copied to the output folders
