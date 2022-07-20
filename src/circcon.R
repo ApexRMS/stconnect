@@ -38,8 +38,7 @@ speciesSet <- datasheetExpectData(myProject, "stconnect_Species")
 runSettings <- datasheetExpectData(myScenario, "stsim_RunControl")
 outputOptions <- datasheetExpectData(myScenario, "stconnect_CCOutputOptions")
 stateClass <- datasheet(myScenario,"stsim_StateClass")
-resistanceLULCIn <- datasheetExpectData(myScenario, "stconnect_CCLULCResistance")
-resistanceAgeIn <- datasheetExpectData(myScenario, "stconnect_CCAgeResistance")
+resistanceIn <- datasheetExpectData(myScenario, "stconnect_CCResistance")
 # Eventually add this to output options
 rescaleCurrMap <- TRUE
    
@@ -50,7 +49,7 @@ effectivePermeabilityOut <- datasheet(myScenario, "stconnect_CCOutputMetric")
 
 # Manipulate datasheets and prep for simulation --------------------------------------------
 # Add state class id values to resistance LULC datasheet to be used when reclassing state class rasters
-resistanceLULCIn <- resistanceLULCIn %>%
+resistanceIn <- resistanceIn %>%
   left_join(stateClass, by = c("StateClassID" = "Name"))
 
 # Set of timesteps to analyse
@@ -76,8 +75,7 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
 
     #Read in state class and age rasters for this iteration and timestep
     stateclassMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialState", iteration = iteration, timestep = timestep)
-    ageMap <- datasheetRaster(myScenario, datasheet = "stsim_OutputSpatialAge", iteration = iteration, timestep = timestep)
-    
+
     for (speciesRow in 1:nrow(speciesSet)) {
       
       # Species name
@@ -86,23 +84,18 @@ for (iteration in runSettings$MinimumIteration:runSettings$MaximumIteration) {
       speciesCode <- speciesSet[speciesRow, "Code"]
       
       # Species resistance values LULC
-      resistanceLULCValues <- resistanceLULCIn %>%
+      resistanceValues <- resistanceIn %>%
         filter(SpeciesID == species) %>%
         select("ID", "Value")
-      # Species resistance values Age
-      resistanceAgeValues <- resistanceAgeIn %>%
-        filter(resistanceAgeIn$SpeciesID == species) %>%
-        select("AgeMin", "AgeMax", "Value")
-      
+
       # Check if values exist for this species, if not move to next species 
-      if (nrow(resistanceLULCValues) == 0 || nrow(resistanceAgeValues) == 0) {
-        next
+      if (nrow(resistanceValues) == 0) {
+          next
       }
 
       # Species resistance raster
-      resistanceLULCRaster <- reclassify(stateclassMap, rcl = resistanceLULCValues)
-      resistanceAgeRaster <- reclassify(ageMap, rcl = resistanceAgeValues, right=TRUE, include.lowest=TRUE)
-      resistanceRaster <- resistanceLULCRaster * resistanceAgeRaster
+      # Reclassify state class raster
+      resistanceRaster <- reclassify(stateclassMap, rcl = resistanceValues)
 
       # Create focal regions
       # Create focal region raster for N-S by adding top and bottom rows
