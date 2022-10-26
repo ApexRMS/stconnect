@@ -25,7 +25,7 @@ This quickstart tutorial will introduce you to the basics of working with ST-Con
 
 > **Note:** To download and install Circuitscape, follow the Circuitscape.jl installation link and not the link to the Windows executable. It will prompt you to install Julia first, which will then be used to install Circuitscape.
 
-Once all required programs are installed, open **SyncroSim** and select **File -> Packages... -> Install...**, check the box for the **stconnect** package and click OK. Alternatively, download the [latest release](https://github.com/ApexRMS/stconnect/releases/){:target="_blank"} from GitHub. Then, in **SyncroSim** select **File -> Packages... -> Install From File...**, and navigate to and select the downloaded package file with the extension *.ssimpkg*.
+Once all required programs are installed, open **SyncroSim** and select **File -> Packages... -> Install...**, check the box for the **stconnect** package and click OK.
 
 <br>
 
@@ -47,7 +47,7 @@ When you are ready to create the Library file, click **OK**. A new Library will 
 
 ## **Step 3: Configuring the ST-Connect Library**
 
-For the model to run, SyncroSim needs to locate the locations of your R, Julia, and Zonation (if applicable) executables. 
+For the model to run, SyncroSim needs to locate your R, Julia, and Zonation (if applicable) executables. 
 
 The R executable will be found automatically. To check, in the Library Explorer, double-click on hte Library **Simple Conn. Model** and navigate to the **Options** tab. In the **R Configuration** datasheet, you should see the file path to your R executable. If not, click **Browse...** and navigate to the correct file location.
 
@@ -137,6 +137,6 @@ Scenarios featuring the entirety of Hawaii's Big Island are included in the Libr
 
 ## **Learn more**
 
-* For more on the applications of ST-Connect, see [QuéBio](https://quebio.ca/en/connectivity_report){:target="_blank"}.
+* For an example of an application of ST-Connect, see [this study](https://quebio.ca/en/connectivity_report){:target="_blank"}.
 * For more on Circuitscape, see the [Circuitscape documentation](https://docs.circuitscape.org/Circuitscape.jl/latest/){:target="_blank"}.
-* For more on connectivity research, see the special issue [Dynamic Landscape Connectivity](https://www.mdpi.com/journal/land/special_issues/landscape_connectivity){:target="_blank"}.
+* For more on connectivity forecasting research, see the special issue [Dynamic Landscape Connectivity](https://www.mdpi.com/journal/land/special_issues/landscape_connectivity){:target="_blank"}.
