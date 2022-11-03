@@ -4,7 +4,7 @@ packagesToLoad <- c("raster", "rsyncrosim", "dplyr")
 # Identify packages that are not already installed
 packagesToInstall <- packagesToLoad[!(packagesToLoad %in% installed.packages()[,"Package"])]
 # Install missing packages
-if(length(packagesToInstall)) install.packages(packagesToInstall)
+if(length(packagesToInstall)) install.packages(packagesToInstall, repos = "https://mirror.rcg.sfu.ca/mirror/CRAN/")
 # Load packages
 lapply(packagesToLoad, library, character.only = TRUE)
 
