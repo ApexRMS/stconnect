@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.17" url="http://apexrms.github.io/stconnect/">
+<package name="stconnect" displayName="Connectivity planning for future climate and land-use change" version="1.1.18" url="http://apexrms.github.io/stconnect/">
 
   <transformers>
 
