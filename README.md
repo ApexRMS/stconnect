@@ -1,6 +1,6 @@
-# ST-Connect
-Connectivity planning for future climate and land-use change
+# **ST-Connect**
 
-_ST-Connect_ is an open-source [SyncroSim](https://syncrosim.com/) Base Package for forecasting landscape connectivity.
+**ST-Connect** is an open-source [SyncroSim](http://www.syncrosim.com) base package for forecasting landscape connectivity under future climate and land-use change.
 
-Additional documentation for the _ST-Connect_ package can be found [here](https://apexrms.github.io/stconnect/).
+* See the [Home page](https://apexrms.github.io/stconnect/) for an overview of **ST-Connect**
+* See the [Getting Started](https://apexrms.github.io/stconnect/getting_started.html) page to get up and running quickly
