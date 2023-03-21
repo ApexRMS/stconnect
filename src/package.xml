@@ -8,7 +8,7 @@
     <transformer
       name="Primary"
       displayName="Connectivity planning for future climate and land-use change"
-	  isPipelineBased="True"
+      isPipelineBased="True"
       isPrimary="True">
       <include>
         <transformer name="Global"/>
@@ -530,6 +530,10 @@
       </group>
       <group name="CircuitConnectivityGroup" displayName="Circuit Connectivity">
         <item name="EffectivePermeability" displayName="Effective Permeability" dataSheet="stconnect_CCOutputMetric" column="EffectivePermeability" filter="SpeciesID"/>
+      </group>
+      <group name="AttributeGroup" displayName="Attributes">
+        <item name="stsim_StateAttr" displayName="State Attributes" dataSheet="stsim_OutputStateAttribute" column="Amount" variableSourceColumn="StateAttributeTypeID"/>
+        <item name="stsim_TransAttr" displayName="Transition Attributes" dataSheet="stsim_OutputTransitionAttribute" column="Amount" variableSourceColumn="TransitionAttributeTypeID"/>
       </group>
     </layout>
 
